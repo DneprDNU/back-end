@@ -5,6 +5,7 @@ import org.dnu.filestorage.service.dao.GenericDAO;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * @author demyura
  * @since 14.11.14
  */
+@Transactional
 public class GenericDAOImpl<T extends NamedEntity> implements GenericDAO<T> {
     @PersistenceContext
     protected EntityManager entityManager;

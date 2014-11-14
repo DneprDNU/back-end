@@ -17,6 +17,13 @@ public class Subject extends NamedEntity {
     @ManyToMany()
     private List<LinkingEntity> links;
 
+    public Subject() {
+    }
+
+    public Subject(String name) {
+        super(name);
+    }
+
     public List<Resource> getResources() {
         return resources;
     }

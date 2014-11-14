@@ -15,6 +15,13 @@ public class NamedEntity implements Serializable {
     private Long id;
     private String name;
 
+    public NamedEntity() {
+    }
+
+    public NamedEntity(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }

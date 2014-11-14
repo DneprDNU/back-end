@@ -10,10 +10,15 @@ import java.util.List;
  */
 @Entity
 public class Teacher extends NamedEntity {
-
     @ManyToMany()
     private List<LinkingEntity> links;
 
+    public Teacher() {
+    }
+
+    public Teacher(String name) {
+        super(name);
+    }
 
     public List<LinkingEntity> getLinks() {
         return links;

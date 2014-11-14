@@ -17,6 +17,14 @@ public class Speciality extends NamedEntity {
     @ManyToMany()
     private List<LinkingEntity> links;
 
+    public Speciality() {
+    }
+
+    public Speciality(String name, String code) {
+        super(name);
+        this.code = code;
+    }
+
     public String getCode() {
         return code;
     }

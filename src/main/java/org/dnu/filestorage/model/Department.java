@@ -17,6 +17,14 @@ public class Department extends NamedEntity {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Teacher> employees;
 
+    public Department() {
+    }
+
+    public Department(String name, String shortName) {
+        super(name);
+        this.shortName = shortName;
+    }
+
     public String getShortName() {
         return shortName;
     }
