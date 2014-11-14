@@ -1,6 +1,8 @@
 package org.dnu.filestorage.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import java.util.List;
 
 /**
@@ -8,10 +10,26 @@ import java.util.List;
  * @since 07.10.14
  */
 @Entity
-public class Subject {
-    @Id
-    @GeneratedValue()
-    private long id;
+public class Subject extends NamedEntity {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Resource> resources;
+
+    @ManyToMany()
+    private List<LinkingEntity> links;
+
+    public List<Resource> getResources() {
+        return resources;
+    }
+
+    public void setResources(List<Resource> resources) {
+        this.resources = resources;
+    }
+
+    public List<LinkingEntity> getLinks() {
+        return links;
+    }
+
+    public void setLinks(List<LinkingEntity> links) {
+        this.links = links;
+    }
 }

@@ -1,16 +1,12 @@
 package org.dnu.filestorage.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 /**
  * @author demyura
  * @since 07.10.14
  */
 @Entity
-public class Category {
-    @Id
-    @GeneratedValue()
-    private long id;
+public class Category extends NamedEntity {
+
 }
