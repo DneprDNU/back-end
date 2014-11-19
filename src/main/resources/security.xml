@@ -4,12 +4,10 @@
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd
-
-
-
-                                  http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd"
+                           http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd"
         >
-    <security:global-method-security xmlns:security="http://www.springframework.org/schema/security"
+
+<security:global-method-security xmlns:security="http://www.springframework.org/schema/security"
                                      secured-annotations="enabled"/>
 
     <security:http auto-config="true">
@@ -28,7 +26,6 @@
                              default-target-url="/index.jsp"
                              authentication-failure-url="/login.html?login_error=1"/>
         <security:logout logout-url="/logout" logout-success-url="/logoutSuccess.html"/>
-
     </security:http>
 
     <bean id="roleVoter" class="org.springframework.security.access.vote.RoleHierarchyVoter">
