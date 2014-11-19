@@ -7,26 +7,42 @@
                            http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd"
         >
 
-<security:global-method-security xmlns:security="http://www.springframework.org/schema/security"
+    <security:global-method-security xmlns:security="http://www.springframework.org/schema/security"
                                      secured-annotations="enabled"/>
 
-    <security:http auto-config="true">
-        <security:intercept-url pattern="/login*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <security:intercept-url pattern="/logoutSuccess*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <security:intercept-url pattern="/css/main.css" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <security:intercept-url pattern="/resources/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <security:intercept-url pattern="/rest/**" method="GET" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <security:intercept-url pattern="/rest/**" method="POST" access="ROLE_ADMIN"/>
-        <security:intercept-url pattern="/rest/**" method="PUT" access="ROLE_ADMIN"/>
-        <security:intercept-url pattern="/rest/**" method="DELETE" access="ROLE_ADMIN"/>
+    <security:http realm="Protected API" use-expressions="true" auto-config="false" create-session="stateless"
+                   entry-point-ref="customAuthenticationEntryPoint" authentication-manager-ref="authenticationManager">
+        <security:custom-filter ref="authenticationTokenProcessingFilter" position="FORM_LOGIN_FILTER"/>
+        <security:intercept-url pattern="/login*" access="permitAll()"/>
+        <security:intercept-url pattern="/logoutSuccess*" access="permitAll()"/>
+        <security:intercept-url pattern="/css/main.css" access="permitAll()"/>
+        <security:intercept-url pattern="/resources/**" access="permitAll()"/>
+        <security:intercept-url pattern="/rest/**" method="GET" access="hasRole('ROLE_USER')"/>
+        <security:intercept-url pattern="/rest/**" method="POST" access="hasRole('ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/rest/**" method="PUT" access="hasRole('ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/rest/**" method="DELETE" access="hasRole('ROLE_ADMIN')"/>
         <security:intercept-url pattern="/**" access="ROLE_USER"/>
-
-        <security:form-login login-page="/login.html"
-                             login-processing-url="/loginProcess"
-                             default-target-url="/index.jsp"
-                             authentication-failure-url="/login.html?login_error=1"/>
-        <security:logout logout-url="/logout" logout-success-url="/logoutSuccess.html"/>
     </security:http>
+
+    <bean id="customAuthenticationEntryPoint"
+          class="org.dnu.filestorage.security.CustomAuthenticationEntryPoint"/>
+
+    <bean class="org.dnu.filestorage.security.AuthenticationTokenProcessingFilter"
+          id="authenticationTokenProcessingFilter">
+        <constructor-arg ref="authenticationManager"/>
+    </bean>
+
+
+    <security:authentication-manager id="authenticationManager">
+    <security:authentication-provider>
+            <security:user-service>
+                <security:user name="user" password="password" authorities="ROLE_USER"/>
+                <security:user name="admin" password="password" authorities="ROLE_ADMIN"/>
+                <security:user name="superadmin" password="password" authorities="ROLE_SUPER_ADMIN"/>
+            </security:user-service>
+        </security:authentication-provider>
+    </security:authentication-manager>
+
 
     <bean id="roleVoter" class="org.springframework.security.access.vote.RoleHierarchyVoter">
         <constructor-arg ref="roleHierarchy"/>
@@ -41,13 +57,4 @@
         </property>
     </bean>
 
-    <security:authentication-manager>
-        <security:authentication-provider>
-            <security:user-service>
-                <security:user name="user" password="password" authorities="ROLE_USER"/>
-                <security:user name="admin" password="password" authorities="ROLE_ADMIN"/>
-                <security:user name="superadmin" password="password" authorities="ROLE_SUPER_ADMIN"/>
-            </security:user-service>
-        </security:authentication-provider>
-    </security:authentication-manager>
 </beans>
