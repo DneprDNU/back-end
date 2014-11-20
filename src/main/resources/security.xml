@@ -17,10 +17,11 @@
         <security:intercept-url pattern="/logoutSuccess*" access="permitAll()"/>
         <security:intercept-url pattern="/css/main.css" access="permitAll()"/>
         <security:intercept-url pattern="/resources/**" access="permitAll()"/>
-        <security:intercept-url pattern="/rest/**" method="GET" access="hasRole('ROLE_USER')"/>
-        <security:intercept-url pattern="/rest/**" method="POST" access="hasRole('ROLE_ADMIN')"/>
-        <security:intercept-url pattern="/rest/**" method="PUT" access="hasRole('ROLE_ADMIN')"/>
-        <security:intercept-url pattern="/rest/**" method="DELETE" access="hasRole('ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/" access="permitAll()"/>
+        <security:intercept-url pattern="/rest/**" method="GET" access="hasRole('user')"/>
+        <security:intercept-url pattern="/rest/**" method="POST" access="hasRole('admin')"/>
+        <security:intercept-url pattern="/rest/**" method="PUT" access="hasRole('admin')"/>
+        <security:intercept-url pattern="/rest/**" method="DELETE" access="hasRole('admin')"/>
         <security:intercept-url pattern="/**" access="ROLE_USER"/>
     </security:http>
 
@@ -36,10 +37,10 @@
     <security:authentication-manager id="authenticationManager">
         <security:authentication-provider>
         <security:user-service>
-                <security:user name="user" password="password" authorities="ROLE_USER"/>
-                <security:user name="admin" password="password" authorities="ROLE_ADMIN"/>
-                <security:user name="superadmin" password="password" authorities="ROLE_SUPER_ADMIN"/>
-            </security:user-service>
+            <security:user name="user" password="password" authorities="user"/>
+            <security:user name="admin" password="password" authorities="admin"/>
+            <security:user name="superadmin" password="password" authorities="superadmin"/>
+        </security:user-service>
         </security:authentication-provider>
     </security:authentication-manager>
 
@@ -51,8 +52,8 @@
           class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
         <property name="hierarchy">
             <value>
-                ROLE_ADMIN > ROLE_USER
-                ROLE_SUPER_ADMIN > ROLE_ADMIN
+                admin > user
+                superadmin > admin
             </value>
         </property>
     </bean>
