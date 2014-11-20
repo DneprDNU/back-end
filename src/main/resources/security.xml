@@ -22,7 +22,7 @@
         <security:intercept-url pattern="/rest/**" method="POST" access="hasRole('admin')"/>
         <security:intercept-url pattern="/rest/**" method="PUT" access="hasRole('admin')"/>
         <security:intercept-url pattern="/rest/**" method="DELETE" access="hasRole('admin')"/>
-        <security:intercept-url pattern="/**" access="ROLE_USER"/>
+        <security:intercept-url pattern="/**" access="hasRole('user')"/>
     </security:http>
 
     <bean id="customAuthenticationEntryPoint"
