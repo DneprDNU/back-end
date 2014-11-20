@@ -11,8 +11,9 @@
                                      secured-annotations="enabled"/>
 
     <security:http realm="Protected API" use-expressions="true" auto-config="false" create-session="stateless"
-                   entry-point-ref="customAuthenticationEntryPoint" authentication-manager-ref="authenticationManager">
-        <security:custom-filter ref="authenticationTokenProcessingFilter" position="FORM_LOGIN_FILTER"/>
+                   entry-point-ref="customAuthenticationEntryPoint" authentication-manager-ref="authenticationManager"
+                   access-decision-manager-ref="accessDecisionManager">
+    <security:custom-filter ref="authenticationTokenProcessingFilter" position="FORM_LOGIN_FILTER"/>
         <security:intercept-url pattern="/login*" access="permitAll()"/>
         <security:intercept-url pattern="/logoutSuccess*" access="permitAll()"/>
         <security:intercept-url pattern="/css/main.css" access="permitAll()"/>
@@ -36,13 +37,30 @@
 
     <security:authentication-manager id="authenticationManager">
         <security:authentication-provider>
-        <security:user-service>
-            <security:user name="user" password="password" authorities="ROLE_USER"/>
-            <security:user name="admin" password="password" authorities="ROLE_ADMIN"/>
-            <security:user name="superadmin" password="password" authorities="ROLE_SUPERADMIN"/>
-        </security:user-service>
+            <security:user-service>
+                <security:user name="user" password="password" authorities="ROLE_USER"/>
+                <security:user name="admin" password="password" authorities="ROLE_ADMIN"/>
+                <security:user name="superadmin" password="password" authorities="ROLE_SUPERADMIN"/>
+            </security:user-service>
         </security:authentication-provider>
     </security:authentication-manager>
+
+
+    <bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+        <property name="decisionVoters">
+            <list>
+                <ref bean="roleVoter"/>
+                <bean class="org.springframework.security.web.access.expression.WebExpressionVoter">
+                    <property name="expressionHandler">
+                        <bean class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler">
+                            <property name="roleHierarchy" ref="roleHierarchy"/>
+                        </bean>
+                    </property>
+                </bean>
+                <bean class="org.springframework.security.access.vote.AuthenticatedVoter"/>
+            </list>
+        </property>
+    </bean>
 
 
     <bean id="roleVoter" class="org.springframework.security.access.vote.RoleHierarchyVoter">
