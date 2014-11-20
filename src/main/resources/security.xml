@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd"
+        >
+
+    <security:global-method-security xmlns:security="http://www.springframework.org/schema/security"
+                                     secured-annotations="enabled"/>
+
+    <security:http realm="Protected API" use-expressions="true" auto-config="false" create-session="stateless"
+                   entry-point-ref="customAuthenticationEntryPoint" authentication-manager-ref="authenticationManager">
+        <security:custom-filter ref="authenticationTokenProcessingFilter" position="FORM_LOGIN_FILTER"/>
+        <security:intercept-url pattern="/login*" access="permitAll()"/>
+        <security:intercept-url pattern="/logoutSuccess*" access="permitAll()"/>
+        <security:intercept-url pattern="/css/main.css" access="permitAll()"/>
+        <security:intercept-url pattern="/resources/**" access="permitAll()"/>
+        <security:intercept-url pattern="/rest/**" method="GET" access="hasRole('ROLE_USER')"/>
+        <security:intercept-url pattern="/rest/**" method="POST" access="hasRole('ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/rest/**" method="PUT" access="hasRole('ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/rest/**" method="DELETE" access="hasRole('ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/**" access="ROLE_USER"/>
+    </security:http>
+
+    <bean id="customAuthenticationEntryPoint"
+          class="org.dnu.filestorage.security.CustomAuthenticationEntryPoint"/>
+
+    <bean class="org.dnu.filestorage.security.AuthenticationTokenProcessingFilter"
+          id="authenticationTokenProcessingFilter">
+        <constructor-arg ref="authenticationManager"/>
+    </bean>
+
+
+    <security:authentication-manager id="authenticationManager">
+        <security:authentication-provider>
+        <security:user-service>
+                <security:user name="user" password="password" authorities="ROLE_USER"/>
+                <security:user name="admin" password="password" authorities="ROLE_ADMIN"/>
+                <security:user name="superadmin" password="password" authorities="ROLE_SUPER_ADMIN"/>
+            </security:user-service>
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+
+    <bean id="roleVoter" class="org.springframework.security.access.vote.RoleHierarchyVoter">
+        <constructor-arg ref="roleHierarchy"/>
+    </bean>
+    <bean id="roleHierarchy"
+          class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
+        <property name="hierarchy">
+            <value>
+                ROLE_ADMIN > ROLE_USER
+                ROLE_SUPER_ADMIN > ROLE_ADMIN
+            </value>
+        </property>
+    </bean>
+
+</beans>

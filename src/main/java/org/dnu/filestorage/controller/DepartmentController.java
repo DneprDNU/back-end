@@ -2,7 +2,7 @@ package org.dnu.filestorage.controller;
 
 import org.dnu.filestorage.controller.generic.GenericController;
 import org.dnu.filestorage.model.Department;
-import org.dnu.filestorage.service.dao.GenericDAO;
+import org.dnu.filestorage.service.dao.DepartmentDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class DepartmentController extends GenericController<Department> {
 
     @Autowired
-    public DepartmentController(GenericDAO<Department> dao) {
+    public DepartmentController(DepartmentDAO dao) {
         super(dao);
     }
 }
