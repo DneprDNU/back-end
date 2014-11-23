@@ -2,6 +2,7 @@ package org.dnu.filestorage.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
 public class Resource extends NamedEntity {
     @ManyToMany
     private List<Category> categories;
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(fetch= FetchType.EAGER)
     private List<Subject> subjects;
 
     private String year;

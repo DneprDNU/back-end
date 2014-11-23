@@ -1,19 +1,17 @@
 package org.dnu.filestorage.security.transfer;
 
-import java.util.Map;
 
-/**
- * @author demyura
- * @since 19.11.14
- */
+import java.util.List;
+
 public class UserTransfer {
 
-    private final String name;
+    private  String name;
 
-    private final Map<String, Boolean> roles;
+    private  List<String> roles;
 
+    public UserTransfer() {}
 
-    public UserTransfer(String userName, Map<String, Boolean> roles) {
+    public UserTransfer(String userName, List<String> roles) {
         this.name = userName;
         this.roles = roles;
     }
@@ -24,7 +22,7 @@ public class UserTransfer {
     }
 
 
-    public Map<String, Boolean> getRoles() {
+    public List<String> getRoles() {
         return this.roles;
     }
 

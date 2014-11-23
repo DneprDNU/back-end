@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+
 /**
  * @author demyura
  * @since 14.11.14
@@ -16,12 +18,12 @@ public class MockDataService {
 
     @Autowired
     public MockDataService(FacultyDAO facultyDAO, DepartmentDAO departmentDAO, SpecialityDAO specialityDAO,
-                           SubjectDAO subjectDAO, TeacherDAO teacherDAO) {
+                           SubjectDAO subjectDAO, TeacherDAO teacherDAO, ResourceDAO resourceDAO) {
         teacherDAO.saveOfUpdate(new Teacher("Teacher 1"));
         teacherDAO.saveOfUpdate(new Teacher("Teacher 2"));
         teacherDAO.saveOfUpdate(new Teacher("Teacher 3"));
-
-        subjectDAO.saveOfUpdate(new Subject("Subject 1"));
+        Subject subject1 = new Subject("Subject 1");
+        subject1 = subjectDAO.saveOfUpdate(subject1);
         subjectDAO.saveOfUpdate(new Subject("Subject 2"));
         subjectDAO.saveOfUpdate(new Subject("Subject 3"));
 
@@ -36,5 +38,19 @@ public class MockDataService {
         facultyDAO.saveOfUpdate(new Faculty("Faculty 1", "f1", "Description 1"));
         facultyDAO.saveOfUpdate(new Faculty("Faculty 2", "f2", "Description 2"));
         facultyDAO.saveOfUpdate(new Faculty("Faculty 3", "f3", "Description 3"));
+
+
+        // Some basic test Resources.
+        Resource resource1 = new Resource("Internet technology konspekt", null, Arrays.asList(subject1), "2014"
+                , "Yaroslav Kharchenko", "Description", "", "");
+        Resource resource2 = new Resource("Internet technology konspekt", null, null, "2014"
+                , "Yaroslav Kharchenko", "Description", "", "");
+        Resource resource3 = new Resource("Internet technology konspekt", null, null, "2014"
+                , "Yaroslav Kharchenko", "Description", "", "");
+
+        resourceDAO.saveOfUpdate(resource1);
+        resourceDAO.saveOfUpdate(resource2);
+        resourceDAO.saveOfUpdate(resource3);
+
     }
 }
