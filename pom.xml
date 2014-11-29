@@ -10,6 +10,7 @@
         <spring.version>4.1.0.RELEASE</spring.version>
         <jdk.version>1.8</jdk.version>
         <hibernate.version>4.3.7.Final</hibernate.version>
+        <hadoop.version>2.5.2</hadoop.version>
     </properties>
 
     <dependencies>
@@ -135,6 +136,13 @@
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
             <version>1.2.1</version> <!-- makesure correct version here -->
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-client</artifactId>
+            <version>${hadoop.version}</version>
         </dependency>
 
     </dependencies>

@@ -27,6 +27,11 @@
         <property name="maxUploadSize" value="50000000"/>
     </bean>
 
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="/application.properties"/>
+    </bean>
+
     <mvc:resources mapping="/resources/**" location="/resources/" />
 
 </beans>
