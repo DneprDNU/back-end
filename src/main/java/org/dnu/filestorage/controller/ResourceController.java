@@ -7,15 +7,6 @@ import org.dnu.filestorage.utils.FileUploader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author demyura
@@ -33,7 +24,7 @@ public class ResourceController extends GenericController<Resource> {
         super(dao);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    /*@RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> create(HttpServletRequest request, @RequestParam(value = "file") MultipartFile file) throws IOException {
         String fileName = fileUploader.uploadFile(request, file);
@@ -41,5 +32,5 @@ public class ResourceController extends GenericController<Resource> {
         m.put("filename", fileName);
         m.put("created", true);
         return m;
-    }
+    }*/
 }
