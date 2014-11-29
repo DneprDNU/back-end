@@ -18,7 +18,8 @@
         <security:intercept-url pattern="/logoutSuccess*" access="permitAll()"/>
         <security:intercept-url pattern="/css/main.css" access="permitAll()"/>
         <security:intercept-url pattern="/resources/**" access="permitAll()"/>
-        <security:intercept-url pattern="/api-docs/*" access="permitAll()"/>
+        <security:intercept-url pattern="/api-docs**" access="permitAll()"/>
+        <security:intercept-url pattern="/swag**" access="permitAll()"/>
         <security:intercept-url pattern="/" access="permitAll()"/>
         <security:intercept-url pattern="/rest/**" method="GET" access="hasRole('ROLE_USER')"/>
         <security:intercept-url pattern="/rest/**" method="POST" access="hasRole('ROLE_ADMIN')"/>
