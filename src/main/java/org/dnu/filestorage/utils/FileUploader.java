@@ -17,7 +17,7 @@ public class FileUploader {
 
     public static final String FOLDER = "/resources/";
 
-    @Value("#{hdfs.url}")
+    @Value("${hdfs.url}")
     private String hdfsUrl = "";
 
     public String uploadFile(HttpServletRequest request, MultipartFile multipartFile) {
