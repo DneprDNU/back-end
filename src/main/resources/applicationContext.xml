@@ -17,6 +17,10 @@
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
+
+    <bean id="swaggerConfig" class="com.mangofactory.swagger.configuration.SpringSwaggerConfig"/>
+
+
     <context:component-scan base-package="org.dnu.filestorage"/>
 
 
@@ -29,7 +33,8 @@
 
     <bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location" value="classpath:application.properties"/>
+
+        <property name="locations" value="classpath:*.properties"/>
     </bean>
 
     <mvc:resources mapping="/resources/**" location="/resources/" />
