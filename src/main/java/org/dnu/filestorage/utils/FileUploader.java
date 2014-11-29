@@ -4,13 +4,18 @@ package org.dnu.filestorage.utils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class FileUploader {
 
     public static final String FOLDER = "/resources/";
 
     public static String uploadFile(HttpServletRequest request, MultipartFile multipartFile) throws IOException {
+
+
         File f = new File(request.getRealPath("") + FOLDER + multipartFile.getOriginalFilename());
 
         int i = 0;
