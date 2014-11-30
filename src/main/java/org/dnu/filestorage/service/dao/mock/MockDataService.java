@@ -35,9 +35,12 @@ public class MockDataService {
         departmentDAO.saveOfUpdate(new Department("Department 2", "dep.2"));
         departmentDAO.saveOfUpdate(new Department("Department 3", "dep.3"));
 
-        facultyDAO.saveOfUpdate(new Faculty("Faculty 1", "f1", "Description 1"));
-        facultyDAO.saveOfUpdate(new Faculty("Faculty 2", "f2", "Description 2"));
-        facultyDAO.saveOfUpdate(new Faculty("Faculty 3", "f3", "Description 3"));
+        facultyDAO.saveOfUpdate(new Faculty("Faculty 1", "f1", "Description 1"
+                , "http://dnu.thebodva.com/upload/b32f3d1ef28edf602362b91cb935886f.jpg"));
+        facultyDAO.saveOfUpdate(new Faculty("Faculty 2", "f2", "Description 2"
+                , "http://dnu.thebodva.com/upload/b32f3d1ef28edf602362b91cb935886f.jpg"));
+        facultyDAO.saveOfUpdate(new Faculty("Faculty 3", "f3", "Description 3"
+                , "http://dnu.thebodva.com/upload/b32f3d1ef28edf602362b91cb935886f.jpg"));
 
 
         // Some basic test Resources.

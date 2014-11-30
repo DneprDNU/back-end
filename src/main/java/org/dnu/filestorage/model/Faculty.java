@@ -13,6 +13,7 @@ import java.util.List;
 public class Faculty extends NamedEntity {
     private String shortName;
     private String description;
+    private String image;
     @OneToMany(fetch = FetchType.LAZY)
     private List<Department> departments;
 
@@ -23,6 +24,13 @@ public class Faculty extends NamedEntity {
         super(name);
         this.shortName = shortName;
         this.description = description;
+    }
+
+    public Faculty(String name, String shortName, String description, String image) {
+        super(name);
+        this.shortName = shortName;
+        this.description = description;
+        this.image = image;
     }
 
     public String getDescription() {
@@ -47,5 +55,13 @@ public class Faculty extends NamedEntity {
 
     public void setShortName(String shortName) {
         this.shortName = shortName;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
