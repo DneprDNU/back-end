@@ -17,13 +17,17 @@ import java.util.Map;
  * @author demyura
  * @since 14.11.14
  */
-public abstract class GenericController<T extends NamedEntity> {
+public abstract class GenericController<D extends GenericDAO<T>, T extends NamedEntity> {
     private Logger logger = LoggerFactory.getLogger(GenericController.class);
 
-    private GenericDAO<T> dao;
+    private D dao;
 
-    public GenericController(GenericDAO<T> dao) {
+    public GenericController(D dao) {
         this.dao = dao;
+    }
+
+    protected D getDao() {
+        return dao;
     }
 
     @RequestMapping

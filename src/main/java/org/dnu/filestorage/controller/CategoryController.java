@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/rest/category")
-public class CategoryController extends GenericController<Category> {
+public class CategoryController extends GenericController<CategoryDAO, Category> {
 
     @Autowired
     public CategoryController(CategoryDAO dao) {

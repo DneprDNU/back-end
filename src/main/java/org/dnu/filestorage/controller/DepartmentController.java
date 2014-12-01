@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/rest/department")
-public class DepartmentController extends GenericController<Department> {
+public class DepartmentController extends GenericController<DepartmentDAO, Department> {
 
     @Autowired
     public DepartmentController(DepartmentDAO dao) {
