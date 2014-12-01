@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedOutputStream;
+import java.io.InputStream;
 import java.net.URI;
 
 @Component
@@ -19,6 +20,18 @@ public class FileUploader {
 
     @Value("${hdfs.url}")
     private String hdfsUrl = "";
+
+    public InputStream getFile(String fileName) {
+        try {
+            Configuration configuration = new Configuration();
+            FileSystem hdfs = FileSystem.get(new URI(hdfsUrl), configuration);
+            Path path = new Path(fileName);
+            return hdfs.open(path);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public String uploadFile(HttpServletRequest request, MultipartFile multipartFile) {
 
