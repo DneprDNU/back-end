@@ -59,7 +59,7 @@ public class FileUploader {
         try {
             Configuration configuration = new Configuration();
             FileSystem hdfs = FileSystem.get(new URI(hdfsUrl), configuration);
-            Path path = new Path(url);
+            Path path = new Path(FOLDER + url);
             hdfs.deleteOnExit(path);
         } catch (Exception e) {
             e.printStackTrace();
