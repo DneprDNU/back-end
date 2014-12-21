@@ -35,7 +35,7 @@ public class ResourceController extends GenericController<ResourceDAO, Resource>
     public Map<String, Object> create(HttpServletRequest request,
                                       @RequestBody Resource resource, @RequestParam(value = "file") MultipartFile file) {
 
-        String fileUrl = fileUploader.uploadFile(request, file);
+        String fileUrl = fileUploader.uploadFile(file);
         resource.setResourceURL(fileUrl);
         Resource created = getDao().saveOfUpdate(resource);
 

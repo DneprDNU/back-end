@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedOutputStream;
 import java.io.InputStream;
 import java.net.URI;
@@ -33,7 +32,7 @@ public class FileUploader {
         return null;
     }
 
-    public String uploadFile(HttpServletRequest request, MultipartFile multipartFile) {
+    public String uploadFile(MultipartFile multipartFile) {
 
         try {
             Configuration configuration = new Configuration();
