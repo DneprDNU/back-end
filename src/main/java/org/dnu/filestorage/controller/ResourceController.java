@@ -1,9 +1,12 @@
 package org.dnu.filestorage.controller;
 
-import org.dnu.filestorage.controller.generic.GenericController;
+import com.google.common.base.Throwables;
+import org.apache.commons.beanutils.BeanUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.dnu.filestorage.model.Resource;
 import org.dnu.filestorage.service.dao.ResourceDAO;
 import org.dnu.filestorage.utils.FileUploader;
+import org.dnu.filestorage.utils.HibernateAwareObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -11,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,24 +25,32 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/rest/resource")
-public class ResourceController extends GenericController<ResourceDAO, Resource> {
+public class ResourceController {
 
     @Autowired
     private FileUploader fileUploader;
 
+    private ObjectMapper mapper = new HibernateAwareObjectMapper();
+
     @Autowired
-    public ResourceController(ResourceDAO dao) {
-        super(dao);
+    private ResourceDAO dao;
+
+    @RequestMapping
+    @ResponseBody
+    public List<Resource> listAll() {
+        return this.dao.list();
     }
 
-    @RequestMapping(method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> create(HttpServletRequest request,
-                                      @RequestBody Resource resource, @RequestParam(value = "file") MultipartFile file) {
+                                      @RequestParam(value = "json") String sresource, @RequestParam(value = "file") MultipartFile file) throws IOException {
+
+        Resource resource = mapper.readValue(sresource, Resource.class);
 
         String fileUrl = fileUploader.uploadFile(file);
         resource.setResourceURL(fileUrl);
-        Resource created = getDao().saveOfUpdate(resource);
+        Resource created = dao.saveOfUpdate(resource);
 
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("success", true);
@@ -45,14 +58,38 @@ public class ResourceController extends GenericController<ResourceDAO, Resource>
         return m;
     }
 
-
-    /*@RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> create(HttpServletRequest request, @RequestParam(value = "file") MultipartFile file) throws IOException {
-        String fileName = fileUploader.uploadFile(request, file);
+    public Resource get(@PathVariable Long id) {
+        return this.dao.get(id);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public Map<String, Object> update(@PathVariable Long id, @RequestBody Resource json) {
+
+        Resource entity = this.dao.get(id);
+        try {
+            BeanUtils.copyProperties(entity, json);
+        } catch (Exception e) {
+            throw Throwables.propagate(e);
+        }
+
+        Resource updated = this.dao.saveOfUpdate(entity);
+
         Map<String, Object> m = new HashMap<String, Object>();
-        m.put("filename", fileName);
-        m.put("created", true);
+        m.put("success", true);
+        m.put("id", id);
+        m.put("updated", updated);
         return m;
-    }*/
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public Map<String, Object> delete(@PathVariable Long id) {
+        this.dao.remove(id);
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("success", true);
+        return m;
+    }
 }

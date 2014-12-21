@@ -24,7 +24,7 @@ public class FileUploader {
         try {
             Configuration configuration = new Configuration();
             FileSystem hdfs = FileSystem.get(new URI(hdfsUrl), configuration);
-            Path path = new Path(fileName);
+            Path path = new Path(FOLDER + fileName);
             return hdfs.open(path);
         } catch (Exception e) {
             e.printStackTrace();

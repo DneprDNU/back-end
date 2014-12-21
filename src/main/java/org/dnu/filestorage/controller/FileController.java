@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -19,8 +20,8 @@ public class FileController {
     @Autowired
     private FileUploader fileUploader;
 
-    @RequestMapping("/files/{fileName}")
-    public void getFile(@PathVariable("fileName") String fileName,
+    @RequestMapping("/files")
+    public void getFile(@RequestParam("fileName") String fileName,
                         HttpServletResponse response) {
         try {
             InputStream is = fileUploader.getFile(fileName);
