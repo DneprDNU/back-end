@@ -24,7 +24,7 @@ public class FileUploader {
         try {
             Configuration configuration = new Configuration();
             FileSystem hdfs = FileSystem.get(new URI(hdfsUrl), configuration);
-            Path path = new Path(fileName);
+            Path path = new Path(FOLDER + fileName);
             return hdfs.open(path);
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,5 +53,16 @@ public class FileUploader {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void removeFile(String url) {
+        try {
+            Configuration configuration = new Configuration();
+            FileSystem hdfs = FileSystem.get(new URI(hdfsUrl), configuration);
+            Path path = new Path(url);
+            hdfs.deleteOnExit(path);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

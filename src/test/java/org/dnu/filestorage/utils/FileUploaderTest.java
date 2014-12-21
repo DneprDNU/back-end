@@ -24,5 +24,8 @@ public class FileUploaderTest {
         String url = fileUploader.uploadFile(multipartFile);
         logger.error(url);
         assertNotNull(fileUploader.getFile(url));
+        fileUploader.removeFile(url);
     }
+
+
 }
