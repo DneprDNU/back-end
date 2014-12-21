@@ -1,5 +1,6 @@
 package org.dnu.filestorage.utils;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +14,15 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/testApplicationContext.xml")
 public class FileUploaderTest {
-
     @Autowired
     FileUploader fileUploader;
+    private Logger logger = Logger.getLogger(FileUploaderTest.class);
 
     @Test
     public void testUploadFile() throws Exception {
         MultipartFile multipartFile = new MockMultipartFile("testFile", "content".getBytes());
         String url = fileUploader.uploadFile(multipartFile);
-
+        logger.error(url);
         assertNotNull(fileUploader.getFile(url));
     }
 }
