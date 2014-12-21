@@ -37,11 +37,11 @@ public class FileUploader {
         try {
             Configuration configuration = new Configuration();
             FileSystem hdfs = FileSystem.get(new URI(hdfsUrl), configuration);
-            Path file = new Path(hdfsUrl + FOLDER + multipartFile.getOriginalFilename());
+            Path file = new Path(hdfsUrl + FOLDER + multipartFile.getName());
             int i = 0;
             while (hdfs.exists(file)) {
                 i++;
-                file = new Path(hdfsUrl + FOLDER + multipartFile.getOriginalFilename() + i);
+                file = new Path(hdfsUrl + FOLDER + multipartFile.getName() + i);
             }
 
             BufferedOutputStream os = new BufferedOutputStream(hdfs.create(file));
