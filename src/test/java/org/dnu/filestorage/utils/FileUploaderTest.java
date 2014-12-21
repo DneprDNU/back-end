@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:applicationContext.xml")
+@ContextConfiguration("/testApplicationContext.xml")
 public class FileUploaderTest {
 
     @Autowired
