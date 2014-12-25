@@ -14,7 +14,7 @@ public class Faculty extends NamedEntity {
     private String shortName;
     private String description;
     private String image;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Department> departments;
 
     public Faculty() {
