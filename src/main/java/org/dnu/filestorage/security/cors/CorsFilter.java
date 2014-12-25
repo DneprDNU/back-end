@@ -1,11 +1,8 @@
 package org.dnu.filestorage.security.cors;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -14,21 +11,27 @@ import java.io.IOException;
  * @since 29.11.14
  */
 @Component
-public class CorsFilter extends OncePerRequestFilter {
+public class CorsFilter implements Filter {
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
+    public void init(FilterConfig filterConfig) throws ServletException {
 
+    }
+
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
+                         FilterChain filterChain) throws IOException, ServletException {
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
         response.addHeader("Access-Control-Allow-Origin", "*");
 
-        if (request.getHeader("Access-Control-Request-Method") != null && "OPTIONS".equals(request.getMethod())) {
+        response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, " +
+                "X-Auth-Token");
+        filterChain.doFilter(servletRequest, response);
+    }
 
-            response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-            response.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, " +
-                    "X-Auth-Token");
-            response.addHeader("Access-Control-Max-Age", "1");
-        }
-        filterChain.doFilter(request, response);
+    @Override
+    public void destroy() {
+
     }
 }

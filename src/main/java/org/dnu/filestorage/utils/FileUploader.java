@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedOutputStream;
 import java.io.InputStream;
 import java.net.URI;
@@ -33,16 +32,16 @@ public class FileUploader {
         return null;
     }
 
-    public String uploadFile(HttpServletRequest request, MultipartFile multipartFile) {
+    public String uploadFile(MultipartFile multipartFile) {
 
         try {
             Configuration configuration = new Configuration();
             FileSystem hdfs = FileSystem.get(new URI(hdfsUrl), configuration);
-            Path file = new Path(hdfsUrl + FOLDER + multipartFile.getOriginalFilename());
+            Path file = new Path(hdfsUrl + FOLDER + multipartFile.getName());
             int i = 0;
             while (hdfs.exists(file)) {
                 i++;
-                file = new Path(hdfsUrl + FOLDER + multipartFile.getOriginalFilename() + i);
+                file = new Path(hdfsUrl + FOLDER + multipartFile.getName() + i);
             }
 
             BufferedOutputStream os = new BufferedOutputStream(hdfs.create(file));
@@ -54,5 +53,16 @@ public class FileUploader {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void removeFile(String url) {
+        try {
+            Configuration configuration = new Configuration();
+            FileSystem hdfs = FileSystem.get(new URI(hdfsUrl), configuration);
+            Path path = new Path(FOLDER + url);
+            hdfs.deleteOnExit(path);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

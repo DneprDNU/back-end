@@ -48,7 +48,7 @@ public class ResourceController {
 
         Resource resource = mapper.readValue(sresource, Resource.class);
 
-        String fileUrl = fileUploader.uploadFile(request, file);
+        String fileUrl = fileUploader.uploadFile(file);
         resource.setResourceURL(fileUrl);
         Resource created = dao.saveOfUpdate(resource);
 

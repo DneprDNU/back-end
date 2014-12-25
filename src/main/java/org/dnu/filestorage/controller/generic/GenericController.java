@@ -55,7 +55,7 @@ public abstract class GenericController<D extends GenericDAO<T>, T extends Named
         return this.dao.get(id);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public Map<String, Object> update(@PathVariable Long id, @RequestBody T json) {
         logger.debug("update() of id#{} with body {}", id, json);
