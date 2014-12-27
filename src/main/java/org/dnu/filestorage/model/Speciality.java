@@ -1,7 +1,7 @@
 package org.dnu.filestorage.model;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -9,13 +9,17 @@ import java.util.List;
  * @since 07.10.14
  */
 @Entity
+@NamedQueries({@NamedQuery(name = "getSpecialitiesByFacultyId", query = "select a from Speciality as a " +
+        "left join a.departments d left join d.faculty f where f.id=:facultyId")})
 public class Speciality extends NamedEntity {
     private String code;
     @ManyToMany
-    private List<Teacher> supervisors;
+    private List<Teacher> supervisors = new LinkedList<Teacher>();
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Department> departments = new LinkedList<Department>();
 
     @ManyToMany()
-    private List<LinkingEntity> links;
+    private List<LinkingEntity> links = new LinkedList<LinkingEntity>();
 
     public Speciality() {
     }
@@ -47,5 +51,13 @@ public class Speciality extends NamedEntity {
 
     public void setLinks(List<LinkingEntity> links) {
         this.links = links;
+    }
+
+    public List<Department> getDepartments() {
+        return departments;
+    }
+
+    public void setDepartments(List<Department> departments) {
+        this.departments = departments;
     }
 }

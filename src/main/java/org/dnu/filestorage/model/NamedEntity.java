@@ -14,12 +14,19 @@ public class NamedEntity implements Serializable {
     @GeneratedValue()
     private Long id;
     private String name;
+    @Column(length = 10000)
+    private String image;
 
     public NamedEntity() {
     }
 
     public NamedEntity(String name) {
         this.name = name;
+    }
+
+    public NamedEntity(String name, String image) {
+        this.name = name;
+        this.image = image;
     }
 
     public Long getId() {
@@ -36,5 +43,13 @@ public class NamedEntity implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

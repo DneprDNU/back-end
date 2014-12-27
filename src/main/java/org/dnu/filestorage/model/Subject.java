@@ -3,6 +3,7 @@ package org.dnu.filestorage.model;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -12,10 +13,10 @@ import java.util.List;
 @Entity
 public class Subject extends NamedEntity {
     @ManyToMany(fetch = FetchType.LAZY)
-    private List<Resource> resources;
+    private List<Resource> resources = new LinkedList<Resource>();
 
     @ManyToMany()
-    private List<LinkingEntity> links;
+    private List<LinkingEntity> links = new LinkedList<LinkingEntity>();
 
     public Subject() {
     }

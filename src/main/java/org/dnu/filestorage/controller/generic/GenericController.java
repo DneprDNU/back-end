@@ -41,7 +41,7 @@ public abstract class GenericController<D extends GenericDAO<T>, T extends Named
     public Map<String, Object> create(@RequestBody T json) {
         logger.debug("create() with body {} of type {}", json, json.getClass());
 
-        T created = this.dao.saveOfUpdate(json);
+        T created = this.dao.create(json);
 
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("success", true);
@@ -71,7 +71,7 @@ public abstract class GenericController<D extends GenericDAO<T>, T extends Named
 
         logger.debug("merged entity: {}", entity);
 
-        T updated = this.dao.saveOfUpdate(entity);
+        T updated = this.dao.update(entity);
         logger.debug("updated enitity: {}", updated);
 
         Map<String, Object> m = new HashMap<String, Object>();

@@ -6,6 +6,10 @@ import org.dnu.filestorage.service.dao.SpecialityDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * @author demyura
@@ -18,5 +22,11 @@ public class SpecialityController extends GenericController<SpecialityDAO, Speci
     @Autowired
     public SpecialityController(SpecialityDAO dao) {
         super(dao);
+    }
+
+    @RequestMapping(params = "facultyId={facultyId}")
+    @ResponseBody
+    public List<Speciality> listAllByFacultyId(@RequestParam("facultyId") Long facultyId) {
+        return getDao().getSpecialitiesByFacultyId(facultyId);
     }
 }

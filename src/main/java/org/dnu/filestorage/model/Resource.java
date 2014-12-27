@@ -1,17 +1,17 @@
 package org.dnu.filestorage.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
 public class Resource extends NamedEntity {
     @ManyToMany
-    private List<Category> categories;
-    @ManyToMany(fetch= FetchType.EAGER)
-    private List<Subject> subjects;
+    private List<Category> categories = new LinkedList<Category>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Subject> subjects = new LinkedList<Subject>();
 
     private String year;
 
@@ -23,7 +23,7 @@ public class Resource extends NamedEntity {
 
     private String imageURL;
 
-    public Resource(){
+    public Resource() {
 
     }
 

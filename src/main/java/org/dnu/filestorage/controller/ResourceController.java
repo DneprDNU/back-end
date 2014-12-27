@@ -1,8 +1,8 @@
 package org.dnu.filestorage.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
 import org.apache.commons.beanutils.BeanUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.dnu.filestorage.model.Resource;
 import org.dnu.filestorage.service.dao.ResourceDAO;
 import org.dnu.filestorage.utils.FileUploader;
@@ -50,7 +50,7 @@ public class ResourceController {
 
         String fileUrl = fileUploader.uploadFile(file);
         resource.setResourceURL(fileUrl);
-        Resource created = dao.saveOfUpdate(resource);
+        Resource created = dao.create(resource);
 
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("success", true);
@@ -75,7 +75,7 @@ public class ResourceController {
             throw Throwables.propagate(e);
         }
 
-        Resource updated = this.dao.saveOfUpdate(entity);
+        Resource updated = this.dao.update(entity);
 
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("success", true);

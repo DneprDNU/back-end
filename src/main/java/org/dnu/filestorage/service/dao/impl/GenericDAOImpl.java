@@ -38,8 +38,14 @@ public class GenericDAOImpl<T extends NamedEntity> implements GenericDAO<T> {
     }
 
     @Override
-    public T saveOfUpdate(T entity) {
+    public T update(T entity) {
         return entityManager.merge(entity);
+    }
+
+    @Override
+    public T create(T entity) {
+        entityManager.persist(entity);
+        return entity;
     }
 
     @Override

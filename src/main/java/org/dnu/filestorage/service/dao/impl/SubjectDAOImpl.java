@@ -5,6 +5,7 @@ import org.dnu.filestorage.service.dao.SubjectDAO;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * @author demyura
@@ -14,4 +15,13 @@ import javax.transaction.Transactional;
 @Transactional
 public class SubjectDAOImpl extends GenericDAOImpl<Subject> implements SubjectDAO {
 
+    @Override
+    public List<Subject> getBySpecialityId(Long specialityId) {
+        return null;
+    }
+
+    @Override
+    public List<Subject> getByDepartmentId(Long departmentId) {
+        return null;
+    }
 }

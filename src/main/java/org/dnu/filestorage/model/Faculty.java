@@ -1,8 +1,10 @@
 package org.dnu.filestorage.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -13,9 +15,9 @@ import java.util.List;
 public class Faculty extends NamedEntity {
     private String shortName;
     private String description;
-    private String image;
-    @OneToMany(fetch = FetchType.EAGER)
-    private List<Department> departments;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Department> departments = new LinkedList<Department>();
 
     public Faculty() {
     }
@@ -27,10 +29,9 @@ public class Faculty extends NamedEntity {
     }
 
     public Faculty(String name, String shortName, String description, String image) {
-        super(name);
+        super(name, image);
         this.shortName = shortName;
         this.description = description;
-        this.image = image;
     }
 
     public String getDescription() {
@@ -55,13 +56,5 @@ public class Faculty extends NamedEntity {
 
     public void setShortName(String shortName) {
         this.shortName = shortName;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 }

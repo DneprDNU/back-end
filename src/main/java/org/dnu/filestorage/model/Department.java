@@ -1,8 +1,7 @@
 package org.dnu.filestorage.model;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -12,10 +11,12 @@ import java.util.List;
 @Entity
 public class Department extends NamedEntity {
     private String shortName;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Speciality> specialities = new LinkedList<Speciality>();
     @ManyToMany(fetch = FetchType.LAZY)
-    private List<Speciality> specialities;
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<Teacher> employees;
+    private List<Teacher> employees = new LinkedList<Teacher>();
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Faculty faculty;
 
     public Department() {
     }
@@ -47,5 +48,13 @@ public class Department extends NamedEntity {
 
     public void setEmployees(List<Teacher> employees) {
         this.employees = employees;
+    }
+
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
     }
 }

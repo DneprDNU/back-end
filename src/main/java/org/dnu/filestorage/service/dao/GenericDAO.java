@@ -13,7 +13,9 @@ public interface GenericDAO<T extends NamedEntity> {
 
     T get(Long id);
 
-    T saveOfUpdate(T entity);
+    T update(T entity);
+
+    T create(T entity);
 
     void remove(Long id);
 
