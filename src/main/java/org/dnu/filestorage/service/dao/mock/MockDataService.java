@@ -29,13 +29,15 @@ public class MockDataService {
 
         specialityDAO.create(new Speciality("Speciality 1", "code 1"));
         specialityDAO.create(new Speciality("Speciality 2", "code 2"));
-        specialityDAO.create(new Speciality("Speciality 3", "code 3"));
+        Speciality speciality = new Speciality("Speciality 3", "code 3");
+        specialityDAO.create(speciality);
 
         departmentDAO.create(new Department("Department 1", "dep.1"));
         departmentDAO.create(new Department("Department 2", "dep.2"));
         departmentDAO.create(new Department("Department 3", "dep.3"));
         Department department4 = departmentDAO.create(new Department("Department 4", "dep.4"));
-
+        department4.getSpecialities().add(speciality);
+        speciality.getDepartments().add(department4);
         facultyDAO.create(new Faculty("Faculty 1", "f1", "Description 1"
                 , "http://dnu.thebodva.com/upload/b32f3d1ef28edf602362b91cb935886f.jpg"));
 
@@ -51,6 +53,7 @@ public class MockDataService {
 
         facultyDAO.create(faculty4);
         faculty4.setDepartments(Arrays.asList(department4));
+        department4.setFaculty(faculty4);
         facultyDAO.update(faculty4);
 
         // Some basic test Resources.
