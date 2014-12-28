@@ -10,7 +10,8 @@ import java.util.List;
  */
 @Entity
 @NamedQueries({@NamedQuery(name = "getSpecialitiesByFacultyId", query = "select a from Speciality as a " +
-        "left join fetch a.departments d left join d.faculty f where f.id=:facultyId")})
+        "left join a.departments d left join d.faculty f " +
+        " where f.id=:facultyId")})
 public class Speciality extends NamedEntity {
     private String code;
     @ManyToMany(fetch = FetchType.LAZY)
