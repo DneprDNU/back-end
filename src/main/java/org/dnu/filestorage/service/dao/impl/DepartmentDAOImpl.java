@@ -16,7 +16,7 @@ public class DepartmentDAOImpl extends GenericDAOImpl<Department> implements Dep
 
     @Override
     public Department getDepartmentWithRelations(Long id) {
-        return (Department) entityManager.createNamedQuery("getDepartmentWithRelations").setParameter("id", id)
-                .getSingleResult();
+        return (Department) entityManager.createNamedQuery("getDepartmentWithRelations")
+                .setParameter("departmentId", id).getSingleResult();
     }
 }

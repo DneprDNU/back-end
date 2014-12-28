@@ -11,9 +11,9 @@ import java.util.List;
  * @since 28.09.14
  */
 @Entity
-@NamedQueries({@NamedQuery(name = "getDepartmentWithRelations", query = "select d from Department d " +
-        "join fetch d.specialities join fetch d.employees " +
-        "where d.id=:id")})
+@NamedQueries({@NamedQuery(name = "getDepartmentWithRelations", query = "select a from Department a " +
+        "left join fetch a.specialities left join fetch a.employees " +
+        " where a.id = :departmentId")})
 public class Department extends NamedEntity {
     private String shortName;
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

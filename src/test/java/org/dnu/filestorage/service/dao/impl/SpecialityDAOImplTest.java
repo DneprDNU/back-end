@@ -14,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/testApplicationContext.xml")
@@ -41,5 +42,7 @@ public class SpecialityDAOImplTest {
 
         facultyDAO.create(faculty);
         assertEquals(1, specialityDAO.getSpecialitiesByFacultyId(faculty.getId()).size());
+        assertNotNull(facultyDAO.getFacultyWithRelations(faculty.getId()));
+        assertNotNull(departmentDAO.getDepartmentWithRelations(department.getId()));
     }
 }
