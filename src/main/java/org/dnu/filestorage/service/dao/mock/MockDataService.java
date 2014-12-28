@@ -48,9 +48,10 @@ public class MockDataService {
         Faculty faculty4 = new Faculty("Faculty 4", "f4", "Description 4"
                 , "http://dnu.thebodva.com/upload/b32f3d1ef28edf602362b91cb935886f.jpg");
 
+
         facultyDAO.create(faculty4);
         faculty4.setDepartments(Arrays.asList(department4));
-
+        facultyDAO.update(faculty4);
 
         // Some basic test Resources.
         Resource resource1 = new Resource("Internet technology konspekt", null, Arrays.asList(subject1), "2014"
