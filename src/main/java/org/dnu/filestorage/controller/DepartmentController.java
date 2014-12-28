@@ -24,7 +24,6 @@ public class DepartmentController extends GenericController<DepartmentDAO, Depar
     @Override
     public Department get(@PathVariable Long id) {
         Department result = getDao().getDepartmentWithRelations(id);
-        result.getEmployees().size(); // workaround for JPA problem with multiple join fetch in named query
         return result;
     }
 }
