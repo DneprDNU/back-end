@@ -5,6 +5,7 @@ import org.dnu.filestorage.model.Faculty;
 import org.dnu.filestorage.service.dao.FacultyDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -21,7 +22,7 @@ public class FacultyController extends GenericController<FacultyDAO, Faculty> {
     }
 
     @Override
-    public Faculty get(Long id) {
-        return getDao().getFacultyWithRelations(1l);
+    public Faculty get(@PathVariable Long id) {
+        return getDao().getFacultyWithRelations(id);
     }
 }

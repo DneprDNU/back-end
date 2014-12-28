@@ -5,6 +5,7 @@ import org.dnu.filestorage.model.Department;
 import org.dnu.filestorage.service.dao.DepartmentDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -21,7 +22,7 @@ public class DepartmentController extends GenericController<DepartmentDAO, Depar
     }
 
     @Override
-    public Department get(Long id) {
+    public Department get(@PathVariable Long id) {
         return getDao().getDepartmentWithRelations(id);
     }
 }
