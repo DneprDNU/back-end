@@ -3,13 +3,19 @@ package org.dnu.filestorage.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
 import org.apache.commons.beanutils.BeanUtils;
+import org.dnu.filestorage.model.Category;
 import org.dnu.filestorage.model.Resource;
+import org.dnu.filestorage.model.Subject;
+import org.dnu.filestorage.search.ResourceSearchRepository;
+import org.dnu.filestorage.service.dao.CategoryDAO;
 import org.dnu.filestorage.service.dao.ResourceDAO;
+import org.dnu.filestorage.service.dao.SubjectDAO;
 import org.dnu.filestorage.utils.FileUploader;
 import org.dnu.filestorage.utils.HibernateAwareObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,10 +36,51 @@ public class ResourceController {
     @Autowired
     private FileUploader fileUploader;
 
+    @Autowired
+    private CategoryDAO categoryDAO;
+
+    @Autowired
+    private SubjectDAO subjectDAO;
+
     private ObjectMapper mapper = new HibernateAwareObjectMapper();
+
+//    @Autowired
+//    ResourceSearchRepository resourceSearchRepository;
 
     @Autowired
     private ResourceDAO dao;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder)
+    {
+        binder.setDisallowedFields("resource", "image");
+
+        binder.registerCustomEditor(List.class, "categories", new CustomCollectionEditor(List.class) {
+            protected Object convertElement(Object element) {
+                if (element instanceof Category) {
+                    return element;
+                }
+                if (element instanceof String) {
+                   Category category = categoryDAO.get(Long.valueOf((String)element));
+                    return category;
+                }
+                return null;
+            }
+        });
+
+        binder.registerCustomEditor(List.class, "subjects",  new CustomCollectionEditor(List.class) {
+            protected Object convertElement(Object element) {
+                if (element instanceof Category) {
+                    return element;
+                }
+                if (element instanceof String) {
+                    Subject subject = subjectDAO.get(Long.valueOf((String)element));
+                    return subject;
+                }
+                return null;
+            }
+        });
+    }
 
     @RequestMapping
     @ResponseBody
@@ -43,14 +90,18 @@ public class ResourceController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> create(HttpServletRequest request,
-                                      @RequestParam(value = "json") String sresource, @RequestParam(value = "file") MultipartFile file) throws IOException {
+    public Map<String, Object> create(HttpServletRequest request, @ModelAttribute Resource res, @RequestParam(required = false) MultipartFile resource, @RequestParam(required = false) MultipartFile image) throws IOException {
 
-        Resource resource = mapper.readValue(sresource, Resource.class);
+        if (resource != null) {
+            String fileUrl = fileUploader.uploadFile(resource);
+            res.setResourceURL(fileUrl);
+        }
+        if (image != null) {
+            String imageUrl = fileUploader.uploadFile(image);
+            res.setImageURL(imageUrl);
+        }
 
-        String fileUrl = fileUploader.uploadFile(file);
-        resource.setResourceURL(fileUrl);
-        Resource created = dao.create(resource);
+        Resource created = dao.create(res);
 
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("success", true);
@@ -64,15 +115,24 @@ public class ResourceController {
         return this.dao.get(id);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> update(@PathVariable Long id, @RequestBody Resource json) {
+    public Map<String, Object> update(@PathVariable Long id, @ModelAttribute Resource res, @RequestParam(required = false) MultipartFile resource, @RequestParam(required = false) MultipartFile image) {
 
         Resource entity = this.dao.get(id);
         try {
-            BeanUtils.copyProperties(entity, json);
+            BeanUtils.copyProperties(entity, res);
         } catch (Exception e) {
             throw Throwables.propagate(e);
+        }
+
+        if (resource != null) {
+            String fileUrl = fileUploader.uploadFile(resource);
+            res.setResourceURL(fileUrl);
+        }
+        if (image != null) {
+            String imageUrl = fileUploader.uploadFile(image);
+            res.setImageURL(imageUrl);
         }
 
         Resource updated = this.dao.update(entity);
