@@ -1,5 +1,7 @@
 package org.dnu.filestorage.model;
 
+import org.hibernate.annotations.IndexColumn;
+
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,10 +12,12 @@ import java.util.List;
  */
 @Entity
 @NamedQueries({@NamedQuery(name = "getDepartmentWithRelations", query = "select d from Department d " +
-        "join fetch d.specialities join fetch d.employees where d.id=:id")})
+        "join fetch d.specialities join fetch d.employees " +
+        "where d.id=:id")})
 public class Department extends NamedEntity {
     private String shortName;
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @IndexColumn(name = "INDEX_COL")   //workaround for multiple fetch joins
     private List<Speciality> specialities = new LinkedList<Speciality>();
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Teacher> employees = new LinkedList<Teacher>();

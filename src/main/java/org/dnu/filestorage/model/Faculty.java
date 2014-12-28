@@ -10,7 +10,7 @@ import java.util.List;
  */
 @Entity
 @NamedQueries({@NamedQuery(name = "getFacultyWithRelations", query = "select f from Faculty f " +
-        "join fetch f.departments where f.id=:id")})
+        "left join fetch f.departments where f.id=:id")})
 public class Faculty extends NamedEntity {
     private String shortName;
     private String description;
