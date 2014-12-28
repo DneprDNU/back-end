@@ -7,5 +7,5 @@ import org.dnu.filestorage.model.Faculty;
  * @since 15.10.14
  */
 public interface FacultyDAO extends GenericDAO<Faculty> {
-
+    Faculty getFacultyWithRelations(Long id);
 }

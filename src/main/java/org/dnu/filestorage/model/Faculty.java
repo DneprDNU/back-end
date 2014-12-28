@@ -1,9 +1,6 @@
 package org.dnu.filestorage.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,11 +9,13 @@ import java.util.List;
  * @since 28.09.14
  */
 @Entity
+@NamedQueries({@NamedQuery(name = "getFacultyWithRelations", query = "select f from Faculty f " +
+        "join fetch f.departments where f.id=:id")})
 public class Faculty extends NamedEntity {
     private String shortName;
     private String description;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Department> departments = new LinkedList<Department>();
 
     public Faculty() {

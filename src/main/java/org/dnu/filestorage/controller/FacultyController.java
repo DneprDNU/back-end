@@ -19,4 +19,9 @@ public class FacultyController extends GenericController<FacultyDAO, Faculty> {
     public FacultyController(FacultyDAO dao) {
         super(dao);
     }
+
+    @Override
+    public Faculty get(Long id) {
+        return getDao().getFacultyWithRelations(id);
+    }
 }

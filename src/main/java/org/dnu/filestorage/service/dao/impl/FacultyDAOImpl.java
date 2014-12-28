@@ -14,4 +14,9 @@ import javax.transaction.Transactional;
 @Transactional
 public class FacultyDAOImpl extends GenericDAOImpl<Faculty> implements FacultyDAO {
 
+    @Override
+    public Faculty getFacultyWithRelations(Long id) {
+        return (Faculty) entityManager.createNamedQuery("getFacultyWithRelations").setParameter("id", id)
+                .getSingleResult();
+    }
 }

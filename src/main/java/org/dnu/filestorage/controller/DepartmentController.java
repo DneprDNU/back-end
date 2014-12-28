@@ -19,4 +19,9 @@ public class DepartmentController extends GenericController<DepartmentDAO, Depar
     public DepartmentController(DepartmentDAO dao) {
         super(dao);
     }
+
+    @Override
+    public Department get(Long id) {
+        return getDao().getDepartmentWithRelations(id);
+    }
 }

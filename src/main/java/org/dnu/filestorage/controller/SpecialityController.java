@@ -24,7 +24,7 @@ public class SpecialityController extends GenericController<SpecialityDAO, Speci
         super(dao);
     }
 
-    @RequestMapping(params = "facultyId={facultyId}")
+    @RequestMapping(params = "facultyId")
     @ResponseBody
     public List<Speciality> listAllByFacultyId(@RequestParam("facultyId") Long facultyId) {
         return getDao().getSpecialitiesByFacultyId(facultyId);

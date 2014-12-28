@@ -14,4 +14,9 @@ import javax.transaction.Transactional;
 @Transactional
 public class DepartmentDAOImpl extends GenericDAOImpl<Department> implements DepartmentDAO {
 
+    @Override
+    public Department getDepartmentWithRelations(Long id) {
+        return (Department) entityManager.createNamedQuery("getDepartmentWithRelations").setParameter("id", id)
+                .getSingleResult();
+    }
 }

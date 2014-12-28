@@ -7,5 +7,5 @@ import org.dnu.filestorage.model.Department;
  * @since 15.10.14
  */
 public interface DepartmentDAO extends GenericDAO<Department> {
-//    List<Department> getByFacultyId(Long facultyId);
+    Department getDepartmentWithRelations(Long id);
 }
