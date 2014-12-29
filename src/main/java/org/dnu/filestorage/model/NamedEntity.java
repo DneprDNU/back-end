@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class NamedEntity implements Serializable {
+public class NamedEntity implements Serializable, Identifiable {
     @Id
     @GeneratedValue()
     private Long id;

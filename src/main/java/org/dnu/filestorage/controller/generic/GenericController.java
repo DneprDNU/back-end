@@ -2,6 +2,7 @@ package org.dnu.filestorage.controller.generic;
 
 import com.google.common.base.Throwables;
 import org.apache.commons.beanutils.BeanUtils;
+import org.dnu.filestorage.model.Identifiable;
 import org.dnu.filestorage.model.NamedEntity;
 import org.dnu.filestorage.service.dao.GenericDAO;
 import org.slf4j.Logger;
@@ -17,7 +18,7 @@ import java.util.Map;
  * @author demyura
  * @since 14.11.14
  */
-public abstract class GenericController<D extends GenericDAO<T>, T extends NamedEntity> {
+public abstract class GenericController<D extends GenericDAO<T>, T extends Identifiable> {
     private Logger logger = LoggerFactory.getLogger(GenericController.class);
 
     private D dao;

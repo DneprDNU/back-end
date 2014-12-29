@@ -18,7 +18,13 @@ public class MockDataService {
 
     @Autowired
     public MockDataService(FacultyDAO facultyDAO, DepartmentDAO departmentDAO, SpecialityDAO specialityDAO,
-                           SubjectDAO subjectDAO, TeacherDAO teacherDAO, ResourceDAO resourceDAO) {
+                           SubjectDAO subjectDAO, TeacherDAO teacherDAO, ResourceDAO resourceDAO, UserDAO userDAO) {
+
+
+        userDAO.create(new User("admin", "password", true, "ROLE_ADMIN"));
+        userDAO.create(new User("user", "password", true, "ROLE_USER"));
+        userDAO.create(new User("superadmin", "password", true, "ROLE_SUPERADMIN"));
+
         teacherDAO.create(new Teacher("Teacher 1"));
         teacherDAO.create(new Teacher("Teacher 2"));
         teacherDAO.create(new Teacher("Teacher 3"));

@@ -1,5 +1,6 @@
 package org.dnu.filestorage.service.dao.impl;
 
+import org.dnu.filestorage.model.Identifiable;
 import org.dnu.filestorage.model.NamedEntity;
 import org.dnu.filestorage.service.dao.GenericDAO;
 
@@ -14,7 +15,7 @@ import java.util.List;
  * @since 14.11.14
  */
 @Transactional
-public class GenericDAOImpl<T extends NamedEntity> implements GenericDAO<T> {
+public class GenericDAOImpl<T extends Identifiable> implements GenericDAO<T> {
     @PersistenceContext
     protected EntityManager entityManager;
 
@@ -33,7 +34,7 @@ public class GenericDAOImpl<T extends NamedEntity> implements GenericDAO<T> {
     }
 
     @Override
-    public T get(Long id) {
+    public T get(Object id) {
         return entityManager.find(entityClass, id);
     }
 
@@ -49,7 +50,7 @@ public class GenericDAOImpl<T extends NamedEntity> implements GenericDAO<T> {
     }
 
     @Override
-    public void remove(Long id) {
+    public void remove(Object id) {
         entityManager.remove(get(id));
     }
 
