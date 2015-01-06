@@ -1,9 +1,6 @@
 package org.dnu.filestorage.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,9 +9,9 @@ import java.util.List;
  * @since 07.10.14
  */
 @Entity
-//@NamedQueries({@NamedQuery(name = "getSpecialitiesByFacultyId", query = "select a from Speciality as a " +
-//        "left join a.departments d left join d.faculty f " +
-//        " where f.id=:facultyId")})
+@NamedQueries({@NamedQuery(name = "getSpecialitiesByFacultyId", query = "select a from Speciality as a " +
+        "left join a.departments d left join d.faculty f " +
+        " where f.id=:facultyId")})
 public class Speciality extends NamedEntity {
     private String code;
     @ManyToMany(fetch = FetchType.LAZY)

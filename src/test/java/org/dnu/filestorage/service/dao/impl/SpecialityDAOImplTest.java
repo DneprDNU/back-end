@@ -35,6 +35,7 @@ public class SpecialityDAOImplTest {
         Faculty faculty = new Faculty("a", "a", "a");
         Department department = new Department("b", "b");
         Speciality speciality = new Speciality("c", "c");
+        department.setFaculty(faculty);
         faculty.getDepartments().add(department);
         speciality.getDepartments().add(department);
         department.getSpecialities().add(speciality);
