@@ -19,7 +19,7 @@ public class Department extends NamedEntity {
     private List<Speciality> specialities = new LinkedList<Speciality>();
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Teacher> employees = new LinkedList<Teacher>();
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Faculty faculty;
 
     public Department() {
