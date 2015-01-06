@@ -59,7 +59,6 @@ public class MockDataService {
 
         facultyDAO.create(faculty4);
         faculty4.setDepartments(Arrays.asList(department4));
-        department4.setFaculty(faculty4);
         facultyDAO.update(faculty4);
 
         // Some basic test Resources.

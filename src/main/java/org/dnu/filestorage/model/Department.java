@@ -19,8 +19,9 @@ public class Department extends NamedEntity {
     private List<Speciality> specialities = new LinkedList<Speciality>();
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Teacher> employees = new LinkedList<Teacher>();
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Faculty faculty;
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @Transient
+//    private Faculty faculty;
 
     public Department() {
     }
@@ -54,11 +55,4 @@ public class Department extends NamedEntity {
         this.employees = employees;
     }
 
-    public Faculty getFaculty() {
-        return faculty;
-    }
-
-    public void setFaculty(Faculty faculty) {
-        this.faculty = faculty;
-    }
 }

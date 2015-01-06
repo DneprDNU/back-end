@@ -16,7 +16,10 @@ public class FacultyDAOImpl extends GenericDAOImpl<Faculty> implements FacultyDA
 
     @Override
     public Faculty getFacultyWithRelations(Long id) {
-        return (Faculty) entityManager.createNamedQuery("getFacultyWithRelations").setParameter("facultyId", id)
-                .getSingleResult();
+        Faculty result = get(id);
+        result.getDepartments().size(); //workaround for recursion
+        return result;
+//        return (Faculty) entityManager.createNamedQuery("getFacultyWithRelations").setParameter("facultyId", id)
+//                .getSingleResult();
     }
 }
