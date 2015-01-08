@@ -52,14 +52,14 @@ public class MockDataService {
         linkingEntity1.setTeacher(teacher1);
         linkingEntityDAO.update(linkingEntity1);
 
-        linkingEntity1.setSubject(subject1);
-        linkingEntity1.setSpeciality(speciality1);
-        linkingEntity1.setTeacher(teacher1);
+        linkingEntity2.setSubject(subject1);
+        linkingEntity2.setSpeciality(speciality1);
+        linkingEntity2.setTeacher(teacher1);
         linkingEntityDAO.update(linkingEntity2);
 
-        linkingEntity1.setSubject(subject2);
-        linkingEntity1.setSpeciality(speciality);
-        linkingEntity1.setTeacher(teacher1);
+        linkingEntity3.setSubject(subject2);
+        linkingEntity3.setSpeciality(speciality);
+        linkingEntity3.setTeacher(teacher1);
         linkingEntityDAO.update(linkingEntity3);
 
 
