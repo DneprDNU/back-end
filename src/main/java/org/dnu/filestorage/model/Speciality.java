@@ -19,7 +19,7 @@ public class Speciality extends NamedEntity {
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Department> departments = new LinkedList<Department>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "speciality", cascade = CascadeType.ALL)
     private List<LinkingEntity> links = new LinkedList<LinkingEntity>();
 
     public Speciality() {
