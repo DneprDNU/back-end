@@ -1,7 +1,8 @@
 package org.dnu.filestorage.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  */
 @Entity
 public class Teacher extends NamedEntity {
-    @ManyToMany()
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
     private List<LinkingEntity> links = new LinkedList<LinkingEntity>();
 
     public Teacher() {

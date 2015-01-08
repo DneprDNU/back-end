@@ -15,7 +15,7 @@ public class Faculty extends NamedEntity {
     private String shortName;
     private String description;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "faculty")
     private List<Department> departments = new LinkedList<Department>();
 
     public Faculty() {

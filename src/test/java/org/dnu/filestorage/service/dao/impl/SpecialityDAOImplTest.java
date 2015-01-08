@@ -44,5 +44,6 @@ public class SpecialityDAOImplTest {
         assertEquals(1, specialityDAO.getSpecialitiesByFacultyId(faculty.getId()).size());
         assertNotNull(facultyDAO.getFacultyWithRelations(faculty.getId()));
         assertNotNull(departmentDAO.getDepartmentWithRelations(department.getId()));
+
     }
 }
