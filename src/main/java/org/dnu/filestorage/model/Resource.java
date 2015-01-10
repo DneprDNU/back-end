@@ -13,7 +13,7 @@ public class Resource extends NamedEntity {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Subject> subjects = new LinkedList<Subject>();
 
-    @ManyToOne
+    @ManyToOne()
     private Speciality speciality;
 
     private String year;

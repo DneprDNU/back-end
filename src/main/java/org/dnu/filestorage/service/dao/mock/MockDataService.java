@@ -20,14 +20,15 @@ public class MockDataService {
 
     public MockDataService(FacultyDAO facultyDAO, DepartmentDAO departmentDAO, SpecialityDAO specialityDAO,
                            SubjectDAO subjectDAO, TeacherDAO teacherDAO, ResourceDAO resourceDAO, UserDAO userDAO,
-                           LinkingEntityDAO linkingEntityDAO) {
+                           LinkingEntityDAO linkingEntityDAO, CategoryDAO categoryDAO) {
 
 
-        init(facultyDAO, departmentDAO, specialityDAO, subjectDAO, teacherDAO, resourceDAO, userDAO, linkingEntityDAO);
+        init(facultyDAO, departmentDAO, specialityDAO, subjectDAO, teacherDAO, resourceDAO, userDAO, linkingEntityDAO,
+                categoryDAO);
 
     }
 
-    public void init(FacultyDAO facultyDAO, DepartmentDAO departmentDAO, SpecialityDAO specialityDAO, SubjectDAO subjectDAO, TeacherDAO teacherDAO, ResourceDAO resourceDAO, UserDAO userDAO, LinkingEntityDAO linkingEntityDAO) {
+    public void init(FacultyDAO facultyDAO, DepartmentDAO departmentDAO, SpecialityDAO specialityDAO, SubjectDAO subjectDAO, TeacherDAO teacherDAO, ResourceDAO resourceDAO, UserDAO userDAO, LinkingEntityDAO linkingEntityDAO, CategoryDAO categoryDAO) {
         userDAO.create(new User("admin", "password", true, "ROLE_ADMIN"));
         userDAO.create(new User("user", "password", true, "ROLE_USER"));
         userDAO.create(new User("superadmin", "password", true, "ROLE_SUPERADMIN"));
@@ -106,8 +107,13 @@ public class MockDataService {
                 , "Yaroslav Kharchenko", "Description", "", "");
 
 
-        resourceDAO.create(resource1);
+        resource1 = resourceDAO.create(resource1);
         resourceDAO.create(resource2);
         resourceDAO.create(resource3);
+
+        Category category = categoryDAO.create(new Category());
+        category.setName("Category 1");
+        category.addResource(resource1);
+        categoryDAO.update(category);
     }
 }
