@@ -49,10 +49,12 @@ public class SpecialityDAOImplTest {
     @Test
     public void testRequestResourcesByCategory() throws Exception {
         Category category = new Category();
-        Resource resource = new Resource();
+        Resource resource = resourceDAO.create(new Resource());
         category.addResource(resource);
 
+
         category = categoryDAO.create(category);
+        resourceDAO.update(resource);
         assertEquals(1, resourceDAO.listByCategoryId(category.getId()).size());
 //        assertNotEquals(Long.valueOf(1l), category.getId());
 //        assertEquals(1, resourceDAO.listByCategoryId(1l).size());
