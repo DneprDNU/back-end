@@ -98,6 +98,10 @@ public class MockDataService {
         faculty4.setDepartments(Arrays.asList(department4));
         facultyDAO.update(faculty4);
 
+        Category category = categoryDAO.create(new Category());
+        category.setName("Category 1");
+        categoryDAO.update(category);
+
         // Some basic test Resources.
         Resource resource1 = new Resource("Internet technology konspekt", "2014"
                 , "Yaroslav Kharchenko", "Description", "", "");
@@ -111,9 +115,8 @@ public class MockDataService {
         resourceDAO.create(resource2);
         resourceDAO.create(resource3);
 
-        Category category = categoryDAO.create(new Category());
-        category.setName("Category 1");
         category.addResource(resource1);
         categoryDAO.update(category);
+
     }
 }
