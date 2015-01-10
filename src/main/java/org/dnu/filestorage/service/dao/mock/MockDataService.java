@@ -1,11 +1,13 @@
 package org.dnu.filestorage.service.dao.mock;
 
 import org.dnu.filestorage.model.*;
+import org.dnu.filestorage.search.ResourceSearchRepository;
 import org.dnu.filestorage.service.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 /**
@@ -20,15 +22,15 @@ public class MockDataService {
 
     public MockDataService(FacultyDAO facultyDAO, DepartmentDAO departmentDAO, SpecialityDAO specialityDAO,
                            SubjectDAO subjectDAO, TeacherDAO teacherDAO, ResourceDAO resourceDAO, UserDAO userDAO,
-                           LinkingEntityDAO linkingEntityDAO, CategoryDAO categoryDAO) {
+                           LinkingEntityDAO linkingEntityDAO, CategoryDAO categoryDAO, ResourceSearchRepository resourceSearchRepository) {
 
 
         init(facultyDAO, departmentDAO, specialityDAO, subjectDAO, teacherDAO, resourceDAO, userDAO, linkingEntityDAO,
-                categoryDAO);
+                categoryDAO, resourceSearchRepository);
 
     }
 
-    public void init(FacultyDAO facultyDAO, DepartmentDAO departmentDAO, SpecialityDAO specialityDAO, SubjectDAO subjectDAO, TeacherDAO teacherDAO, ResourceDAO resourceDAO, UserDAO userDAO, LinkingEntityDAO linkingEntityDAO, CategoryDAO categoryDAO) {
+    public void init(FacultyDAO facultyDAO, DepartmentDAO departmentDAO, SpecialityDAO specialityDAO, SubjectDAO subjectDAO, TeacherDAO teacherDAO, ResourceDAO resourceDAO, UserDAO userDAO, LinkingEntityDAO linkingEntityDAO, CategoryDAO categoryDAO, ResourceSearchRepository resourceSearchRepository) {
         userDAO.create(new User("admin", "password", true, "ROLE_ADMIN"));
         userDAO.create(new User("user", "password", true, "ROLE_USER"));
         userDAO.create(new User("superadmin", "password", true, "ROLE_SUPERADMIN"));
@@ -109,6 +111,15 @@ public class MockDataService {
                 , "Yaroslav Kharchenko", "Description", "", "");
         Resource resource3 = new Resource("Internet technology konspekt", "2014"
                 , "Yaroslav Kharchenko", "Description", "", "");
+
+        resourceSearchRepository.clearIndex("resources_cluster");
+        try {
+            resourceSearchRepository.index(resource1);
+            resourceSearchRepository.index(resource2);
+            resourceSearchRepository.index(resource3);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         resource1 = resourceDAO.create(resource1);

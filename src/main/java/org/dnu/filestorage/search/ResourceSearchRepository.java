@@ -1,6 +1,8 @@
 package org.dnu.filestorage.search;
 
 import org.dnu.filestorage.model.Resource;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
@@ -60,5 +62,12 @@ public class ResourceSearchRepository {
 
         SearchHits hits = response.getHits();
         return hits.getHits();
+    }
+
+    public void clearIndex(String indexName) {
+        DeleteIndexResponse delete = client.admin().indices().delete(new DeleteIndexRequest("resources_cluster")).actionGet();
+        if (!delete.isAcknowledged()) {
+            // Something is wrong.
+        }
     }
 }

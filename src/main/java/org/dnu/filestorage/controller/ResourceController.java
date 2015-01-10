@@ -6,6 +6,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.dnu.filestorage.model.Category;
 import org.dnu.filestorage.model.Resource;
 import org.dnu.filestorage.model.Subject;
+import org.dnu.filestorage.search.ResourceSearchRepository;
 import org.dnu.filestorage.service.dao.CategoryDAO;
 import org.dnu.filestorage.service.dao.ResourceDAO;
 import org.dnu.filestorage.service.dao.SubjectDAO;
@@ -43,8 +44,8 @@ public class ResourceController {
 
     private ObjectMapper mapper = new HibernateAwareObjectMapper();
 
-//    @Autowired
-//    ResourceSearchRepository resourceSearchRepository;
+    @Autowired
+    ResourceSearchRepository resourceSearchRepository;
 
     @Autowired
     private ResourceDAO dao;
@@ -100,6 +101,8 @@ public class ResourceController {
         }
 
         Resource created = dao.create(res);
+
+        resourceSearchRepository.index(created);
 
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("success", true);
