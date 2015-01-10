@@ -98,11 +98,11 @@ public class MockDataService {
         facultyDAO.update(faculty4);
 
         // Some basic test Resources.
-        Resource resource1 = new Resource("Internet technology konspekt", null, Arrays.asList(subject1), "2014"
+        Resource resource1 = new Resource("Internet technology konspekt", "2014"
                 , "Yaroslav Kharchenko", "Description", "", "");
-        Resource resource2 = new Resource("Internet technology konspekt", null, null, "2014"
+        Resource resource2 = new Resource("Internet technology konspekt", "2014"
                 , "Yaroslav Kharchenko", "Description", "", "");
-        Resource resource3 = new Resource("Internet technology konspekt", null, null, "2014"
+        Resource resource3 = new Resource("Internet technology konspekt", "2014"
                 , "Yaroslav Kharchenko", "Description", "", "");
 
 

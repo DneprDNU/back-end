@@ -14,12 +14,13 @@ import java.util.List;
         " where a.id = :departmentId")})
 public class Department extends NamedEntity {
     private String shortName;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @IndexColumn(name = "INDEX_COL")   //workaround for multiple fetch joins
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},
+            mappedBy = "departments")
     private List<Speciality> specialities = new LinkedList<Speciality>();
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},
+            mappedBy = "departments")
     private List<Teacher> employees = new LinkedList<Teacher>();
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Faculty faculty;
 
     public Department() {
@@ -28,6 +29,18 @@ public class Department extends NamedEntity {
     public Department(String name, String shortName) {
         super(name);
         this.shortName = shortName;
+    }
+
+    public Department addSpeciality(Speciality speciality) {
+        this.specialities.add(speciality);
+        speciality.getDepartments().add(this);
+        return this;
+    }
+
+    public Department addEmployee(Teacher teacher) {
+        this.employees.add(teacher);
+        teacher.getDepartments().add(this);
+        return this;
     }
 
     public String getShortName() {

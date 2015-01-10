@@ -10,10 +10,11 @@ import java.util.List;
  */
 @Entity
 public class Subject extends NamedEntity {
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},
+            mappedBy = "subjects")
     private List<Resource> resources = new LinkedList<Resource>();
 
-    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "subject", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     private List<LinkingEntity> links = new LinkedList<LinkingEntity>();
 
     public Subject() {
@@ -21,6 +22,12 @@ public class Subject extends NamedEntity {
 
     public Subject(String name) {
         super(name);
+    }
+
+    public Subject addResource(Resource resource) {
+        this.resources.add(resource);
+        resource.getSubjects().add(this);
+        return this;
     }
 
     public List<Resource> getResources() {

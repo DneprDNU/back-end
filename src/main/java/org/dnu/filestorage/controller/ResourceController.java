@@ -6,7 +6,6 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.dnu.filestorage.model.Category;
 import org.dnu.filestorage.model.Resource;
 import org.dnu.filestorage.model.Subject;
-import org.dnu.filestorage.search.ResourceSearchRepository;
 import org.dnu.filestorage.service.dao.CategoryDAO;
 import org.dnu.filestorage.service.dao.ResourceDAO;
 import org.dnu.filestorage.service.dao.SubjectDAO;
@@ -51,8 +50,7 @@ public class ResourceController {
     private ResourceDAO dao;
 
     @InitBinder
-    public void initBinder(WebDataBinder binder)
-    {
+    public void initBinder(WebDataBinder binder) {
         binder.setDisallowedFields("resource", "image");
 
         binder.registerCustomEditor(List.class, "categories", new CustomCollectionEditor(List.class) {
@@ -61,20 +59,20 @@ public class ResourceController {
                     return element;
                 }
                 if (element instanceof String) {
-                   Category category = categoryDAO.get(Long.valueOf((String)element));
+                    Category category = categoryDAO.get(Long.valueOf((String) element));
                     return category;
                 }
                 return null;
             }
         });
 
-        binder.registerCustomEditor(List.class, "subjects",  new CustomCollectionEditor(List.class) {
+        binder.registerCustomEditor(List.class, "subjects", new CustomCollectionEditor(List.class) {
             protected Object convertElement(Object element) {
                 if (element instanceof Category) {
                     return element;
                 }
                 if (element instanceof String) {
-                    Subject subject = subjectDAO.get(Long.valueOf((String)element));
+                    Subject subject = subjectDAO.get(Long.valueOf((String) element));
                     return subject;
                 }
                 return null;
@@ -151,5 +149,11 @@ public class ResourceController {
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("success", true);
         return m;
+    }
+
+    @RequestMapping(params = {"categoryId"})
+    @ResponseBody
+    public List<Resource> listByCategoryId(@RequestParam Long categoryId) {
+        return this.dao.listByCategoryId(categoryId);
     }
 }

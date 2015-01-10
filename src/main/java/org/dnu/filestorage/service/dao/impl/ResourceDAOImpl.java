@@ -5,6 +5,7 @@ import org.dnu.filestorage.service.dao.ResourceDAO;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * @author demyura
@@ -14,4 +15,9 @@ import javax.transaction.Transactional;
 @Transactional
 public class ResourceDAOImpl extends GenericDAOImpl<Resource> implements ResourceDAO {
 
+    @Override
+    public List<Resource> listByCategoryId(Long categoryId) {
+        return entityManager.createNamedQuery("getResourcesByCategoryId", Resource.class)
+                .setParameter("categoryId", categoryId).getResultList();
+    }
 }

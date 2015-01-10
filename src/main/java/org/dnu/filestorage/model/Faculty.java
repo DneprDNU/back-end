@@ -15,7 +15,8 @@ public class Faculty extends NamedEntity {
     private String shortName;
     private String description;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "faculty")
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},
+            mappedBy = "faculty")
     private List<Department> departments = new LinkedList<Department>();
 
     public Faculty() {
@@ -31,6 +32,12 @@ public class Faculty extends NamedEntity {
         super(name, image);
         this.shortName = shortName;
         this.description = description;
+    }
+
+    public Faculty addDepartment(Department department) {
+        this.departments.add(department);
+        department.setFaculty(this);
+        return this;
     }
 
     public String getDescription() {

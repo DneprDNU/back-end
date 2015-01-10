@@ -1,17 +1,20 @@
 package org.dnu.filestorage.model;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
 
 @Entity
+@NamedQueries({@NamedQuery(name = "getResourcesByCategoryId", query = "select r from Resource r " +
+        "left join fetch r.categories c where c.id=:categoryId")})
 public class Resource extends NamedEntity {
     @ManyToMany
     private List<Category> categories = new LinkedList<Category>();
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Subject> subjects = new LinkedList<Subject>();
+
+    @ManyToOne
+    private Speciality speciality;
 
     private String year;
 
@@ -27,15 +30,25 @@ public class Resource extends NamedEntity {
 
     }
 
-    public Resource(String name, List<Category> categories, List<Subject> subjects, String year, String author, String description, String resourceURL, String imageURL) {
+    public Resource(String name, String year, String author, String description, String resourceURL, String imageURL) {
         super(name);
-        this.categories = categories;
-        this.subjects = subjects;
         this.year = year;
         this.author = author;
         this.description = description;
         this.resourceURL = resourceURL;
         this.imageURL = imageURL;
+    }
+
+    public Resource addCategory(Category category) {
+        this.categories.add(category);
+        category.getResources().add(this);
+        return this;
+    }
+
+    public Resource addSubject(Subject subject) {
+        this.subjects.add(subject);
+        subject.getResources().add(this);
+        return this;
     }
 
     public List<Category> getCategories() {
@@ -93,4 +106,6 @@ public class Resource extends NamedEntity {
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
+
+
 }

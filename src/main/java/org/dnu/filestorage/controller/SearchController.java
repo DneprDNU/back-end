@@ -2,9 +2,7 @@ package org.dnu.filestorage.controller;
 
 import org.dnu.filestorage.model.Resource;
 import org.dnu.filestorage.search.ResourceSearchRepository;
-import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.SearchHits;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,11 +29,11 @@ public class SearchController {
         Resource[] resources = new Resource[searchHits.length];
 
         for (int i = 0; i < searchHits.length; i++) {
-            String resourceName = (String)searchHits[i].getSource().get("resourceName");
-            String author = (String)searchHits[i].getSource().get("author");
-            String description = (String)searchHits[i].getSource().get("description");
+            String resourceName = (String) searchHits[i].getSource().get("resourceName");
+            String author = (String) searchHits[i].getSource().get("author");
+            String description = (String) searchHits[i].getSource().get("description");
 
-            resources[i] = new Resource(resourceName, null, null, "", author, description, "", "");
+            resources[i] = new Resource(resourceName, "2006", author, description, "", "");
         }
         return resources;
     }

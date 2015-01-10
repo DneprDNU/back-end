@@ -14,12 +14,12 @@ import java.util.List;
         " where f.id=:facultyId")})
 public class Speciality extends NamedEntity {
     private String code;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "specialities")
     private List<Teacher> supervisors = new LinkedList<Teacher>();
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Department> departments = new LinkedList<Department>();
 
-    @OneToMany(mappedBy = "speciality", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "speciality", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     private List<LinkingEntity> links = new LinkedList<LinkingEntity>();
 
     public Speciality() {
@@ -28,6 +28,18 @@ public class Speciality extends NamedEntity {
     public Speciality(String name, String code) {
         super(name);
         this.code = code;
+    }
+
+    public Speciality addSupervisor(Teacher teacher) {
+        this.supervisors.add(teacher);
+        teacher.getSpecialities().add(this);
+        return this;
+    }
+
+    public Speciality addDepartment(Department department) {
+        this.departments.add(department);
+        department.getSpecialities().add(this);
+        return this;
     }
 
     public String getCode() {

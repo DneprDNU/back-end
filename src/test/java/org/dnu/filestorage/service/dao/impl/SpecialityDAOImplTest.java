@@ -1,12 +1,7 @@
 package org.dnu.filestorage.service.dao.impl;
 
-import org.dnu.filestorage.model.Department;
-import org.dnu.filestorage.model.Faculty;
-import org.dnu.filestorage.model.Speciality;
-import org.dnu.filestorage.service.dao.DepartmentDAO;
-import org.dnu.filestorage.service.dao.FacultyDAO;
-import org.dnu.filestorage.service.dao.SpecialityDAO;
-import org.dnu.filestorage.service.dao.SubjectDAO;
+import org.dnu.filestorage.model.*;
+import org.dnu.filestorage.service.dao.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +23,10 @@ public class SpecialityDAOImplTest {
     SpecialityDAO specialityDAO;
     @Autowired
     SubjectDAO subjectDAO;
+    @Autowired
+    ResourceDAO resourceDAO;
+    @Autowired
+    CategoryDAO categoryDAO;
 
     @Test
     public void testGetSpecialitiesByFacultyId() throws Exception {
@@ -45,5 +44,15 @@ public class SpecialityDAOImplTest {
         assertNotNull(facultyDAO.getFacultyWithRelations(faculty.getId()));
         assertNotNull(departmentDAO.getDepartmentWithRelations(department.getId()));
 
+    }
+
+    @Test
+    public void testRequestResourcesByCategory() throws Exception {
+        Category category = new Category();
+        Resource resource = new Resource();
+        category.addResource(resource);
+
+        category = categoryDAO.create(category);
+        assertEquals(1, resourceDAO.listByCategoryId(category.getId()).size());
     }
 }
