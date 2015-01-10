@@ -65,9 +65,12 @@ public class ResourceSearchRepository {
     }
 
     public void clearIndex(String indexName) {
-        DeleteIndexResponse delete = client.admin().indices().delete(new DeleteIndexRequest("resources_cluster")).actionGet();
-        if (!delete.isAcknowledged()) {
-            // Something is wrong.
+        boolean isExists = client.admin().indices().prepareExists("testindex").execute().actionGet().isExists();
+        if (isExists) {
+            DeleteIndexResponse delete = client.admin().indices().delete(new DeleteIndexRequest("resources_cluster")).actionGet();
+            if (!delete.isAcknowledged()) {
+                // Something is wrong.
+            }
         }
     }
 }
