@@ -24,4 +24,11 @@ public class SubjectDAOImpl extends GenericDAOImpl<Subject> implements SubjectDA
     public List<Subject> getByDepartmentId(Long departmentId) {
         return null;
     }
+
+    @Override
+    public Subject get(Object id) {
+        Subject result = super.get(id);
+        result.getResources().size();
+        return result;
+    }
 }

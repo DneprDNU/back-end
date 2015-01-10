@@ -20,4 +20,12 @@ public class ResourceDAOImpl extends GenericDAOImpl<Resource> implements Resourc
         return entityManager.createNamedQuery("getResourcesByCategoryId", Resource.class)
                 .setParameter("categoryId", categoryId).getResultList();
     }
+
+    @Override
+    public Resource get(Object id) {
+        Resource result = super.get(id);
+        result.getSubjects().size();  //initialization
+        result.getCategories().size();
+        return result;
+    }
 }

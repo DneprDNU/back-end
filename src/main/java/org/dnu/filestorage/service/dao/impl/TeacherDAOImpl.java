@@ -24,4 +24,12 @@ public class TeacherDAOImpl extends GenericDAOImpl<Teacher> implements TeacherDA
     public List<Teacher> getTeachersByDepartmentId(Long departmentId) {
         return null;
     }
+
+    @Override
+    public Teacher get(Object id) {
+        Teacher result = super.get(id);
+        result.getDepartments().size();
+        result.getSpecialities().size();
+        return result;
+    }
 }

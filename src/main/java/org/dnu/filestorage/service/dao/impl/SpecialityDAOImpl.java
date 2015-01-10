@@ -22,4 +22,12 @@ public class SpecialityDAOImpl extends GenericDAOImpl<Speciality> implements Spe
         return entityManager.createNamedQuery("getSpecialitiesByFacultyId").setParameter("facultyId", facultyId)
                 .getResultList();
     }
+
+    @Override
+    public Speciality get(Object id) {
+        Speciality result = super.get(id);
+        result.getDepartments().size();
+        result.getSupervisors().size();
+        return result;
+    }
 }

@@ -153,7 +153,7 @@ public class ResourceController {
 
     @RequestMapping(params = {"categoryId"})
     @ResponseBody
-    public List<Resource> listByCategoryId(@RequestParam Long categoryId) {
+    public List<Resource> listByCategoryId(@RequestParam("categoryId") Long categoryId) {
         return this.dao.listByCategoryId(categoryId);
     }
 }
