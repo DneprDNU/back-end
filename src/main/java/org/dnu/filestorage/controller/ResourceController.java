@@ -34,19 +34,14 @@ import java.util.Map;
 public class ResourceController {
 
     @Autowired
+    ResourceSearchRepository resourceSearchRepository;
+    @Autowired
     private FileUploader fileUploader;
-
     @Autowired
     private CategoryDAO categoryDAO;
-
     @Autowired
     private SubjectDAO subjectDAO;
-
     private ObjectMapper mapper = new HibernateAwareObjectMapper();
-
-    @Autowired
-    ResourceSearchRepository resourceSearchRepository;
-
     @Autowired
     private ResourceDAO dao;
 
@@ -158,5 +153,11 @@ public class ResourceController {
     @ResponseBody
     public List<Resource> listByCategoryId(@RequestParam("categoryId") Long categoryId) {
         return this.dao.listByCategoryId(categoryId);
+    }
+
+    @RequestMapping(params = "teacherId")
+    @ResponseBody
+    public List<Resource> listByTeacherIdByLinks(@RequestParam("teacherId") Long teacherId) {
+        return this.dao.listResourcesByTeacherIdByLinks(teacherId);
     }
 }

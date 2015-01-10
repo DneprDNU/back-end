@@ -22,6 +22,12 @@ public class ResourceDAOImpl extends GenericDAOImpl<Resource> implements Resourc
     }
 
     @Override
+    public List<Resource> listResourcesByTeacherIdByLinks(Long teacherId) {
+        return entityManager.createNamedQuery("getResourcesByTeacherIdByLinks", Resource.class)
+                .setParameter("teacherId", teacherId).getResultList();
+    }
+
+    @Override
     public Resource get(Object id) {
         Resource result = super.get(id);
         result.getSubjects().size();  //initialization
