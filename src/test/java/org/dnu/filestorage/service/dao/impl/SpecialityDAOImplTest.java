@@ -59,5 +59,6 @@ public class SpecialityDAOImplTest {
 //        assertNotEquals(Long.valueOf(1l), category.getId());
 //        assertEquals(1, resourceDAO.listByCategoryId(1l).size());
 //        assertEquals(1, resourceDAO.listResourcesByTeacherIdByLinks(1l).size());
+//        assertEquals(2, subjectDAO.getByDepartmentId(4l).size());
     }
 }

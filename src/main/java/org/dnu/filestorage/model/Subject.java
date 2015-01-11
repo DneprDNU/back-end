@@ -9,6 +9,8 @@ import java.util.List;
  * @since 07.10.14
  */
 @Entity
+@NamedQueries({@NamedQuery(name = "getSubjectsByDepartmentIdByLinks", query = "select distinct s from Subject s " +
+        "left join s.links l left join l.speciality sp left join sp.departments d where d.id=:departmentId")})
 public class Subject extends NamedEntity {
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},
             mappedBy = "subjects")

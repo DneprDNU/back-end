@@ -10,7 +10,5 @@ import java.util.List;
  */
 public interface SubjectDAO extends GenericDAO<Subject> {
 
-    List<Subject> getBySpecialityId(Long specialityId);
-
     List<Subject> getByDepartmentId(Long departmentId);
 }

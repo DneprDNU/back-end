@@ -109,5 +109,11 @@ public class Resource extends NamedEntity {
         this.imageURL = imageURL;
     }
 
+    public Speciality getSpeciality() {
+        return speciality;
+    }
 
+    public void setSpeciality(Speciality speciality) {
+        this.speciality = speciality;
+    }
 }
