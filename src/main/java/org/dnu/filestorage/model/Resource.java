@@ -103,4 +103,12 @@ public class Resource extends NamedEntity {
     public void setResource(String resource) {
         this.resource = resource;
     }
+
+    public Speciality getSpeciality() {
+        return speciality;
+    }
+
+    public void setSpeciality(Speciality speciality) {
+        this.speciality = speciality;
+    }
 }
