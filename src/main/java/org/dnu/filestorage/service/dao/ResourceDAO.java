@@ -11,4 +11,6 @@ import java.util.List;
 public interface ResourceDAO extends GenericDAO<Resource> {
 
     List<Resource> listByCategoryId(Long categoryId);
+
+    List<Resource> listResourcesByTeacherIdByLinks(Long teacherId);
 }

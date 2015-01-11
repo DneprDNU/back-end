@@ -16,13 +16,9 @@ import java.util.List;
 public class SubjectDAOImpl extends GenericDAOImpl<Subject> implements SubjectDAO {
 
     @Override
-    public List<Subject> getBySpecialityId(Long specialityId) {
-        return null;
-    }
-
-    @Override
     public List<Subject> getByDepartmentId(Long departmentId) {
-        return null;
+        return entityManager.createNamedQuery("getSubjectsByDepartmentIdByLinks", Subject.class)
+                .setParameter("departmentId", departmentId).getResultList();
     }
 
     @Override

@@ -125,10 +125,13 @@ public class MockDataService {
         resource1 = resourceDAO.create(resource1);
         resourceDAO.create(resource2);
         resourceDAO.create(resource3);
+        resource1.setSpeciality(speciality);
 
         category.addResource(resource1);
         resourceDAO.update(resource1);
         categoryDAO.update(category);
 
+        subject1.addResource(resource1);
+        subjectDAO.update(subject1);
     }
 }
