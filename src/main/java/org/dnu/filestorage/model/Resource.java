@@ -1,5 +1,8 @@
 package org.dnu.filestorage.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,21 +25,19 @@ public class Resource extends NamedEntity {
 
     private String description;
 
-    private String resourceURL;
-
-    private String imageURL;
+    @JsonIgnore
+    private String resource;
 
     public Resource() {
 
     }
 
     public Resource(String name, String year, String author, String description, String resourceURL, String imageURL) {
-        super(name);
+        super(name, imageURL);
         this.year = year;
         this.author = author;
         this.description = description;
-        this.resourceURL = resourceURL;
-        this.imageURL = imageURL;
+        this.resource = resourceURL;
     }
 
     public Resource addCategory(Category category) {
@@ -91,21 +92,14 @@ public class Resource extends NamedEntity {
         this.description = description;
     }
 
-    public String getResourceURL() {
-        return resourceURL;
+    @JsonProperty("resource")
+    public String getResource() {
+        return resource;
     }
 
-    public void setResourceURL(String resourceURL) {
-        this.resourceURL = resourceURL;
+    @JsonIgnore
+    public void setResource(String resource) {
+        this.resource = resource;
     }
-
-    public String getImageURL() {
-        return imageURL;
-    }
-
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
-    }
-
 
 }

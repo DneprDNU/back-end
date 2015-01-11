@@ -1,5 +1,6 @@
 package org.dnu.filestorage.controller;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
 import org.apache.commons.beanutils.BeanUtils;
@@ -14,6 +15,7 @@ import org.dnu.filestorage.utils.FileUploader;
 import org.dnu.filestorage.utils.HibernateAwareObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -93,11 +95,11 @@ public class ResourceController {
 
         if (resource != null) {
             String fileUrl = fileUploader.uploadFile(resource);
-            res.setResourceURL(fileUrl);
+            res.setResource(fileUrl);
         }
         if (image != null) {
             String imageUrl = fileUploader.uploadFile(image);
-            res.setImageURL(imageUrl);
+            res.setImage(imageUrl);
         }
 
         Resource created = dao.create(res);
@@ -116,24 +118,25 @@ public class ResourceController {
         return this.dao.get(id);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public Map<String, Object> update(@PathVariable Long id, @ModelAttribute Resource res, @RequestParam(required = false) MultipartFile resource, @RequestParam(required = false) MultipartFile image) {
+    public Map<String, Object> update(@PathVariable Long id, @RequestParam(value = "resource") String resourceString, @RequestParam MultipartFile file, @RequestParam(required = false) MultipartFile image) throws IOException {
 
+        Resource resource = new HibernateAwareObjectMapper().readValue(resourceString, Resource.class);
         Resource entity = this.dao.get(id);
         try {
-            BeanUtils.copyProperties(entity, res);
+            BeanUtils.copyProperties(entity, resource);
         } catch (Exception e) {
             throw Throwables.propagate(e);
         }
 
-        if (resource != null) {
-            String fileUrl = fileUploader.uploadFile(resource);
-            res.setResourceURL(fileUrl);
+        if (file != null) {
+            String fileUrl = fileUploader.uploadFile(file);
+            resource.setResource(fileUrl);
         }
         if (image != null) {
             String imageUrl = fileUploader.uploadFile(image);
-            res.setImageURL(imageUrl);
+            resource.setImage(imageUrl);
         }
 
         Resource updated = this.dao.update(entity);

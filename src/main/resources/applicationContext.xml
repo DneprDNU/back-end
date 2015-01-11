@@ -27,7 +27,7 @@
     <import resource="security.xml"/>
     <import resource="dataSource.xml"/>
 
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <bean id="multipartResolver" class="org.dnu.filestorage.utils.CustomCommonsMultipartResolver">
         <property name="maxUploadSize" value="50000000"/>
     </bean>
 

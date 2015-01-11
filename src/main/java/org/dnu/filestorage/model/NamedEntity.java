@@ -1,5 +1,8 @@
 package org.dnu.filestorage.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -15,6 +18,7 @@ public class NamedEntity implements Serializable, Identifiable {
     private Long id;
     private String name;
     @Column(length = 10000)
+    @JsonIgnore
     private String image;
 
     public NamedEntity() {
@@ -45,10 +49,12 @@ public class NamedEntity implements Serializable, Identifiable {
         this.name = name;
     }
 
+    @JsonProperty("image")
     public String getImage() {
         return image;
     }
 
+    @JsonIgnore
     public void setImage(String image) {
         this.image = image;
     }
