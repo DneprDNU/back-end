@@ -29,4 +29,9 @@ public class Category extends NamedEntity {
     public void setResources(List<Resource> resources) {
         this.resources = resources;
     }
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }

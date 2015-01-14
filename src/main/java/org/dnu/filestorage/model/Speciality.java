@@ -73,4 +73,9 @@ public class Speciality extends NamedEntity {
     public void setDepartments(List<Department> departments) {
         this.departments = departments;
     }
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }
