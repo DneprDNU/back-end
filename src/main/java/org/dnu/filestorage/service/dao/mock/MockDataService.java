@@ -44,6 +44,7 @@ public class MockDataService {
         List<Teacher> teacherList = new LinkedList<Teacher>();
         List<Subject> subjects = new LinkedList<Subject>();
         List<Speciality> specialities = new LinkedList<>();
+        List<Resource> resources = new LinkedList<>();
 
         for (int s = 0; s < 10; ++s) {
             Subject subject = subjectDAO.create(new Subject("Subject " + s));
@@ -53,6 +54,7 @@ public class MockDataService {
                 Resource resource = resourceDAO.create(new Resource("Resource " + s + " " + r, "2014",
                         "Author", "Description", "resourceUrl",
                         "http://dnu.thebodva.com/upload/b32f3d1ef28edf602362b91cb935886f.jpg"));
+                resources.add(resource);
                 subject.addResource(resource);
             }
             subjectDAO.update(subject);
@@ -197,6 +199,9 @@ public class MockDataService {
             resourceSearchRepository.index(resourceDAO.get(1l));
             resourceSearchRepository.index(resource2);
             resourceSearchRepository.index(resource3);
+            for (Resource resource : resources) {
+                resourceSearchRepository.index(resource);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
