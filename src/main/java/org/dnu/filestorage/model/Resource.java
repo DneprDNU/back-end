@@ -1,12 +1,13 @@
 package org.dnu.filestorage.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import org.dnu.filestorage.utils.ResourceDeserializer;
 
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
 
+@JsonDeserialize(using = ResourceDeserializer.class)
 @Entity
 @NamedQueries({@NamedQuery(name = "getResourcesByCategoryId", query = "select r from Resource r " +
         "left join fetch r.categories c where c.id=:categoryId"),
@@ -27,7 +28,7 @@ public class Resource extends NamedEntity {
 
     private String description;
 
-    @JsonIgnore
+    @Column(length = 10000)
     private String resource;
 
     public Resource() {
@@ -94,12 +95,10 @@ public class Resource extends NamedEntity {
         this.description = description;
     }
 
-    @JsonProperty("resource")
     public String getResource() {
         return resource;
     }
 
-    @JsonIgnore
     public void setResource(String resource) {
         this.resource = resource;
     }
