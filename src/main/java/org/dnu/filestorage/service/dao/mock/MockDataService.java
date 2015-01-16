@@ -172,26 +172,17 @@ public class MockDataService {
         categoryDAO.update(category);
 
         // Some basic test Resources.
-        Resource resource1 = new Resource("Internet technology konspekt", "2014"
+        Resource resource1 = new Resource("Конспект", "2014"
                 , "Yaroslav Kharchenko", "Description", "", "");
         Resource resource2 = new Resource("Internet technology konspekt", "2014"
                 , "Yaroslav Kharchenko", "Description", "", "");
         Resource resource3 = new Resource("Internet technology konspekt", "2014"
                 , "Yaroslav Kharchenko", "Description", "", "");
 
-        resourceSearchRepository.clearIndex("resources_cluster");
-        try {
-            resourceSearchRepository.index(resource1);
-            resourceSearchRepository.index(resource2);
-            resourceSearchRepository.index(resource3);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
         resource1 = resourceDAO.create(resource1);
-        resourceDAO.create(resource2);
-        resourceDAO.create(resource3);
+        resource2 = resourceDAO.create(resource2);
+        resource3 = resourceDAO.create(resource3);
+
         resource1.setSpeciality(speciality);
 
         category.addResource(resource1);
@@ -200,5 +191,14 @@ public class MockDataService {
 
         subject1.addResource(resource1);
         subjectDAO.update(subject1);
+
+        resourceSearchRepository.clearIndex("resources_cluster");
+        try {
+            resourceSearchRepository.index(resourceDAO.get(1l));
+            resourceSearchRepository.index(resource2);
+            resourceSearchRepository.index(resource3);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

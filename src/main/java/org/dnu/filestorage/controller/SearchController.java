@@ -1,5 +1,6 @@
 package org.dnu.filestorage.controller;
 
+import org.dnu.filestorage.model.Category;
 import org.dnu.filestorage.model.Resource;
 import org.dnu.filestorage.search.ResourceSearchRepository;
 import org.elasticsearch.search.SearchHit;
@@ -9,21 +10,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
+/**
+ * Controller for searching through resources.
+ */
 @Controller
 public class SearchController {
 
     @Autowired
     ResourceSearchRepository resourceSearchRepository;
 
+    /**
+     * Search resources by user query.
+     *
+     * @param query User query to search resources by.
+     * @return Resources as a result of user search query.
+     * @throws IOException Input-Output Exception.
+     */
     @RequestMapping("/search")
     @ResponseBody
-    public Resource[] search(@RequestParam(required = false) String query,
-                             HttpServletResponse response) throws IOException {
+    public Resource[] search(@RequestParam(required = false) String query) throws IOException {
 
+        // We need to handle Ukrainian symbols.
+        if (query != null) {
+            query = new String((query).getBytes("ISO-8859-1"), "UTF-8");
+        }
 
         SearchHit[] searchHits = resourceSearchRepository.search(query);
         Resource[] resources = new Resource[searchHits.length];
@@ -32,8 +47,19 @@ public class SearchController {
             String resourceName = (String) searchHits[i].getSource().get("resourceName");
             String author = (String) searchHits[i].getSource().get("author");
             String description = (String) searchHits[i].getSource().get("description");
+            String year = (String) searchHits[i].getSource().get("year");
+            List<String> categoriesString = (List<String>) searchHits[i].getSource().get("categories");
+            List<Category> categories = new ArrayList<Category>();
+            for (String category : categoriesString) {
+                Category cat = new Category();
+                cat.setName(category);
+                categories.add(cat);
+            }
 
-            resources[i] = new Resource(resourceName, "2006", author, description, "", "");
+            Resource resource = new Resource(resourceName, year, author, description, "", "");
+            resource.setId(Long.parseLong(searchHits[i].id()));
+            resource.setCategories(categories);
+            resources[i] = resource;
         }
         return resources;
     }
