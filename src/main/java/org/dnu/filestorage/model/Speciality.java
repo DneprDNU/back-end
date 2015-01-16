@@ -31,14 +31,22 @@ public class Speciality extends NamedEntity {
     }
 
     public Speciality addSupervisor(Teacher teacher) {
-        this.supervisors.add(teacher);
-        teacher.getSpecialities().add(this);
+        if (!supervisors.contains(teacher)) {
+            this.supervisors.add(teacher);
+        }
+        if (!teacher.getSpecialities().contains(this)) {
+            teacher.getSpecialities().add(this);
+        }
         return this;
     }
 
     public Speciality addDepartment(Department department) {
-        this.departments.add(department);
-        department.getSpecialities().add(this);
+        if (!departments.contains(department)) {
+            this.departments.add(department);
+        }
+        if (!department.getSpecialities().contains(this)) {
+            department.getSpecialities().add(this);
+        }
         return this;
     }
 
