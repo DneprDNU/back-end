@@ -27,8 +27,12 @@ public class Subject extends NamedEntity {
     }
 
     public Subject addResource(Resource resource) {
-        this.resources.add(resource);
-        resource.getSubjects().add(this);
+        if (!resources.contains(resource)) {
+            this.resources.add(resource);
+        }
+        if (!resource.getSubjects().contains(this)) {
+            resource.getSubjects().add(this);
+        }
         return this;
     }
 

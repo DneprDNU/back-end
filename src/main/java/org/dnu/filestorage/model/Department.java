@@ -14,9 +14,9 @@ import java.util.List;
         " where a.id = :departmentId")})
 public class Department extends NamedEntity {
     private String shortName;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "departments")
     private List<Speciality> specialities = new LinkedList<Speciality>();
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "departments")
     private List<Teacher> employees = new LinkedList<Teacher>();
     @ManyToOne(fetch = FetchType.LAZY)
     private Faculty faculty;
@@ -33,9 +33,9 @@ public class Department extends NamedEntity {
         if (!specialities.contains(speciality)) {
             this.specialities.add(speciality);
         }
-//        if (!speciality.getDepartments().contains(this)) {
-//            speciality.getDepartments().add(this);
-//        }
+        if (!speciality.getDepartments().contains(this)) {
+            speciality.getDepartments().add(this);
+        }
         return this;
     }
 
@@ -43,9 +43,9 @@ public class Department extends NamedEntity {
         if (!employees.contains(teacher)) {
             this.employees.add(teacher);
         }
-//        if (!teacher.getDepartments().contains(this)) {
-//            teacher.getDepartments().add(this);
-//        }
+        if (!teacher.getDepartments().contains(this)) {
+            teacher.getDepartments().add(this);
+        }
         return this;
     }
 

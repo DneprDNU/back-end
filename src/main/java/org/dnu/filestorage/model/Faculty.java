@@ -35,7 +35,9 @@ public class Faculty extends NamedEntity {
     }
 
     public Faculty addDepartment(Department department) {
-        this.departments.add(department);
+        if (!departments.contains(department)) {
+            this.departments.add(department);
+        }
         department.setFaculty(this);
         return this;
     }
