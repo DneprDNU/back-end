@@ -134,7 +134,7 @@ public class ResourceController {
             resource.setImage(imageUrl);
         }
 
-        Resource updated = this.dao.update(entity);
+        Resource updated = this.dao.update(resource);
 
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("success", true);
