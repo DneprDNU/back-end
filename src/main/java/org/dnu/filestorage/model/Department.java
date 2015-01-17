@@ -33,9 +33,9 @@ public class Department extends NamedEntity {
         if (!specialities.contains(speciality)) {
             this.specialities.add(speciality);
         }
-        if (!speciality.getDepartments().contains(this)) {
-            speciality.getDepartments().add(this);
-        }
+//        if (!speciality.getDepartments().contains(this)) {
+//            speciality.getDepartments().add(this);
+//        }
         return this;
     }
 

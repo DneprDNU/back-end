@@ -16,7 +16,7 @@ public class Teacher extends NamedEntity {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "employees")
     private List<Department> departments = new LinkedList<Department>();
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Speciality> specialities = new LinkedList<Speciality>();
 
 

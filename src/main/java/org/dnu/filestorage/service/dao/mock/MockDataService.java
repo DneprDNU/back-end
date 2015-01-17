@@ -56,6 +56,7 @@ public class MockDataService {
                         "http://dnu.thebodva.com/upload/b32f3d1ef28edf602362b91cb935886f.jpg"));
                 resources.add(resource);
                 subject.addResource(resource);
+                resourceDAO.update(resource);
             }
             subjectDAO.update(subject);
         }
@@ -86,9 +87,12 @@ public class MockDataService {
                         department.addEmployee(teacher);
                         speciality.addSupervisor(teacher);
 
+                        teacherDAO.update(teacher);
                         teacherList.add(teacher);
                     }
+                    specialityDAO.update(speciality);
                 }
+                departmentDAO.update(department);
                 facultyDAO.update(faculty);
             }
         }
