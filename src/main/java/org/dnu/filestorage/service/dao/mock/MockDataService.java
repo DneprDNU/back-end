@@ -23,19 +23,24 @@ public class MockDataService {
 
     private Random random = new Random();
 
+
     @Autowired
 
     public MockDataService(FacultyDAO facultyDAO, DepartmentDAO departmentDAO, SpecialityDAO specialityDAO,
                            SubjectDAO subjectDAO, TeacherDAO teacherDAO, ResourceDAO resourceDAO, UserDAO userDAO,
-                           LinkingEntityDAO linkingEntityDAO, CategoryDAO categoryDAO, ResourceSearchRepository resourceSearchRepository) {
+                           LinkingEntityDAO linkingEntityDAO, CategoryDAO categoryDAO, FreeResourceDAO freeResourceDAO,
+                           ResourceSearchRepository resourceSearchRepository) {
 
 
         init(facultyDAO, departmentDAO, specialityDAO, subjectDAO, teacherDAO, resourceDAO, userDAO, linkingEntityDAO,
-                categoryDAO, resourceSearchRepository);
+                categoryDAO, resourceSearchRepository, freeResourceDAO);
 
     }
 
-    public void init(FacultyDAO facultyDAO, DepartmentDAO departmentDAO, SpecialityDAO specialityDAO, SubjectDAO subjectDAO, TeacherDAO teacherDAO, ResourceDAO resourceDAO, UserDAO userDAO, LinkingEntityDAO linkingEntityDAO, CategoryDAO categoryDAO, ResourceSearchRepository resourceSearchRepository) {
+    public void init(FacultyDAO facultyDAO, DepartmentDAO departmentDAO, SpecialityDAO specialityDAO,
+                     SubjectDAO subjectDAO, TeacherDAO teacherDAO, ResourceDAO resourceDAO, UserDAO userDAO,
+                     LinkingEntityDAO linkingEntityDAO, CategoryDAO categoryDAO,
+                     ResourceSearchRepository resourceSearchRepository, FreeResourceDAO freeResourceDAO) {
         userDAO.create(new User("admin", "password", true, "ROLE_ADMIN"));
         userDAO.create(new User("user", "password", true, "ROLE_USER"));
         userDAO.create(new User("superadmin", "password", true, "ROLE_SUPERADMIN"));
@@ -105,6 +110,12 @@ public class MockDataService {
                 linkingEntity.setTeacher(teacherList.get(random.nextInt(teacherList.size())));
                 linkingEntityDAO.update(linkingEntity);
             }
+        }
+
+
+        for (int i = 0; i < 10; ++i) {
+            FreeResource freeResource = freeResourceDAO.create(new FreeResource("Free resource " + i, "description",
+                    "google.com.ua", null));
         }
 
 
