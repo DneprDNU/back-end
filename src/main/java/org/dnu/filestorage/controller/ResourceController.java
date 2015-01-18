@@ -46,6 +46,8 @@ public class ResourceController {
     private ObjectMapper mapper = new HibernateAwareObjectMapper();
     @Autowired
     private ResourceDAO dao;
+    @Autowired
+    private  ObjectMapper objectMapper;
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -117,7 +119,7 @@ public class ResourceController {
     @ResponseBody
     public Map<String, Object> update(@PathVariable Long id, @RequestParam(value = "resource") String resourceString, @RequestParam MultipartFile file, @RequestParam(required = false) MultipartFile image) throws IOException {
 
-        Resource resource = new HibernateAwareObjectMapper().readValue(resourceString, Resource.class);
+        Resource resource = objectMapper.readValue(resourceString, Resource.class);
         Resource entity = this.dao.get(id);
         try {
             BeanUtils.copyProperties(entity, resource);
