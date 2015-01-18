@@ -14,9 +14,9 @@ import java.util.List;
         " where f.id=:facultyId")})
 public class Speciality extends NamedEntity {
     private String code;
-    @ManyToMany(fetch = FetchType.LAZY/*, mappedBy = "specialities"*/)
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "specialities")
     private List<Teacher> supervisors = new LinkedList<Teacher>();
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "specialities")
     private List<Department> departments = new LinkedList<Department>();
 
     @OneToMany(mappedBy = "speciality", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})

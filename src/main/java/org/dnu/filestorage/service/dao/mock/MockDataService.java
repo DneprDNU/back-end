@@ -92,14 +92,15 @@ public class MockDataService {
                         department.addEmployee(teacher);
                         speciality.addSupervisor(teacher);
 
-                        teacherDAO.update(teacher);
+//                        teacherDAO.update(teacher);
                         teacherList.add(teacher);
                     }
-                    specialityDAO.update(speciality);
+//                    specialityDAO.update(speciality);
                 }
-                departmentDAO.update(department);
-                facultyDAO.update(faculty);
+//                departmentDAO.update(department);
+
             }
+            facultyDAO.update(faculty);
         }
 
         for (int s = 0; s < specialities.size(); s++) {

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -66,10 +67,15 @@ public class SpecialityDAOImplTest {
 
 
     @Test
+    @Transactional
     public void testMockData() throws Exception {
         Department department = departmentDAO.getDepartmentWithRelations(1l);
         Set<Speciality> specialities = new HashSet<>(department.getSpecialities());
         assertNotEquals(0, specialities.size());
         assertEquals(department.getSpecialities().size(), specialities.size());
+
+//        Speciality speciality=department.getSpecialities().get(0);
+//        assertNotEquals(0, speciality.getSupervisors().size());
+//        assertEquals(speciality.getSupervisors().size(), new HashSet<>(speciality.getSupervisors()).size());
     }
 }
