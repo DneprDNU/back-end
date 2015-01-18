@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * @author demyura
@@ -17,6 +20,8 @@ import java.util.Arrays;
 @Service
 @DependsOn("transactionManager")
 public class MockDataService {
+
+    private Random random = new Random();
 
     @Autowired
 
@@ -34,6 +39,74 @@ public class MockDataService {
         userDAO.create(new User("admin", "password", true, "ROLE_ADMIN"));
         userDAO.create(new User("user", "password", true, "ROLE_USER"));
         userDAO.create(new User("superadmin", "password", true, "ROLE_SUPERADMIN"));
+
+
+        List<Teacher> teacherList = new LinkedList<Teacher>();
+        List<Subject> subjects = new LinkedList<Subject>();
+        List<Speciality> specialities = new LinkedList<>();
+        List<Resource> resources = new LinkedList<>();
+
+        for (int s = 0; s < 10; ++s) {
+            Subject subject = subjectDAO.create(new Subject("Subject " + s));
+            subjects.add(subject);
+
+            for (int r = 0; r < 10; ++r) {
+                Resource resource = resourceDAO.create(new Resource("Resource " + s + " " + r, "2014",
+                        "Author", "Description", "resourceUrl",
+                        "http://dnu.thebodva.com/upload/b32f3d1ef28edf602362b91cb935886f.jpg"));
+                resources.add(resource);
+                subject.addResource(resource);
+                resourceDAO.update(resource);
+            }
+            subjectDAO.update(subject);
+        }
+
+        for (int f = 0; f < 10; ++f) {
+            Faculty faculty = facultyDAO
+                    .create(new Faculty("Faculty " + f, "F" + f, "Faculty " + f + " description",
+                            "http://dnu.thebodva.com/upload/b32f3d1ef28edf602362b91cb935886f.jpg"));
+
+            for (int d = 0; d < 5; ++d) {
+                Department department = departmentDAO
+                        .create(new Department("Department " + d + " (Faculty " + f + ")", "D" + d + "F" + f));
+                faculty.addDepartment(department);
+
+                Teacher previousSuperviser = null;
+                int teacherIndex = 1;
+                for (int s = 0; s < 10; ++s) {
+                    Speciality speciality = specialityDAO
+                            .create(new Speciality("Speciality " + f + " " + d + " " + s,
+                                    "sp." + f + " " + d + " " + s));
+
+                    specialities.add(speciality);
+                    department.addSpeciality(speciality);
+
+                    if (random.nextBoolean() || previousSuperviser == null) {
+                        Teacher teacher = teacherDAO.create(new Teacher("Teacher " + f + " " + d + " " + teacherIndex++));
+                        previousSuperviser = teacher;
+                        department.addEmployee(teacher);
+                        speciality.addSupervisor(teacher);
+
+                        teacherDAO.update(teacher);
+                        teacherList.add(teacher);
+                    }
+                    specialityDAO.update(speciality);
+                }
+                departmentDAO.update(department);
+                facultyDAO.update(faculty);
+            }
+        }
+
+        for (int s = 0; s < specialities.size(); s++) {
+            for (int su = 0; su < 5; su++) {
+                LinkingEntity linkingEntity = linkingEntityDAO.create(new LinkingEntity());
+                linkingEntity.setSpeciality(specialities.get(s));
+                linkingEntity.setSubject(subjects.get(random.nextInt(subjects.size())));
+                linkingEntity.setTeacher(teacherList.get(random.nextInt(teacherList.size())));
+                linkingEntityDAO.update(linkingEntity);
+            }
+        }
+
 
         Teacher teacher1 = teacherDAO.create(new Teacher("Teacher 1"));
         Teacher teacher2 = teacherDAO.create(new Teacher("Teacher 2"));
@@ -130,6 +203,9 @@ public class MockDataService {
             resourceSearchRepository.index(resourceDAO.get(1l));
             resourceSearchRepository.index(resource2);
             resourceSearchRepository.index(resource3);
+            for (Resource resource : resources) {
+                resourceSearchRepository.index(resource);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

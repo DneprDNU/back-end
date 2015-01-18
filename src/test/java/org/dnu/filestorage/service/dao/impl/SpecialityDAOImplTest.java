@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/testApplicationContext.xml")
@@ -60,5 +62,14 @@ public class SpecialityDAOImplTest {
 //        assertEquals(1, resourceDAO.listByCategoryId(1l).size());
 //        assertEquals(1, resourceDAO.listResourcesByTeacherIdByLinks(1l).size());
 //        assertEquals(2, subjectDAO.getByDepartmentId(4l).size());
+    }
+
+
+    @Test
+    public void testMockData() throws Exception {
+        Department department = departmentDAO.getDepartmentWithRelations(1l);
+        Set<Speciality> specialities = new HashSet<>(department.getSpecialities());
+        assertNotEquals(0, specialities.size());
+        assertEquals(department.getSpecialities().size(), specialities.size());
     }
 }

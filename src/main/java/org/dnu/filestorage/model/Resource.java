@@ -44,14 +44,22 @@ public class Resource extends NamedEntity {
     }
 
     public Resource addCategory(Category category) {
-        this.categories.add(category);
-        category.getResources().add(this);
+        if (!categories.contains(category)) {
+            this.categories.add(category);
+        }
+        if (!category.getResources().contains(this)) {
+            category.getResources().add(this);
+        }
         return this;
     }
 
     public Resource addSubject(Subject subject) {
-        this.subjects.add(subject);
-        subject.getResources().add(this);
+        if (!subjects.contains(subject)) {
+            this.subjects.add(subject);
+        }
+        if (!subject.getResources().contains(this)) {
+            subject.getResources().add(this);
+        }
         return this;
     }
 

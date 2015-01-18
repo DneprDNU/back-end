@@ -14,7 +14,7 @@ import java.util.List;
         " where f.id=:facultyId")})
 public class Speciality extends NamedEntity {
     private String code;
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "specialities")
+    @ManyToMany(fetch = FetchType.LAZY/*, mappedBy = "specialities"*/)
     private List<Teacher> supervisors = new LinkedList<Teacher>();
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Department> departments = new LinkedList<Department>();
@@ -31,14 +31,22 @@ public class Speciality extends NamedEntity {
     }
 
     public Speciality addSupervisor(Teacher teacher) {
-        this.supervisors.add(teacher);
-        teacher.getSpecialities().add(this);
+        if (!supervisors.contains(teacher)) {
+            this.supervisors.add(teacher);
+        }
+        if (!teacher.getSpecialities().contains(this)) {
+            teacher.getSpecialities().add(this);
+        }
         return this;
     }
 
     public Speciality addDepartment(Department department) {
-        this.departments.add(department);
-        department.getSpecialities().add(this);
+        if (!departments.contains(department)) {
+            this.departments.add(department);
+        }
+        if (!department.getSpecialities().contains(this)) {
+            department.getSpecialities().add(this);
+        }
         return this;
     }
 

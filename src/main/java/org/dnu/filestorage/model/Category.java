@@ -17,8 +17,12 @@ public class Category extends NamedEntity {
     private List<Resource> resources = new LinkedList<Resource>();
 
     public Category addResource(Resource resource) {
-        resources.add(resource);
-        resource.getCategories().add(this);
+        if (!resources.contains(resource)) {
+            resources.add(resource);
+        }
+        if (!resource.getCategories().contains(this)) {
+            resource.getCategories().add(this);
+        }
         return this;
     }
 

@@ -13,10 +13,10 @@ public class Teacher extends NamedEntity {
     @OneToMany(mappedBy = "teacher", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     private List<LinkingEntity> links = new LinkedList<LinkingEntity>();
 
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "employees")
     private List<Department> departments = new LinkedList<Department>();
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Speciality> specialities = new LinkedList<Speciality>();
 
 

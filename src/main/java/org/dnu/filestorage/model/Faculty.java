@@ -15,7 +15,7 @@ public class Faculty extends NamedEntity {
     private String shortName;
     private String description;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH},
+    @OneToMany(fetch = FetchType.LAZY/*, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}*/,
             mappedBy = "faculty")
     private List<Department> departments = new LinkedList<Department>();
 
@@ -35,7 +35,9 @@ public class Faculty extends NamedEntity {
     }
 
     public Faculty addDepartment(Department department) {
-        this.departments.add(department);
+        if (!departments.contains(department)) {
+            this.departments.add(department);
+        }
         department.setFaculty(this);
         return this;
     }
