@@ -95,9 +95,7 @@ public class MockDataService {
 //                        teacherDAO.update(teacher);
                         teacherList.add(teacher);
                     }
-//                    specialityDAO.update(speciality);
                 }
-//                departmentDAO.update(department);
 
             }
             facultyDAO.update(faculty);
