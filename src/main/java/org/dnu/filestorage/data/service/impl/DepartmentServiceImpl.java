@@ -52,8 +52,7 @@ public class DepartmentServiceImpl extends GenericServiceImpl<DepartmentDAO, Dep
     public Department create(Department newEntity) {
         Department department = dao.create(new Department());
         newEntity.setId(department.getId());
-        update(newEntity);
-        return department;
+        return update(newEntity);
     }
 
     private void copyProperties(Department newEntity, Department current) {
