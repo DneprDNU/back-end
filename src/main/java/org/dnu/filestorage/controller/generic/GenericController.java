@@ -1,7 +1,5 @@
 package org.dnu.filestorage.controller.generic;
 
-import com.google.common.base.Throwables;
-import org.apache.commons.beanutils.BeanUtils;
 import org.dnu.filestorage.data.model.Identifiable;
 import org.dnu.filestorage.data.service.GenericService;
 import org.slf4j.Logger;
@@ -58,21 +56,7 @@ public abstract class GenericController<S extends GenericService<T>, T extends I
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public Map<String, Object> update(@PathVariable Long id, @RequestBody T json) {
-        logger.debug("update() of id#{} with body {}", id, json);
-        logger.debug("T json is of type {}", json.getClass());
-
-        T entity = this.service.get(id);
-        try {
-            BeanUtils.copyProperties(entity, json);
-        } catch (Exception e) {
-            logger.warn("while copying properties", e);
-            throw Throwables.propagate(e);
-        }
-
-        logger.debug("merged entity: {}", entity);
-
-        T updated = this.service.update(entity);
-        logger.debug("updated enitity: {}", updated);
+        T updated = this.service.update(json);
 
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("success", true);
