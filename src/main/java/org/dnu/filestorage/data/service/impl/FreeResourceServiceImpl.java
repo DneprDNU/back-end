@@ -3,6 +3,7 @@ package org.dnu.filestorage.data.service.impl;
 import org.dnu.filestorage.data.dao.FreeResourceDAO;
 import org.dnu.filestorage.data.model.FreeResource;
 import org.dnu.filestorage.data.service.FreeResourceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,6 +14,11 @@ import javax.transaction.Transactional;
  */
 @Service
 @Transactional
-public class FreeResourceServiceImpl extends GenericServiceImpl<FreeResourceDAO, FreeResource> implements FreeResourceService {
+public class FreeResourceServiceImpl extends GenericServiceImpl<FreeResourceDAO, FreeResource>
+        implements FreeResourceService {
 
+    @Autowired
+    public FreeResourceServiceImpl(FreeResourceDAO dao) {
+        super(dao);
+    }
 }

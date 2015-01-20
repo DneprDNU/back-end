@@ -3,6 +3,7 @@ package org.dnu.filestorage.controller;
 import org.dnu.filestorage.controller.generic.GenericController;
 import org.dnu.filestorage.data.model.Speciality;
 import org.dnu.filestorage.data.service.SpecialityService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +18,11 @@ import java.util.List;
 @Controller
 @RequestMapping("/rest/speciality")
 public class SpecialityController extends GenericController<SpecialityService, Speciality> {
+
+    @Autowired
+    public SpecialityController(SpecialityService service) {
+        super(service);
+    }
 
     @RequestMapping(params = "facultyId")
     @ResponseBody

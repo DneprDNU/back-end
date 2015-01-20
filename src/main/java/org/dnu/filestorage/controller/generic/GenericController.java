@@ -6,7 +6,6 @@ import org.dnu.filestorage.data.model.Identifiable;
 import org.dnu.filestorage.data.service.GenericService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,10 +20,10 @@ import java.util.Map;
 public abstract class GenericController<S extends GenericService<T>, T extends Identifiable> {
     private Logger logger = LoggerFactory.getLogger(GenericController.class);
 
-    @Autowired
     private S service;
 
-    public GenericController() {
+    public GenericController(S service) {
+        this.service = service;
     }
 
     protected S getService() {

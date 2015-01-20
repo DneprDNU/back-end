@@ -3,6 +3,7 @@ package org.dnu.filestorage.data.service.impl;
 import org.dnu.filestorage.data.dao.DepartmentDAO;
 import org.dnu.filestorage.data.model.Department;
 import org.dnu.filestorage.data.service.DepartmentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -14,6 +15,11 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 public class DepartmentServiceImpl extends GenericServiceImpl<DepartmentDAO, Department> implements DepartmentService {
+
+    @Autowired
+    public DepartmentServiceImpl(DepartmentDAO dao) {
+        super(dao);
+    }
 
     @Override
     public Department get(Long id) {

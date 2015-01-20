@@ -3,7 +3,6 @@ package org.dnu.filestorage.data.service.impl;
 import org.dnu.filestorage.data.dao.GenericDAO;
 import org.dnu.filestorage.data.model.Identifiable;
 import org.dnu.filestorage.data.service.GenericService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -14,10 +13,10 @@ import java.util.List;
  */
 @Transactional
 public class GenericServiceImpl<D extends GenericDAO<T>, T extends Identifiable> implements GenericService<T> {
-    @Autowired
     protected D dao;
 
-    public GenericServiceImpl() {
+    public GenericServiceImpl(D dao) {
+        this.dao = dao;
     }
 
     @Override

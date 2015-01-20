@@ -3,6 +3,7 @@ package org.dnu.filestorage.data.service.impl;
 import org.dnu.filestorage.data.dao.SubjectDAO;
 import org.dnu.filestorage.data.model.Subject;
 import org.dnu.filestorage.data.service.SubjectService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -15,6 +16,11 @@ import java.util.List;
 @Service
 @Transactional
 public class SubjectServiceImpl extends GenericServiceImpl<SubjectDAO, Subject> implements SubjectService {
+
+    @Autowired
+    public SubjectServiceImpl(SubjectDAO dao) {
+        super(dao);
+    }
 
     @Override
     public List<Subject> getByDepartmentId(Long departmentId) {
