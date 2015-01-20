@@ -1,6 +1,6 @@
 package org.dnu.filestorage.search;
 
-import org.dnu.filestorage.model.Resource;
+import org.dnu.filestorage.data.model.Resource;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
 import org.elasticsearch.action.search.SearchResponse;

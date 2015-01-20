@@ -1,10 +1,9 @@
 package org.dnu.filestorage.controller;
 
 import org.dnu.filestorage.controller.generic.GenericController;
-import org.dnu.filestorage.model.Department;
-import org.dnu.filestorage.model.Faculty;
-import org.dnu.filestorage.service.dao.FacultyDAO;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.dnu.filestorage.data.model.Department;
+import org.dnu.filestorage.data.model.Faculty;
+import org.dnu.filestorage.data.service.FacultyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,16 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/rest/faculty")
-public class FacultyController extends GenericController<FacultyDAO, Faculty> {
-
-    @Autowired
-    public FacultyController(FacultyDAO dao) {
-        super(dao);
-    }
+public class FacultyController extends GenericController<FacultyService, Faculty> {
 
     @Override
     public Faculty get(@PathVariable Long id) {
-        Faculty result = getDao().getFacultyWithRelations(id);
+        Faculty result = getService().get(id);
         if (result.getDepartments() != null) {
             for (Department department : result.getDepartments()) {
                 department.setFaculty(null);  //workaround for recursion

@@ -1,21 +1,19 @@
 package org.dnu.filestorage.controller;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
 import org.apache.commons.beanutils.BeanUtils;
-import org.dnu.filestorage.model.Category;
-import org.dnu.filestorage.model.Resource;
-import org.dnu.filestorage.model.Subject;
+import org.dnu.filestorage.data.model.Category;
+import org.dnu.filestorage.data.model.Resource;
+import org.dnu.filestorage.data.model.Subject;
+import org.dnu.filestorage.data.service.CategoryService;
+import org.dnu.filestorage.data.service.ResourceService;
+import org.dnu.filestorage.data.service.SubjectService;
 import org.dnu.filestorage.search.ResourceSearchRepository;
-import org.dnu.filestorage.service.dao.CategoryDAO;
-import org.dnu.filestorage.service.dao.ResourceDAO;
-import org.dnu.filestorage.service.dao.SubjectDAO;
 import org.dnu.filestorage.utils.FileUploader;
 import org.dnu.filestorage.utils.HibernateAwareObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -40,14 +38,14 @@ public class ResourceController {
     @Autowired
     private FileUploader fileUploader;
     @Autowired
-    private CategoryDAO categoryDAO;
+    private CategoryService categoryService;
     @Autowired
-    private SubjectDAO subjectDAO;
+    private SubjectService subjectService;
     private ObjectMapper mapper = new HibernateAwareObjectMapper();
     @Autowired
-    private ResourceDAO dao;
+    private ResourceService service;
     @Autowired
-    private  ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -59,7 +57,7 @@ public class ResourceController {
                     return element;
                 }
                 if (element instanceof String) {
-                    Category category = categoryDAO.get(Long.valueOf((String) element));
+                    Category category = categoryService.get(Long.valueOf((String) element));
                     return category;
                 }
                 return null;
@@ -72,7 +70,7 @@ public class ResourceController {
                     return element;
                 }
                 if (element instanceof String) {
-                    Subject subject = subjectDAO.get(Long.valueOf((String) element));
+                    Subject subject = subjectService.get(Long.valueOf((String) element));
                     return subject;
                 }
                 return null;
@@ -83,7 +81,7 @@ public class ResourceController {
     @RequestMapping
     @ResponseBody
     public List<Resource> listAll() {
-        return this.dao.list();
+        return this.service.list();
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -99,7 +97,7 @@ public class ResourceController {
             res.setImage(imageUrl);
         }
 
-        Resource created = dao.create(res);
+        Resource created = service.create(res);
 
         resourceSearchRepository.index(created);
 
@@ -112,7 +110,7 @@ public class ResourceController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Resource get(@PathVariable Long id) {
-        return this.dao.get(id);
+        return this.service.get(id);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -120,7 +118,7 @@ public class ResourceController {
     public Map<String, Object> update(@PathVariable Long id, @RequestParam(value = "resource") String resourceString, @RequestParam MultipartFile file, @RequestParam(required = false) MultipartFile image) throws IOException {
 
         Resource resource = objectMapper.readValue(resourceString, Resource.class);
-        Resource entity = this.dao.get(id);
+        Resource entity = this.service.get(id);
         try {
             BeanUtils.copyProperties(entity, resource);
         } catch (Exception e) {
@@ -136,7 +134,7 @@ public class ResourceController {
             resource.setImage(imageUrl);
         }
 
-        Resource updated = this.dao.update(resource);
+        Resource updated = this.service.update(resource);
 
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("success", true);
@@ -148,7 +146,7 @@ public class ResourceController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public Map<String, Object> delete(@PathVariable Long id) {
-        this.dao.remove(id);
+        this.service.remove(id);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("success", true);
         return m;
@@ -157,12 +155,12 @@ public class ResourceController {
     @RequestMapping(params = "categoryId")
     @ResponseBody
     public List<Resource> listByCategoryId(@RequestParam("categoryId") Long categoryId) {
-        return this.dao.listByCategoryId(categoryId);
+        return this.service.listByCategoryId(categoryId);
     }
 
     @RequestMapping(params = "teacherId")
     @ResponseBody
     public List<Resource> listByTeacherIdByLinks(@RequestParam("teacherId") Long teacherId) {
-        return this.dao.listResourcesByTeacherIdByLinks(teacherId);
+        return this.service.listResourcesByTeacherIdByLinks(teacherId);
     }
 }

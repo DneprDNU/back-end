@@ -1,11 +1,9 @@
 package org.dnu.filestorage.controller;
 
 import org.dnu.filestorage.controller.generic.GenericController;
-import org.dnu.filestorage.model.Department;
-import org.dnu.filestorage.service.dao.DepartmentDAO;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.dnu.filestorage.data.model.Department;
+import org.dnu.filestorage.data.service.DepartmentService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -14,16 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/rest/department")
-public class DepartmentController extends GenericController<DepartmentDAO, Department> {
+public class DepartmentController extends GenericController<DepartmentService, Department> {
 
-    @Autowired
-    public DepartmentController(DepartmentDAO dao) {
-        super(dao);
-    }
-
-    @Override
-    public Department get(@PathVariable Long id) {
-        Department result = getDao().getDepartmentWithRelations(id);
-        return result;
-    }
 }

@@ -1,7 +1,7 @@
 package org.dnu.filestorage.controller;
 
-import org.dnu.filestorage.model.Category;
-import org.dnu.filestorage.model.Resource;
+import org.dnu.filestorage.data.model.Category;
+import org.dnu.filestorage.data.model.Resource;
 import org.dnu.filestorage.search.ResourceSearchRepository;
 import org.elasticsearch.search.SearchHit;
 import org.springframework.beans.factory.annotation.Autowired;

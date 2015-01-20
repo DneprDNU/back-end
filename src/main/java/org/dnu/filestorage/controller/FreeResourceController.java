@@ -1,9 +1,8 @@
 package org.dnu.filestorage.controller;
 
 import org.dnu.filestorage.controller.generic.GenericController;
-import org.dnu.filestorage.model.FreeResource;
-import org.dnu.filestorage.service.dao.FreeResourceDAO;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.dnu.filestorage.data.model.FreeResource;
+import org.dnu.filestorage.data.service.FreeResourceService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -13,11 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/rest/free_resource")
-public class FreeResourceController extends GenericController<FreeResourceDAO, FreeResource> {
+public class FreeResourceController extends GenericController<FreeResourceService, FreeResource> {
 
-
-    @Autowired
-    public FreeResourceController(FreeResourceDAO dao) {
-        super(dao);
-    }
 }

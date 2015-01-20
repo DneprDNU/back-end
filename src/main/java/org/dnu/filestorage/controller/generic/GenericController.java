@@ -2,11 +2,11 @@ package org.dnu.filestorage.controller.generic;
 
 import com.google.common.base.Throwables;
 import org.apache.commons.beanutils.BeanUtils;
-import org.dnu.filestorage.model.Identifiable;
-import org.dnu.filestorage.model.NamedEntity;
-import org.dnu.filestorage.service.dao.GenericDAO;
+import org.dnu.filestorage.data.model.Identifiable;
+import org.dnu.filestorage.data.service.GenericService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,23 +18,23 @@ import java.util.Map;
  * @author demyura
  * @since 14.11.14
  */
-public abstract class GenericController<D extends GenericDAO<T>, T extends Identifiable> {
+public abstract class GenericController<S extends GenericService<T>, T extends Identifiable> {
     private Logger logger = LoggerFactory.getLogger(GenericController.class);
 
-    private D dao;
+    @Autowired
+    private S service;
 
-    public GenericController(D dao) {
-        this.dao = dao;
+    public GenericController() {
     }
 
-    protected D getDao() {
-        return dao;
+    protected S getService() {
+        return service;
     }
 
     @RequestMapping
     @ResponseBody
     public List<T> listAll() {
-        return this.dao.list();
+        return this.service.list();
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
@@ -42,7 +42,7 @@ public abstract class GenericController<D extends GenericDAO<T>, T extends Ident
     public Map<String, Object> create(@RequestBody T json) {
         logger.debug("create() with body {} of type {}", json, json.getClass());
 
-        T created = this.dao.create(json);
+        T created = this.service.create(json);
 
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("success", true);
@@ -53,7 +53,7 @@ public abstract class GenericController<D extends GenericDAO<T>, T extends Ident
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public T get(@PathVariable Long id) {
-        return this.dao.get(id);
+        return this.service.get(id);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = {MediaType.APPLICATION_JSON_VALUE})
@@ -62,7 +62,7 @@ public abstract class GenericController<D extends GenericDAO<T>, T extends Ident
         logger.debug("update() of id#{} with body {}", id, json);
         logger.debug("T json is of type {}", json.getClass());
 
-        T entity = this.dao.get(id);
+        T entity = this.service.get(id);
         try {
             BeanUtils.copyProperties(entity, json);
         } catch (Exception e) {
@@ -72,7 +72,7 @@ public abstract class GenericController<D extends GenericDAO<T>, T extends Ident
 
         logger.debug("merged entity: {}", entity);
 
-        T updated = this.dao.update(entity);
+        T updated = this.service.update(entity);
         logger.debug("updated enitity: {}", updated);
 
         Map<String, Object> m = new HashMap<String, Object>();
@@ -85,7 +85,7 @@ public abstract class GenericController<D extends GenericDAO<T>, T extends Ident
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public Map<String, Object> delete(@PathVariable Long id) {
-        this.dao.remove(id);
+        this.service.remove(id);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("success", true);
         return m;

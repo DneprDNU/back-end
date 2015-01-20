@@ -1,9 +1,8 @@
 package org.dnu.filestorage.controller;
 
 import org.dnu.filestorage.controller.generic.GenericController;
-import org.dnu.filestorage.model.Subject;
-import org.dnu.filestorage.service.dao.SubjectDAO;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.dnu.filestorage.data.model.Subject;
+import org.dnu.filestorage.data.service.SubjectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,16 +16,11 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/rest/subject")
-public class SubjectController extends GenericController<SubjectDAO, Subject> {
-
-    @Autowired
-    public SubjectController(SubjectDAO dao) {
-        super(dao);
-    }
+public class SubjectController extends GenericController<SubjectService, Subject> {
 
     @RequestMapping(params = "departmentId")
     @ResponseBody
     public List<Subject> getSubjectsByDepartmentId(@RequestParam("departmentId") Long departmentId) {
-        return getDao().getByDepartmentId(departmentId);
+        return getService().getByDepartmentId(departmentId);
     }
 }
