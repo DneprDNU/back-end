@@ -21,4 +21,14 @@ public class FreeResourceServiceImpl extends GenericServiceImpl<FreeResourceDAO,
     public FreeResourceServiceImpl(FreeResourceDAO dao) {
         super(dao);
     }
+
+    @Override
+    public FreeResource update(FreeResource entity) {
+        return dao.update(entity);
+    }
+
+    @Override
+    public FreeResource create(FreeResource entity) {
+        return dao.create(entity);
+    }
 }

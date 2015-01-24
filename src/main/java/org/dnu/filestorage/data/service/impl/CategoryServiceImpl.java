@@ -20,4 +20,12 @@ public class CategoryServiceImpl extends GenericServiceImpl<CategoryDAO, Categor
     public CategoryServiceImpl(CategoryDAO dao) {
         super(dao);
     }
+
+    @Override
+    public Category update(Category entity) {
+        Category current = dao.get(entity.getId());
+        current.setName(entity.getName());
+        current.setImage(entity.getImage());
+        return super.update(current);
+    }
 }

@@ -36,7 +36,13 @@ public class GenericServiceImpl<D extends GenericDAO<T>, T extends Identifiable>
 
     @Override
     public T create(T entity) {
-        return dao.create(entity);
+        try {
+            T newInstance = dao.create(dao.getEntityClass().newInstance());
+            entity.setId(newInstance.getId());
+            return update(entity);
+        } catch (InstantiationException | IllegalAccessException e) {
+            return dao.create(entity);
+        }
     }
 
     @Override

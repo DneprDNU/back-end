@@ -1,8 +1,6 @@
 package org.dnu.filestorage.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Throwables;
-import org.apache.commons.beanutils.BeanUtils;
 import org.dnu.filestorage.data.model.Category;
 import org.dnu.filestorage.data.model.Resource;
 import org.dnu.filestorage.data.model.Subject;
@@ -118,12 +116,6 @@ public class ResourceController {
     public Map<String, Object> update(@PathVariable Long id, @RequestParam(value = "resource") String resourceString, @RequestParam MultipartFile file, @RequestParam(required = false) MultipartFile image) throws IOException {
 
         Resource resource = objectMapper.readValue(resourceString, Resource.class);
-        Resource entity = this.service.get(id);
-        try {
-            BeanUtils.copyProperties(entity, resource);
-        } catch (Exception e) {
-            throw Throwables.propagate(e);
-        }
 
         if (file != null) {
             String fileUrl = fileUploader.uploadFile(file);

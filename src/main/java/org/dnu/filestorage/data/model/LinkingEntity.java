@@ -63,4 +63,12 @@ public class LinkingEntity {
         teacher.getLinks().add(this);
         return this;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

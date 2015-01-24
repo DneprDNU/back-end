@@ -36,4 +36,12 @@ public class TeacherServiceImpl extends GenericServiceImpl<TeacherDAO, Teacher> 
     public Teacher get(Long id) {
         return dao.get(id);
     }
+
+    @Override
+    public Teacher update(Teacher entity) {
+        Teacher current = dao.get(entity.getId());
+        current.setName(entity.getName());
+        current.setImage(entity.getImage());
+        return dao.update(current);
+    }
 }

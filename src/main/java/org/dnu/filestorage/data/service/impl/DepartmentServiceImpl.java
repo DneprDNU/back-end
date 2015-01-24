@@ -62,22 +62,22 @@ public class DepartmentServiceImpl extends GenericServiceImpl<DepartmentDAO, Dep
     }
 
     private void updateEmployees(Department newEntity, Department current) {
+        List<Teacher> newEmployees = new LinkedList<Teacher>();
         if (newEntity.getEmployees() != null) {
-            List<Teacher> newEmployees = new LinkedList<Teacher>();
             for (Teacher teacher : newEntity.getEmployees()) {
                 newEmployees.add(teacherDAO.get(teacher.getId()));
             }
-            current.setEmployees(newEmployees);
         }
+        current.setEmployees(newEmployees);
     }
 
     private void updateSpecialities(Department newEntity, Department current) {
+        List<Speciality> newSpecialities = new LinkedList<Speciality>();
         if (newEntity.getSpecialities() != null) {
-            List<Speciality> newSpecialities = new LinkedList<Speciality>();
             for (Speciality speciality : newEntity.getSpecialities()) {
                 newSpecialities.add(specialityDAO.get(speciality.getId()));
             }
-            current.setSpecialities(newSpecialities);
         }
+        current.setSpecialities(newSpecialities);
     }
 }

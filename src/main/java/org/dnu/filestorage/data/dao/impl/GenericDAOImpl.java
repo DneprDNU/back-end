@@ -57,4 +57,8 @@ public class GenericDAOImpl<T extends Identifiable> implements GenericDAO<T> {
     public void remove(T entity) {
         entityManager.remove(entity);
     }
+
+    public Class<T> getEntityClass() {
+        return entityClass;
+    }
 }

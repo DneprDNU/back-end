@@ -1,6 +1,9 @@
 package org.dnu.filestorage.data.service.impl;
 
 import org.dnu.filestorage.data.dao.LinkingEntityDAO;
+import org.dnu.filestorage.data.dao.SpecialityDAO;
+import org.dnu.filestorage.data.dao.SubjectDAO;
+import org.dnu.filestorage.data.dao.TeacherDAO;
 import org.dnu.filestorage.data.model.LinkingEntity;
 import org.dnu.filestorage.data.service.LinkingEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,12 @@ public class LinkingEntityServiceImpl implements LinkingEntityService {
 
     @Autowired
     private LinkingEntityDAO dao;
+    @Autowired
+    private SpecialityDAO specialityDao;
+    @Autowired
+    private SubjectDAO subjectDAO;
+    @Autowired
+    private TeacherDAO teacherDAO;
 
     @Override
     public List<LinkingEntity> list() {
@@ -32,16 +41,24 @@ public class LinkingEntityServiceImpl implements LinkingEntityService {
 
     @Override
     public LinkingEntity update(LinkingEntity entity) {
+        LinkingEntity current = dao.get(entity.getId());
+        current.setSpeciality(entity.getSpeciality() == null ? null : specialityDao.get(entity.getSpeciality().getId()));
+        current.setTeacher(entity.getTeacher() == null ? null : teacherDAO.get(entity.getTeacher().getId()));
+        current.setSubject(entity.getSubject() == null ? null : subjectDAO.get(entity.getSubject().getId()));
         return dao.update(entity);
     }
 
     @Override
     public LinkingEntity create(LinkingEntity entity) {
-        return dao.create(entity);
+        LinkingEntity newInstance = dao.create(new LinkingEntity());
+        entity.setId(newInstance.getId());
+        return update(entity);
     }
 
     @Override
     public void remove(LinkingEntity entity) {
         dao.remove(entity);
     }
+
+
 }

@@ -22,4 +22,6 @@ public interface GenericDAO<T extends Identifiable> {
     default void remove(T entity) {
         remove(entity.getId());
     }
+
+    Class<T> getEntityClass();
 }
