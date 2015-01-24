@@ -35,9 +35,30 @@ public class ResourceDeserializer extends JsonDeserializer<Resource> {
                                 DeserializationContext deserializationContext) throws IOException {
         ObjectCodec oc = jsonParser.getCodec();
         JsonNode node = oc.readTree(jsonParser);
-        Resource resource = new Resource(node.get("name").asText(), node.get("year").asText(), node.get("author").asText(),
-                node.get("description").asText(), "", "");
-        resource.setId(node.get("id").asLong());
+
+        String name = "";
+        String year = "";
+        String author = "";
+        String description = "";
+
+        if (node.get("name") != null) {
+            name = node.get("name").asText();
+        }
+        if (node.get("year") != null) {
+            year = node.get("year").asText();
+        }
+        if (node.get("author") != null) {
+            author = node.get("author").asText();
+        }
+        if (node.get("description") != null) {
+            description = node.get("description").asText();
+        }
+
+
+        Resource resource = new Resource(name, year, author,description, "", "");
+        if (node.get("id") != null) {
+            resource.setId(node.get("id").asLong());
+        }
         List<Category> categoryList = new ArrayList<Category>();
         for (JsonNode jsonNode : node.get("categories")) {
             if (jsonNode.isInt()) {

@@ -16,9 +16,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,10 +87,12 @@ public class ResourceController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> create(HttpServletRequest request, @ModelAttribute Resource res, @RequestParam(required = false) MultipartFile resource, @RequestParam(required = false) MultipartFile image) throws IOException {
+    public Map<String, Object> create(@RequestParam(value = "resource") String resourceString, @RequestParam(required = false) MultipartFile file, @RequestParam(required = false) MultipartFile image) throws IOException {
 
-        if (resource != null) {
-            String fileUrl = fileUploader.uploadFile(resource);
+        Resource res = objectMapper.readValue(resourceString, Resource.class);
+
+        if (file != null) {
+            String fileUrl = fileUploader.uploadFile(file);
             res.setResource(fileUrl);
         }
         if (image != null) {
@@ -107,13 +112,20 @@ public class ResourceController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public Resource get(@PathVariable Long id) {
-        return this.service.get(id);
+    public Resource get(@PathVariable Long id) throws UnknownHostException {
+        Resource resource = this.service.get(id);
+        if (!resource.getResource().isEmpty()) {
+            resource.setResource("http://80.240.139.45:8080/filestorage/files?fileName=" + resource.getResource());
+        }
+        if (!resource.getImage().isEmpty()) {
+            resource.setImage("http://80.240.139.45:8080/filestorage/files?fileName=" + resource.getImage());
+        }
+        return resource;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public Map<String, Object> update(@PathVariable Long id, @RequestParam(value = "resource") String resourceString, @RequestParam MultipartFile file, @RequestParam(required = false) MultipartFile image) throws IOException {
+    public Map<String, Object> update(MultipartRequest multipartRequest ,@PathVariable Long id, @RequestParam(value = "resource") String resourceString, @RequestParam(required = false) MultipartFile file, @RequestParam(required = false) MultipartFile image) throws IOException {
 
         Resource resource = objectMapper.readValue(resourceString, Resource.class);
 
