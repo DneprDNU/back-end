@@ -25,22 +25,22 @@ public class SearchController {
     ResourceSearchRepository resourceSearchRepository;
 
     /**
-     * Search resources by user query.
+     * Search resources by user searchKey.
      *
-     * @param query User query to search resources by.
-     * @return Resources as a result of user search query.
+     * @param searchKey User searchKey to search resources by.
+     * @return Resources as a result of user search searchKey.
      * @throws IOException Input-Output Exception.
      */
     @RequestMapping("/search")
     @ResponseBody
-    public Resource[] search(@RequestParam(required = false) String query) throws IOException {
+    public Resource[] search(@RequestParam(required = false) String searchKey) throws IOException {
 
 //        // We need to handle Ukrainian symbols.
-//        if (query != null) {
-//            query = new String((query).getBytes("ISO-8859-1"), "UTF-8");
+//        if (searchKey != null) {
+//            searchKey = new String((searchKey).getBytes("ISO-8859-1"), "UTF-8");
 //        }
 
-        SearchHit[] searchHits = resourceSearchRepository.search(query);
+        SearchHit[] searchHits = resourceSearchRepository.search(searchKey);
         Resource[] resources = new Resource[searchHits.length];
 
         for (int i = 0; i < searchHits.length; i++) {
