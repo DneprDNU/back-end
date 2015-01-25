@@ -34,6 +34,8 @@ import java.util.Map;
 @RequestMapping("/rest/resource")
 public class ResourceController {
 
+    String defaultImage = "http://dnu.thebodva.com/upload/b32f3d1ef28edf602362b91cb935886f.jpg";
+
     @Autowired
     ResourceSearchRepository resourceSearchRepository;
     @Autowired
@@ -114,10 +116,10 @@ public class ResourceController {
     @ResponseBody
     public Resource get(@PathVariable Long id) throws UnknownHostException {
         Resource resource = this.service.get(id);
-        if (!resource.getResource().isEmpty()) {
+        if (!resource.getResource().isEmpty() && !resource.getImage().equals(defaultImage)) {
             resource.setResource("http://80.240.139.45:8080/filestorage/files?fileName=" + resource.getResource());
         }
-        if (!resource.getImage().isEmpty()) {
+        if (!resource.getImage().isEmpty() && !resource.getImage().equals(defaultImage)) {
             resource.setImage("http://80.240.139.45:8080/filestorage/files?fileName=" + resource.getImage());
         }
         return resource;

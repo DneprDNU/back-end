@@ -21,6 +21,8 @@ import java.util.List;
 @Controller
 public class SearchController {
 
+    String defaultImage = "http://dnu.thebodva.com/upload/b32f3d1ef28edf602362b91cb935886f.jpg";
+
     @Autowired
     ResourceSearchRepository resourceSearchRepository;
 
@@ -59,7 +61,7 @@ public class SearchController {
             Resource resource = new Resource(resourceName, year, author, description, "", "");
             resource.setId(Long.parseLong(searchHits[i].id()));
             resource.setCategories(categories);
-            if (!resource.getImage().isEmpty()) {
+            if (!resource.getImage().isEmpty() && !resource.getImage().equals(defaultImage)) {
                 resource.setImage("http://80.240.139.45:8080/filestorage/files?fileName=" + searchHits[i].getSource().get("image"));
             }
 
