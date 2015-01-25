@@ -60,19 +60,23 @@ public class ResourceDeserializer extends JsonDeserializer<Resource> {
             resource.setId(node.get("id").asLong());
         }
         List<Category> categoryList = new ArrayList<Category>();
-        for (JsonNode jsonNode : node.get("categories")) {
-            if (jsonNode.isInt()) {
-                Category category = categoryDAO.get(Long.valueOf(jsonNode.asInt()));
-                categoryList.add(category);
+        if (node.get("categories") != null) {
+            for (JsonNode jsonNode : node.get("categories")) {
+                if (jsonNode.isInt()) {
+                    Category category = categoryDAO.get(Long.valueOf(jsonNode.asInt()));
+                    categoryList.add(category);
+                }
             }
         }
         resource.setCategories(categoryList);
 
         List<Subject> subjectList = new ArrayList<Subject>();
-        for (JsonNode jsonNode : node.get("subjects")) {
-            if (jsonNode.isInt()) {
-                Subject subject = subjectDAO.get(Long.valueOf(jsonNode.asInt()));
-                subjectList.add(subject);
+        if (node.get("subjects") != null) {
+            for (JsonNode jsonNode : node.get("subjects")) {
+                if (jsonNode.isInt()) {
+                    Subject subject = subjectDAO.get(Long.valueOf(jsonNode.asInt()));
+                    subjectList.add(subject);
+                }
             }
         }
         resource.setSubjects(subjectList);
