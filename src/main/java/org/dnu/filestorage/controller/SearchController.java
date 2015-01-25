@@ -35,10 +35,10 @@ public class SearchController {
     @ResponseBody
     public Resource[] search(@RequestParam(required = false) String query) throws IOException {
 
-        // We need to handle Ukrainian symbols.
-        if (query != null) {
-            query = new String((query).getBytes("ISO-8859-1"), "UTF-8");
-        }
+//        // We need to handle Ukrainian symbols.
+//        if (query != null) {
+//            query = new String((query).getBytes("ISO-8859-1"), "UTF-8");
+//        }
 
         SearchHit[] searchHits = resourceSearchRepository.search(query);
         Resource[] resources = new Resource[searchHits.length];
