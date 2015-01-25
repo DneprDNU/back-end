@@ -56,6 +56,11 @@ public class LinkingEntityServiceImpl implements LinkingEntityService {
     }
 
     @Override
+    public void remove(Long id) {
+        dao.remove(get(id));
+    }
+
+    @Override
     public void remove(LinkingEntity entity) {
         dao.remove(entity);
     }

@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
  * @since 15.10.14
  */
 @Entity
-public class LinkingEntity {
+public class LinkingEntity implements Identifiable {
     @Id
     @GeneratedValue
     private Long id;
