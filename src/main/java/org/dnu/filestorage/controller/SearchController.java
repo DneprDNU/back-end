@@ -59,6 +59,10 @@ public class SearchController {
             Resource resource = new Resource(resourceName, year, author, description, "", "");
             resource.setId(Long.parseLong(searchHits[i].id()));
             resource.setCategories(categories);
+            if (!resource.getImage().isEmpty()) {
+                resource.setImage("http://80.240.139.45:8080/filestorage/files?fileName=" + searchHits[i].getSource().get("image"));
+            }
+
             resources[i] = resource;
         }
         return resources;

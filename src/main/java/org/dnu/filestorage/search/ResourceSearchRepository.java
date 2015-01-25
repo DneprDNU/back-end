@@ -51,6 +51,7 @@ public class ResourceSearchRepository {
                 .field("year", resource.getYear())
                 .field("speciality", resource.getSpeciality())
                 .field("categories", resource.getCategories())
+                .field("image", resource.getImage())
                 .endObject();
         return builder.string();
     }
@@ -95,7 +96,7 @@ public class ResourceSearchRepository {
         if (query == null || query.isEmpty()) {
             queryBuilder = QueryBuilders.matchAllQuery();
         } else {
-            queryBuilder = QueryBuilders.multiMatchQuery(query, "resourceName", "author", "description", "year", "speciality", "categories");
+            queryBuilder = QueryBuilders.multiMatchQuery(query, "resourceName", "author", "description", "year", "speciality", "categories", "image");
         }
 
         SearchResponse response = client.prepareSearch("resources_cluster")
