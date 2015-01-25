@@ -64,6 +64,9 @@ public class SearchController {
             if (!resource.getImage().isEmpty() && !resource.getImage().equals(defaultImage)) {
                 resource.setImage("http://80.240.139.45:8080/filestorage/files?fileName=" + searchHits[i].getSource().get("image"));
             }
+            else{
+                resource.setImage((String)searchHits[i].getSource().get("image"));
+            }
 
             resources[i] = resource;
         }
