@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @since 15.10.14
  */
 @Controller
-@RequestMapping(value = "/rest/freeCategory")
+@RequestMapping(value = "/rest/free_category")
 public class FreeResourceCategoryController extends GenericController<FreeResourceCategoryService, FreeResourceCategory> {
 
     @Autowired

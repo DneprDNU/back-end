@@ -68,6 +68,7 @@ public class MockDataService {
                     resourceDAO.update(resource);
                 }
                 subjectDAO.update(subject);
+                categoryDAO.update(category);
             }
         }
 
@@ -126,6 +127,7 @@ public class MockDataService {
                 freeResource.addCategory(category);
                 freeResourceDAO.update(freeResource);
             }
+            freeResourceCategoryService.update(category);
         }
 
 
