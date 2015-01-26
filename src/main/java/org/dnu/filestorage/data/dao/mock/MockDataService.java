@@ -2,6 +2,7 @@ package org.dnu.filestorage.data.dao.mock;
 
 import org.dnu.filestorage.data.dao.*;
 import org.dnu.filestorage.data.model.*;
+import org.dnu.filestorage.data.service.FreeResourceCategoryService;
 import org.dnu.filestorage.search.ResourceSearchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
@@ -23,6 +24,8 @@ public class MockDataService {
 
     private Random random = new Random();
 
+    @Autowired
+    private FreeResourceCategoryService freeResourceCategoryService;
 
     @Autowired
 
@@ -55,15 +58,19 @@ public class MockDataService {
             Subject subject = subjectDAO.create(new Subject("Subject " + s));
             subjects.add(subject);
 
-            for (int r = 0; r < 10; ++r) {
-                Resource resource = resourceDAO.create(new Resource("Resource " + s + " " + r, "2014",
-                        "Author", "Description", "resourceUrl",
-                        "http://dnu.thebodva.com/upload/b32f3d1ef28edf602362b91cb935886f.jpg"));
-                resources.add(resource);
-                subject.addResource(resource);
-                resourceDAO.update(resource);
+            for (int c = 0; c < 5; ++c) {
+                Category category = categoryDAO.create(new Category("Category " + s + " " + c));
+                for (int r = 0; r < 10; ++r) {
+                    Resource resource = resourceDAO.create(new Resource("Resource " + s + " " + r, "2014",
+                            "Author", "Description", "resourceUrl",
+                            "http://dnu.thebodva.com/upload/b32f3d1ef28edf602362b91cb935886f.jpg"));
+                    resources.add(resource);
+                    resource.addCategory(category);
+                    subject.addResource(resource);
+                    resourceDAO.update(resource);
+                }
+                subjectDAO.update(subject);
             }
-            subjectDAO.update(subject);
         }
 
         for (int f = 0; f < 10; ++f) {
@@ -112,9 +119,15 @@ public class MockDataService {
         }
 
 
-        for (int i = 0; i < 10; ++i) {
-            FreeResource freeResource = freeResourceDAO.create(new FreeResource("Free resource " + i, "description",
-                    "google.com.ua", null));
+        for (int c = 0; c < 5; ++c) {
+            FreeResourceCategory category = freeResourceCategoryService
+                    .create(new FreeResourceCategory("free resource category " + c));
+            for (int i = 0; i < 10; ++i) {
+                FreeResource freeResource = freeResourceDAO.create(new FreeResource("Free resource " + i, "description",
+                        "google.com.ua", null));
+                freeResource.addCategory(category);
+                freeResourceDAO.update(freeResource);
+            }
         }
 
 

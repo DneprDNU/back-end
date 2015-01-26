@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class NamedEntity implements Serializable, Identifiable {
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
     private String name;
     @Column(length = 10000)

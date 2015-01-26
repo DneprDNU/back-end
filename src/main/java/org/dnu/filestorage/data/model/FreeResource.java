@@ -2,6 +2,9 @@ package org.dnu.filestorage.data.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import java.util.LinkedList;
+import java.util.List;
 
 @Entity
 public class FreeResource extends NamedEntity {
@@ -9,6 +12,9 @@ public class FreeResource extends NamedEntity {
 
     @Column(length = 10000)
     private String resource;
+
+    @ManyToMany
+    private List<FreeResourceCategory> categories = new LinkedList<FreeResourceCategory>();
 
     public FreeResource() {
 
@@ -18,6 +24,16 @@ public class FreeResource extends NamedEntity {
         super(name, imageURL);
         this.description = description;
         this.resource = resourceURL;
+    }
+
+    public FreeResource addCategory(FreeResourceCategory category) {
+        if (!categories.contains(category)) {
+            this.categories.add(category);
+        }
+        if (!category.getResources().contains(this)) {
+            category.getResources().add(this);
+        }
+        return this;
     }
 
     public String getDescription() {
@@ -36,4 +52,11 @@ public class FreeResource extends NamedEntity {
         this.resource = resource;
     }
 
+    public List<FreeResourceCategory> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<FreeResourceCategory> categories) {
+        this.categories = categories;
+    }
 }

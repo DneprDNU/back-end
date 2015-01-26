@@ -1,5 +1,6 @@
 package org.dnu.filestorage.data.model;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
@@ -11,10 +12,21 @@ import java.util.List;
  * @since 07.10.14
  */
 @Entity
-public class Category extends NamedEntity {
-
+@DiscriminatorValue("resource")
+public class Category extends AbstractCategory {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Resource> resources = new LinkedList<Resource>();
+
+    public Category() {
+    }
+
+    public Category(String name) {
+        super(name);
+    }
+
+    public Category(String name, String image) {
+        super(name, image);
+    }
 
     public Category addResource(Resource resource) {
         if (!resources.contains(resource)) {
