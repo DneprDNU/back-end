@@ -2,7 +2,6 @@ package org.dnu.filestorage.data.dao.mock;
 
 import org.dnu.filestorage.data.dao.*;
 import org.dnu.filestorage.data.model.*;
-import org.dnu.filestorage.data.service.FreeResourceCategoryService;
 import org.dnu.filestorage.search.ResourceSearchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
@@ -30,7 +29,7 @@ public class MockDataService {
     public MockDataService(FacultyDAO facultyDAO, DepartmentDAO departmentDAO, SpecialityDAO specialityDAO,
                            SubjectDAO subjectDAO, TeacherDAO teacherDAO, ResourceDAO resourceDAO, UserDAO userDAO,
                            LinkingEntityDAO linkingEntityDAO, CategoryDAO categoryDAO, FreeResourceDAO freeResourceDAO,
-                           ResourceSearchRepository resourceSearchRepository, FreeResourceCategoryService freeResourceCategoryService) {
+                           ResourceSearchRepository resourceSearchRepository, FreeResourceCategoryDAO freeResourceCategoryService) {
 
 
         init(facultyDAO, departmentDAO, specialityDAO, subjectDAO, teacherDAO, resourceDAO, userDAO, linkingEntityDAO,
@@ -42,7 +41,7 @@ public class MockDataService {
                      SubjectDAO subjectDAO, TeacherDAO teacherDAO, ResourceDAO resourceDAO, UserDAO userDAO,
                      LinkingEntityDAO linkingEntityDAO, CategoryDAO categoryDAO,
                      ResourceSearchRepository resourceSearchRepository, FreeResourceDAO freeResourceDAO,
-                     FreeResourceCategoryService freeResourceCategoryService) {
+                     FreeResourceCategoryDAO freeResourceCategoryService) {
         userDAO.create(new User("admin", "password", true, "ROLE_ADMIN"));
         userDAO.create(new User("user", "password", true, "ROLE_USER"));
         userDAO.create(new User("superadmin", "password", true, "ROLE_SUPERADMIN"));
