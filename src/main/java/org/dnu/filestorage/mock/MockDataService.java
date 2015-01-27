@@ -1,4 +1,4 @@
-package org.dnu.filestorage.data.dao.mock;
+package org.dnu.filestorage.mock;
 
 import org.dnu.filestorage.data.dao.*;
 import org.dnu.filestorage.data.model.*;
@@ -29,19 +29,18 @@ public class MockDataService {
     public MockDataService(FacultyDAO facultyDAO, DepartmentDAO departmentDAO, SpecialityDAO specialityDAO,
                            SubjectDAO subjectDAO, TeacherDAO teacherDAO, ResourceDAO resourceDAO, UserDAO userDAO,
                            LinkingEntityDAO linkingEntityDAO, CategoryDAO categoryDAO, FreeResourceDAO freeResourceDAO,
-                           ResourceSearchRepository resourceSearchRepository, FreeResourceCategoryDAO freeResourceCategoryService) {
+                           ResourceSearchRepository resourceSearchRepository) {
 
 
         init(facultyDAO, departmentDAO, specialityDAO, subjectDAO, teacherDAO, resourceDAO, userDAO, linkingEntityDAO,
-                categoryDAO, resourceSearchRepository, freeResourceDAO, freeResourceCategoryService);
+                categoryDAO, resourceSearchRepository, freeResourceDAO);
 
     }
 
     public void init(FacultyDAO facultyDAO, DepartmentDAO departmentDAO, SpecialityDAO specialityDAO,
                      SubjectDAO subjectDAO, TeacherDAO teacherDAO, ResourceDAO resourceDAO, UserDAO userDAO,
                      LinkingEntityDAO linkingEntityDAO, CategoryDAO categoryDAO,
-                     ResourceSearchRepository resourceSearchRepository, FreeResourceDAO freeResourceDAO,
-                     FreeResourceCategoryDAO freeResourceCategoryService) {
+                     ResourceSearchRepository resourceSearchRepository, FreeResourceDAO freeResourceDAO) {
         userDAO.create(new User("admin", "password", true, "ROLE_ADMIN"));
         userDAO.create(new User("user", "password", true, "ROLE_USER"));
         userDAO.create(new User("superadmin", "password", true, "ROLE_SUPERADMIN"));
@@ -51,6 +50,7 @@ public class MockDataService {
         List<Subject> subjects = new LinkedList<Subject>();
         List<Speciality> specialities = new LinkedList<>();
         List<Resource> resources = new LinkedList<>();
+        List<Category> categories = new LinkedList<>();
 
         for (int s = 0; s < 10; ++s) {
             Subject subject = subjectDAO.create(new Subject("Subject " + s));
@@ -58,6 +58,7 @@ public class MockDataService {
 
             for (int c = 0; c < 5; ++c) {
                 Category category = categoryDAO.create(new Category("Category " + s + " " + c));
+                categories.add(category);
                 for (int r = 0; r < 10; ++r) {
                     Resource resource = resourceDAO.create(new Resource("Resource " + s + " " + r, "2014",
                             "Author", "Description", "resourceUrl",
@@ -119,15 +120,14 @@ public class MockDataService {
 
 
         for (int c = 0; c < 5; ++c) {
-            FreeResourceCategory category = freeResourceCategoryService
-                    .create(new FreeResourceCategory("free resource category " + c));
             for (int i = 0; i < 10; ++i) {
+                Category category = categories.get(random.nextInt(5));
                 FreeResource freeResource = freeResourceDAO.create(new FreeResource("Free resource " + i, "description",
                         "google.com.ua", null));
                 freeResource.addCategory(category);
                 freeResourceDAO.update(freeResource);
+                categoryDAO.update(category);
             }
-            freeResourceCategoryService.update(category);
         }
 
 

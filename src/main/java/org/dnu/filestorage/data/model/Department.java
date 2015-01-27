@@ -30,8 +30,8 @@ public class Department extends NamedEntity {
     }
 
     public Department addSpeciality(Speciality speciality) {
-        if (!specialities.contains(speciality)) {
-            this.specialities.add(speciality);
+        if (!getSpecialities().contains(speciality)) {
+            getSpecialities().add(speciality);
         }
         if (!speciality.getDepartments().contains(this)) {
             speciality.getDepartments().add(this);
@@ -40,8 +40,8 @@ public class Department extends NamedEntity {
     }
 
     public Department addEmployee(Teacher teacher) {
-        if (!employees.contains(teacher)) {
-            this.employees.add(teacher);
+        if (!getEmployees().contains(teacher)) {
+            getEmployees().add(teacher);
         }
         if (!teacher.getDepartments().contains(this)) {
             teacher.getDepartments().add(this);
@@ -57,7 +57,10 @@ public class Department extends NamedEntity {
         this.shortName = shortName;
     }
 
-    public List<Speciality> getSpecialities() {
+    public synchronized List<Speciality> getSpecialities() {
+        if (specialities == null) {
+            specialities = new LinkedList<>();
+        }
         return specialities;
     }
 
@@ -65,7 +68,10 @@ public class Department extends NamedEntity {
         this.specialities = specialities;
     }
 
-    public List<Teacher> getEmployees() {
+    public synchronized List<Teacher> getEmployees() {
+        if (employees == null) {
+            employees = new LinkedList<>();
+        }
         return employees;
     }
 

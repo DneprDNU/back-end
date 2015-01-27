@@ -14,7 +14,7 @@ public class FreeResource extends NamedEntity {
     private String resource;
 
     @ManyToMany
-    private List<FreeResourceCategory> categories = new LinkedList<FreeResourceCategory>();
+    private List<Category> categories = new LinkedList<Category>();
 
     public FreeResource() {
 
@@ -26,12 +26,12 @@ public class FreeResource extends NamedEntity {
         this.resource = resourceURL;
     }
 
-    public FreeResource addCategory(FreeResourceCategory category) {
-        if (!categories.contains(category)) {
-            this.categories.add(category);
+    public FreeResource addCategory(Category category) {
+        if (!getCategories().contains(category)) {
+            getCategories().add(category);
         }
-        if (!category.getResources().contains(this)) {
-            category.getResources().add(this);
+        if (!category.getFreeResources().contains(this)) {
+            category.getFreeResources().add(this);
         }
         return this;
     }
@@ -52,11 +52,14 @@ public class FreeResource extends NamedEntity {
         this.resource = resource;
     }
 
-    public List<FreeResourceCategory> getCategories() {
+    public synchronized List<Category> getCategories() {
+        if (categories == null) {
+            categories = new LinkedList<>();
+        }
         return categories;
     }
 
-    public void setCategories(List<FreeResourceCategory> categories) {
+    public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
 }

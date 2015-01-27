@@ -35,8 +35,8 @@ public class Faculty extends NamedEntity {
     }
 
     public Faculty addDepartment(Department department) {
-        if (!departments.contains(department)) {
-            this.departments.add(department);
+        if (!getDepartments().contains(department)) {
+            getDepartments().add(department);
         }
         department.setFaculty(this);
         return this;
@@ -50,7 +50,10 @@ public class Faculty extends NamedEntity {
         this.description = description;
     }
 
-    public List<Department> getDepartments() {
+    public synchronized List<Department> getDepartments() {
+        if (departments == null) {
+            departments = new LinkedList<>();
+        }
         return departments;
     }
 

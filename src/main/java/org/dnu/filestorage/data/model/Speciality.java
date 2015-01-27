@@ -31,8 +31,8 @@ public class Speciality extends NamedEntity {
     }
 
     public Speciality addSupervisor(Teacher teacher) {
-        if (!supervisors.contains(teacher)) {
-            this.supervisors.add(teacher);
+        if (!getSupervisors().contains(teacher)) {
+            getSupervisors().add(teacher);
         }
         if (!teacher.getSpecialities().contains(this)) {
             teacher.getSpecialities().add(this);
@@ -41,8 +41,8 @@ public class Speciality extends NamedEntity {
     }
 
     public Speciality addDepartment(Department department) {
-        if (!departments.contains(department)) {
-            this.departments.add(department);
+        if (!getDepartments().contains(department)) {
+            getDepartments().add(department);
         }
         if (!department.getSpecialities().contains(this)) {
             department.getSpecialities().add(this);
@@ -58,7 +58,10 @@ public class Speciality extends NamedEntity {
         this.code = code;
     }
 
-    public List<Teacher> getSupervisors() {
+    public synchronized List<Teacher> getSupervisors() {
+        if (supervisors == null) {
+            supervisors = new LinkedList<>();
+        }
         return supervisors;
     }
 
@@ -66,7 +69,10 @@ public class Speciality extends NamedEntity {
         this.supervisors = supervisors;
     }
 
-    public List<LinkingEntity> getLinks() {
+    public synchronized List<LinkingEntity> getLinks() {
+        if (links == null) {
+            links = new LinkedList<>();
+        }
         return links;
     }
 
@@ -74,7 +80,10 @@ public class Speciality extends NamedEntity {
         this.links = links;
     }
 
-    public List<Department> getDepartments() {
+    public synchronized List<Department> getDepartments() {
+        if (departments == null) {
+            departments = new LinkedList<>();
+        }
         return departments;
     }
 

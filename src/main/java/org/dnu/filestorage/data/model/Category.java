@@ -1,6 +1,5 @@
 package org.dnu.filestorage.data.model;
 
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
@@ -12,10 +11,12 @@ import java.util.List;
  * @since 07.10.14
  */
 @Entity
-@DiscriminatorValue("resource")
-public class Category extends AbstractCategory {
+public class Category extends NamedEntity {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Resource> resources = new LinkedList<Resource>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<FreeResource> freeResources = new LinkedList<FreeResource>();
 
     public Category() {
     }
@@ -29,8 +30,8 @@ public class Category extends AbstractCategory {
     }
 
     public Category addResource(Resource resource) {
-        if (!resources.contains(resource)) {
-            resources.add(resource);
+        if (!getResources().contains(resource)) {
+            getResources().add(resource);
         }
         if (!resource.getCategories().contains(this)) {
             resource.getCategories().add(this);
@@ -38,12 +39,36 @@ public class Category extends AbstractCategory {
         return this;
     }
 
-    public List<Resource> getResources() {
+    public Category addFreeResource(FreeResource resource) {
+        if (!getFreeResources().contains(resource)) {
+            getFreeResources().add(resource);
+        }
+        if (!resource.getCategories().contains(this)) {
+            resource.getCategories().add(this);
+        }
+        return this;
+    }
+
+    public synchronized List<Resource> getResources() {
+        if (resources == null) {
+            resources = new LinkedList<>();
+        }
         return resources;
     }
 
     public void setResources(List<Resource> resources) {
         this.resources = resources;
+    }
+
+    public synchronized List<FreeResource> getFreeResources() {
+        if (freeResources == null) {
+            freeResources = new LinkedList<>();
+        }
+        return freeResources;
+    }
+
+    public void setFreeResources(List<FreeResource> freeResources) {
+        this.freeResources = freeResources;
     }
 
     @Override

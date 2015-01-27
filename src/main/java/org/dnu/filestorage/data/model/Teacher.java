@@ -27,7 +27,10 @@ public class Teacher extends NamedEntity {
         super(name);
     }
 
-    public List<LinkingEntity> getLinks() {
+    public synchronized List<LinkingEntity> getLinks() {
+        if (links == null) {
+            links = new LinkedList<>();
+        }
         return links;
     }
 
@@ -35,7 +38,10 @@ public class Teacher extends NamedEntity {
         this.links = links;
     }
 
-    public List<Department> getDepartments() {
+    public synchronized List<Department> getDepartments() {
+        if (departments == null) {
+            departments = new LinkedList<>();
+        }
         return departments;
     }
 
@@ -43,7 +49,10 @@ public class Teacher extends NamedEntity {
         this.departments = departments;
     }
 
-    public List<Speciality> getSpecialities() {
+    public synchronized List<Speciality> getSpecialities() {
+        if (specialities == null) {
+            specialities = new LinkedList<>();
+        }
         return specialities;
     }
 

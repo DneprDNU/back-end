@@ -26,8 +26,8 @@ public class Subject extends NamedEntity {
     }
 
     public Subject addResource(Resource resource) {
-        if (!resources.contains(resource)) {
-            this.resources.add(resource);
+        if (!getResources().contains(resource)) {
+            getResources().add(resource);
         }
         if (!resource.getSubjects().contains(this)) {
             resource.getSubjects().add(this);
@@ -35,7 +35,10 @@ public class Subject extends NamedEntity {
         return this;
     }
 
-    public List<Resource> getResources() {
+    public synchronized List<Resource> getResources() {
+        if (resources == null) {
+            resources = new LinkedList<>();
+        }
         return resources;
     }
 
@@ -43,7 +46,10 @@ public class Subject extends NamedEntity {
         this.resources = resources;
     }
 
-    public List<LinkingEntity> getLinks() {
+    public synchronized List<LinkingEntity> getLinks() {
+        if (links == null) {
+            links = new LinkedList<>();
+        }
         return links;
     }
 

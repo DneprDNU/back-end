@@ -44,8 +44,8 @@ public class Resource extends NamedEntity {
     }
 
     public Resource addCategory(Category category) {
-        if (!categories.contains(category)) {
-            this.categories.add(category);
+        if (!getCategories().contains(category)) {
+            getCategories().add(category);
         }
         if (!category.getResources().contains(this)) {
             category.getResources().add(this);
@@ -54,8 +54,8 @@ public class Resource extends NamedEntity {
     }
 
     public Resource addSubject(Subject subject) {
-        if (!subjects.contains(subject)) {
-            this.subjects.add(subject);
+        if (!getSubjects().contains(subject)) {
+            getSubjects().add(subject);
         }
         if (!subject.getResources().contains(this)) {
             subject.getResources().add(this);
@@ -63,7 +63,10 @@ public class Resource extends NamedEntity {
         return this;
     }
 
-    public List<Category> getCategories() {
+    public synchronized List<Category> getCategories() {
+        if (categories == null) {
+            categories = new LinkedList<>();
+        }
         return categories;
     }
 
@@ -71,7 +74,10 @@ public class Resource extends NamedEntity {
         this.categories = categories;
     }
 
-    public List<Subject> getSubjects() {
+    public synchronized List<Subject> getSubjects() {
+        if (subjects == null) {
+            subjects = new LinkedList<>();
+        }
         return subjects;
     }
 
