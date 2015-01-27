@@ -4,8 +4,6 @@ import org.dnu.filestorage.data.dao.DepartmentDAO;
 import org.dnu.filestorage.data.dao.FacultyDAO;
 import org.dnu.filestorage.data.model.Department;
 import org.dnu.filestorage.data.model.Faculty;
-import org.dnu.filestorage.data.model.Speciality;
-import org.dnu.filestorage.data.model.Subject;
 import org.dnu.filestorage.data.service.FacultyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +36,7 @@ public class FacultyServiceImpl extends GenericServiceImpl<FacultyDAO, Faculty> 
     @Override
     public Faculty update(Faculty entity) {
         List<Department> departmentList = new ArrayList<Department>();
-        for (Department department: entity.getDepartments()){
+        for (Department department : entity.getDepartments()) {
             Long departmentId = department.getId();
             Department departmentFromDatabase = departmentDAO.get(departmentId);
             departmentList.add(departmentFromDatabase);
@@ -47,12 +45,5 @@ public class FacultyServiceImpl extends GenericServiceImpl<FacultyDAO, Faculty> 
         entity.setDepartments(departmentList);
         return dao.update(entity);
 
-    }
-
-    @Override
-    public Faculty create(Faculty entity) {
-        Faculty faculty = dao.create(new Faculty());
-        faculty.setId(entity.getId());
-        return update(faculty);
     }
 }

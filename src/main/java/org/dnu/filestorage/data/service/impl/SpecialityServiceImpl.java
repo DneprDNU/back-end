@@ -58,13 +58,6 @@ public class SpecialityServiceImpl extends GenericServiceImpl<SpecialityDAO, Spe
     }
 
     @Override
-    public Speciality create(Speciality entity) {
-        Speciality newSpeciality = dao.create(new Speciality());
-        entity.setId(newSpeciality.getId());
-        return update(entity);
-    }
-
-    @Override
     public Speciality get(Long id) {
         return dao.get(id);
     }

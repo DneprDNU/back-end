@@ -49,13 +49,6 @@ public class LinkingEntityServiceImpl implements LinkingEntityService {
     }
 
     @Override
-    public LinkingEntity create(LinkingEntity entity) {
-        LinkingEntity newInstance = dao.create(new LinkingEntity());
-        entity.setId(newInstance.getId());
-        return update(entity);
-    }
-
-    @Override
     public void remove(Long id) {
         dao.remove(get(id));
     }
