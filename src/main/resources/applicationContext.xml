@@ -20,9 +20,8 @@
 
     <bean id="swaggerConfig" class="com.mangofactory.swagger.configuration.SpringSwaggerConfig"/>
 
-
     <context:component-scan base-package="org.dnu.filestorage"/>
-
+    <mvc:default-servlet-handler/>
 
     <import resource="security.xml"/>
     <import resource="dataSource.xml"/>
@@ -37,6 +36,6 @@
         <property name="locations" value="classpath:*.properties"/>
     </bean>
 
-    <mvc:resources mapping="/resources/**" location="/resources/" />
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
 
 </beans>

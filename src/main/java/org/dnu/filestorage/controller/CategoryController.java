@@ -1,5 +1,6 @@
 package org.dnu.filestorage.controller;
 
+import com.wordnik.swagger.annotations.Api;
 import org.dnu.filestorage.controller.generic.GenericController;
 import org.dnu.filestorage.data.model.Category;
 import org.dnu.filestorage.data.service.CategoryService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @since 15.10.14
  */
 @Controller
+@Api(value = "categories", description = "Endpoint for category management")
 @RequestMapping("/rest/category")
 public class CategoryController extends GenericController<CategoryService, Category> {
 

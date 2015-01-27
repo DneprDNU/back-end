@@ -1,6 +1,7 @@
 package org.dnu.filestorage.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wordnik.swagger.annotations.Api;
 import org.dnu.filestorage.data.model.Category;
 import org.dnu.filestorage.data.model.Resource;
 import org.dnu.filestorage.data.model.Subject;
@@ -18,9 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +30,7 @@ import java.util.Map;
  * @since 15.10.14
  */
 @Controller
+@Api(value = "resources", description = "Endpoint for resource management")
 @RequestMapping("/rest/resource")
 public class ResourceController {
 

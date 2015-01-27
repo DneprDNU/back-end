@@ -1,5 +1,6 @@
 package org.dnu.filestorage.controller;
 
+import com.wordnik.swagger.annotations.Api;
 import org.dnu.filestorage.data.model.Category;
 import org.dnu.filestorage.data.model.Resource;
 import org.dnu.filestorage.search.ResourceSearchRepository;
@@ -19,6 +20,7 @@ import java.util.List;
  * Controller for searching through resources.
  */
 @Controller
+@Api(value = "search", description = "Endpoint for search")
 public class SearchController {
 
     String defaultImage = "http://dnu.thebodva.com/upload/b32f3d1ef28edf602362b91cb935886f.jpg";

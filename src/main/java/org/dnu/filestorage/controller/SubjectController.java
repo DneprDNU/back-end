@@ -1,5 +1,6 @@
 package org.dnu.filestorage.controller;
 
+import com.wordnik.swagger.annotations.Api;
 import org.dnu.filestorage.controller.generic.GenericController;
 import org.dnu.filestorage.data.model.Subject;
 import org.dnu.filestorage.data.service.SubjectService;
@@ -16,6 +17,7 @@ import java.util.List;
  * @since 15.10.14
  */
 @Controller
+@Api(value = "subjects", description = "Endpoint for subject management")
 @RequestMapping("/rest/subject")
 public class SubjectController extends GenericController<SubjectService, Subject> {
 

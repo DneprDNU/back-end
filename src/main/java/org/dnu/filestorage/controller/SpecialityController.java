@@ -1,5 +1,6 @@
 package org.dnu.filestorage.controller;
 
+import com.wordnik.swagger.annotations.Api;
 import org.dnu.filestorage.controller.generic.GenericController;
 import org.dnu.filestorage.data.model.Speciality;
 import org.dnu.filestorage.data.service.SpecialityService;
@@ -16,6 +17,7 @@ import java.util.List;
  * @since 15.10.14
  */
 @Controller
+@Api(value = "specialities", description = "Endpoint for speciality management")
 @RequestMapping("/rest/speciality")
 public class SpecialityController extends GenericController<SpecialityService, Speciality> {
 
