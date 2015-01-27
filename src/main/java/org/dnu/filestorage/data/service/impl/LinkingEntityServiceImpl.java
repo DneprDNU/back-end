@@ -49,6 +49,11 @@ public class LinkingEntityServiceImpl implements LinkingEntityService {
     }
 
     @Override
+    public LinkingEntity create(LinkingEntity entity) {
+        return dao.create(entity);
+    }
+
+    @Override
     public void remove(Long id) {
         dao.remove(get(id));
     }

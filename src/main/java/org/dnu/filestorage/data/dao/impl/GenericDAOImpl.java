@@ -29,7 +29,8 @@ public class GenericDAOImpl<T extends Identifiable> implements GenericDAO<T> {
 
     @Override
     public List<T> list() {
-        return entityManager.createQuery("select a from " + entityClass.getSimpleName() + " a", entityClass).getResultList();
+        return entityManager.createQuery("select a from " + entityClass.getSimpleName() + " a"
+                , entityClass).getResultList();
     }
 
     @Override
