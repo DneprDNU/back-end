@@ -34,16 +34,14 @@ public class FacultyServiceImpl extends GenericServiceImpl<FacultyDAO, Faculty> 
     }
 
     @Override
-    public Faculty update(Faculty entity) {
+    protected void copyProperties(Faculty current, Faculty newEntity) {
         List<Department> departmentList = new ArrayList<Department>();
-        for (Department department : entity.getDepartments()) {
+        for (Department department : newEntity.getDepartments()) {
             Long departmentId = department.getId();
             Department departmentFromDatabase = departmentDAO.get(departmentId);
             departmentList.add(departmentFromDatabase);
         }
 
-        entity.setDepartments(departmentList);
-        return dao.update(entity);
-
+        current.setDepartments(departmentList);
     }
 }

@@ -50,7 +50,11 @@ public class LinkingEntityServiceImpl implements LinkingEntityService {
 
     @Override
     public LinkingEntity create(LinkingEntity entity) {
-        return dao.create(entity);
+        LinkingEntity current = dao.create(new LinkingEntity());
+        current.setSpeciality(entity.getSpeciality() == null ? null : specialityDao.get(entity.getSpeciality().getId()));
+        current.setTeacher(entity.getTeacher() == null ? null : teacherDAO.get(entity.getTeacher().getId()));
+        current.setSubject(entity.getSubject() == null ? null : subjectDAO.get(entity.getSubject().getId()));
+        return dao.update(current);
     }
 
     @Override

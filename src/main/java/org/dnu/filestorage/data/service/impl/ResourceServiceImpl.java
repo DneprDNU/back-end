@@ -50,16 +50,6 @@ public class ResourceServiceImpl extends GenericServiceImpl<ResourceDAO, Resourc
         return dao.get(id);
     }
 
-    @Override
-    public Resource update(Resource entity) {
-        Resource current = dao.get(entity.getId());
-        copyProperties(current, entity);
-        copySpeciality(current, entity);
-        copyCategories(current, entity);
-        copySubjects(current, entity);
-        return dao.update(current);
-    }
-
     private void copySubjects(Resource current, Resource newEntity) {
         List<Subject> subjects = new LinkedList<Subject>();
         if (newEntity.getSubjects() != null) {
@@ -84,12 +74,17 @@ public class ResourceServiceImpl extends GenericServiceImpl<ResourceDAO, Resourc
         current.setSpeciality(newEntity.getSpeciality() == null ? null : specialityDao.get(newEntity.getId()));
     }
 
-    private void copyProperties(Resource current, Resource newEntity) {
+    @Override
+    protected void copyProperties(Resource current, Resource newEntity) {
         current.setImage(newEntity.getImage());
         current.setName(newEntity.getName());
         current.setAuthor(newEntity.getAuthor());
         current.setDescription(newEntity.getDescription());
         current.setResource(newEntity.getResource());
         current.setYear(newEntity.getYear());
+
+        copySpeciality(current, newEntity);
+        copyCategories(current, newEntity);
+        copySubjects(current, newEntity);
     }
 }

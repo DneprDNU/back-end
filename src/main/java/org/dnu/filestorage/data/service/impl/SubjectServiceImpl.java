@@ -37,14 +37,6 @@ public class SubjectServiceImpl extends GenericServiceImpl<SubjectDAO, Subject> 
         return dao.get(id);
     }
 
-    @Override
-    public Subject update(Subject entity) {
-        Subject current = dao.get(entity.getId());
-        copyProperties(current, entity);
-        copyResources(current, entity);
-        return dao.update(current);
-    }
-
     private void copyResources(Subject current, Subject newEntity) {
         List<Resource> resources = new LinkedList<Resource>();
         if (newEntity.getResources() != null) {
@@ -55,8 +47,11 @@ public class SubjectServiceImpl extends GenericServiceImpl<SubjectDAO, Subject> 
         current.setResources(resources);
     }
 
-    private void copyProperties(Subject current, Subject newEntity) {
+    @Override
+    protected void copyProperties(Subject current, Subject newEntity) {
         current.setName(newEntity.getName());
         current.setImage(newEntity.getImage());
+
+        copyResources(current, newEntity);
     }
 }

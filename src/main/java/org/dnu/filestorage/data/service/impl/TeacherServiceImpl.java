@@ -38,10 +38,8 @@ public class TeacherServiceImpl extends GenericServiceImpl<TeacherDAO, Teacher> 
     }
 
     @Override
-    public Teacher update(Teacher entity) {
-        Teacher current = dao.get(entity.getId());
-        current.setName(entity.getName());
-        current.setImage(entity.getImage());
-        return dao.update(current);
+    protected void copyProperties(Teacher current, Teacher newEntity) {
+        current.setName(newEntity.getName());
+        current.setImage(newEntity.getImage());
     }
 }

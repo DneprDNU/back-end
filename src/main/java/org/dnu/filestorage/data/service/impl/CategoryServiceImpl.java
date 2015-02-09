@@ -22,10 +22,8 @@ public class CategoryServiceImpl extends GenericServiceImpl<CategoryDAO, Categor
     }
 
     @Override
-    public Category update(Category entity) {
-        Category current = dao.get(entity.getId());
-        current.setName(entity.getName());
-        current.setImage(entity.getImage());
-        return super.update(current);
+    protected void copyProperties(Category current, Category newEntity) {
+        current.setName(newEntity.getName());
+        current.setImage(newEntity.getImage());
     }
 }

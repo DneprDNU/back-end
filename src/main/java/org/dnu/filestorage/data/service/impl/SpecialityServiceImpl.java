@@ -34,11 +34,9 @@ public class SpecialityServiceImpl extends GenericServiceImpl<SpecialityDAO, Spe
     }
 
     @Override
-    public Speciality update(Speciality entity) {
-        Speciality current = dao.get(entity.getId());
-        copyFields(current, entity);
-        copySupervisors(current, entity);
-        return super.update(current);
+    protected void copyProperties(Speciality current, Speciality newEntity) {
+        copyFields(current, newEntity);
+        copySupervisors(current, newEntity);
     }
 
     private void copySupervisors(Speciality current, Speciality newEntity) {
