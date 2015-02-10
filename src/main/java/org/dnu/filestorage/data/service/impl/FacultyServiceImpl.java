@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -48,7 +49,20 @@ public class FacultyServiceImpl extends GenericServiceImpl<FacultyDAO, Faculty> 
             departmentList.add(departmentFromDatabase);
         }
 
-        current.getDepartments().clear();
-        current.getDepartments().addAll(departmentList);
+        Iterator<Department> departmentIterator = current.getDepartments().iterator();
+        while (departmentIterator.hasNext()) {
+            Department nextDepartment = departmentIterator.next();
+            if (!departmentList.contains(nextDepartment)) {
+                nextDepartment.setFaculty(null);
+                departmentIterator.remove();
+//                departmentDAO.update(nextDepartment);
+            } else {
+                departmentList.remove(nextDepartment);
+            }
+        }
+
+        for (Department department : departmentList) {
+            current.addDepartment(department);
+        }
     }
 }
