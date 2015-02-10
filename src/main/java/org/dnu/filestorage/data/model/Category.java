@@ -1,8 +1,12 @@
 package org.dnu.filestorage.data.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,11 +16,14 @@ import java.util.List;
  */
 @Entity
 public class Category extends NamedEntity {
+    @LazyCollection(LazyCollectionOption.EXTRA)
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Resource> resources = new LinkedList<Resource>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     private List<FreeResource> freeResources = new LinkedList<FreeResource>();
+    @Transient
+    private int resourceCount;
 
     public Category() {
     }
@@ -69,6 +76,14 @@ public class Category extends NamedEntity {
 
     public void setFreeResources(List<FreeResource> freeResources) {
         this.freeResources = freeResources;
+    }
+
+    public int getResourceCount() {
+        return resourceCount;
+    }
+
+    public void setResourceCount(int resourceCount) {
+        this.resourceCount = resourceCount;
     }
 
     @Override

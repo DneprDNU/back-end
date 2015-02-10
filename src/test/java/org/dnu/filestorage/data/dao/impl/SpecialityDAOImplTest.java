@@ -58,6 +58,7 @@ public class SpecialityDAOImplTest {
         category = categoryDAO.create(category);
         resourceDAO.update(resource);
         assertEquals(1, resourceDAO.listByCategoryId(category.getId()).size());
+        assertEquals(1, categoryDAO.get(category.getId()).getResourceCount());
 //        assertNotEquals(Long.valueOf(1l), category.getId());
 //        assertEquals(1, resourceDAO.listByCategoryId(1l).size());
 //        assertEquals(1, resourceDAO.listResourcesByTeacherIdByLinks(1l).size());

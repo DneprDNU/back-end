@@ -9,6 +9,7 @@ import java.util.List;
 
 @JsonDeserialize(using = ResourceDeserializer.class)
 @Entity
+@Table(name = "resources")
 @NamedQueries({@NamedQuery(name = "getResourcesByCategoryId", query = "select r from Resource r " +
         "left join fetch r.categories c where c.id=:categoryId"),
         @NamedQuery(name = "getResourcesByTeacherIdByLinks", query = "select distinct r from Resource r " +

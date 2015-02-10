@@ -15,6 +15,7 @@ import java.io.Serializable;
 public class NamedEntity implements Serializable, Identifiable {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
+    @Column(name = "id")
     private Long id;
     private String name;
     @Column(length = 10000)
