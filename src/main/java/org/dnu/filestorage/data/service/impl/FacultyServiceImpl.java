@@ -33,8 +33,14 @@ public class FacultyServiceImpl extends GenericServiceImpl<FacultyDAO, Faculty> 
         return dao.getFacultyWithRelations(id);
     }
 
+
     @Override
     protected void copyProperties(Faculty current, Faculty newEntity) {
+        current.setName(newEntity.getName());
+        current.setImage(newEntity.getImage());
+        current.setDescription(newEntity.getDescription());
+        current.setShortName(newEntity.getShortName());
+
         List<Department> departmentList = new ArrayList<Department>();
         for (Department department : newEntity.getDepartments()) {
             Long departmentId = department.getId();
