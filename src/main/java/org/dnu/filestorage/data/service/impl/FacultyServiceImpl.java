@@ -48,6 +48,7 @@ public class FacultyServiceImpl extends GenericServiceImpl<FacultyDAO, Faculty> 
             departmentList.add(departmentFromDatabase);
         }
 
-        current.setDepartments(departmentList);
+        current.getDepartments().clear();
+        current.getDepartments().addAll(departmentList);
     }
 }
