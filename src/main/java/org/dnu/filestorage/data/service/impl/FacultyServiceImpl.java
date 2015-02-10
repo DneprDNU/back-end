@@ -55,7 +55,7 @@ public class FacultyServiceImpl extends GenericServiceImpl<FacultyDAO, Faculty> 
             if (!departmentList.contains(nextDepartment)) {
                 nextDepartment.setFaculty(null);
                 departmentIterator.remove();
-//                departmentDAO.update(nextDepartment);
+                departmentDAO.update(nextDepartment);
             } else {
                 departmentList.remove(nextDepartment);
             }
