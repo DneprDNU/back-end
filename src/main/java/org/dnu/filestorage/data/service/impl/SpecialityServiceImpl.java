@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -46,7 +47,22 @@ public class SpecialityServiceImpl extends GenericServiceImpl<SpecialityDAO, Spe
                 supervisors.add(teacherDao.get(supervisor.getId()));
             }
         }
-        current.setSupervisors(supervisors);
+
+        Iterator<Teacher> teacherIterator = current.getSupervisors().iterator();
+        while (teacherIterator.hasNext()) {
+            Teacher teacher = teacherIterator.next();
+            if (!supervisors.contains(teacher)) {
+                teacherIterator.remove();
+                teacher.getSpecialities().remove(current);
+                teacherDao.update(teacher);
+            } else {
+                supervisors.remove(teacher);
+            }
+        }
+
+        for (Teacher teacher : supervisors) {
+            current.addSupervisor(teacher);
+        }
     }
 
     private void copyFields(Speciality current, Speciality newEntity) {

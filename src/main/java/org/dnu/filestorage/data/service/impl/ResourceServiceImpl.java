@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -57,7 +58,22 @@ public class ResourceServiceImpl extends GenericServiceImpl<ResourceDAO, Resourc
                 subjects.add(subjectDAO.get(subject.getId()));
             }
         }
-        current.setSubjects(subjects);
+
+        Iterator<Subject> subjectIterator = current.getSubjects().iterator();
+        while (subjectIterator.hasNext()) {
+            Subject subject = subjectIterator.next();
+            if (!subjects.contains(subject)) {
+                subjectIterator.remove();
+                subject.getResources().remove(current);
+                subjectDAO.update(subject);
+            } else {
+                subjects.remove(subject);
+            }
+        }
+
+        for (Subject subject : subjects) {
+            current.addSubject(subject);
+        }
     }
 
     private void copyCategories(Resource current, Resource newEntity) {
@@ -67,7 +83,22 @@ public class ResourceServiceImpl extends GenericServiceImpl<ResourceDAO, Resourc
                 categories.add(categoryDAO.get(category.getId()));
             }
         }
-        current.setCategories(categories);
+
+        Iterator<Category> categoryIterator = current.getCategories().iterator();
+        while (categoryIterator.hasNext()) {
+            Category category = categoryIterator.next();
+            if (!categories.contains(category)) {
+                categoryIterator.remove();
+                category.getResources().remove(current);
+                categoryDAO.update(category);
+            } else {
+                categories.remove(category);
+            }
+        }
+
+        for (Category category : categories) {
+            current.addCategory(category);
+        }
     }
 
     private void copySpeciality(Resource current, Resource newEntity) {

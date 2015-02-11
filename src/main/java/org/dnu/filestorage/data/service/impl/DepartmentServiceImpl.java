@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -53,7 +54,22 @@ public class DepartmentServiceImpl extends GenericServiceImpl<DepartmentDAO, Dep
                 newEmployees.add(teacherDAO.get(teacher.getId()));
             }
         }
-        current.setEmployees(newEmployees);
+
+        Iterator<Teacher> teacherIterator = current.getEmployees().iterator();
+        while (teacherIterator.hasNext()) {
+            Teacher teacher = teacherIterator.next();
+            if (!newEmployees.contains(teacher)) {
+                teacherIterator.remove();
+                teacher.getDepartments().remove(current);
+                teacherDAO.update(teacher);
+            } else {
+                newEmployees.remove(teacher);
+            }
+        }
+
+        for (Teacher teacher : newEmployees) {
+            current.addEmployee(teacher);
+        }
     }
 
     private void updateSpecialities(Department newEntity, Department current) {
@@ -63,6 +79,21 @@ public class DepartmentServiceImpl extends GenericServiceImpl<DepartmentDAO, Dep
                 newSpecialities.add(specialityDAO.get(speciality.getId()));
             }
         }
-        current.setSpecialities(newSpecialities);
+
+        Iterator<Speciality> specialityIterator = current.getSpecialities().iterator();
+        while (specialityIterator.hasNext()) {
+            Speciality speciality = specialityIterator.next();
+            if (!newSpecialities.contains(speciality)) {
+                specialityIterator.remove();
+                speciality.getDepartments().remove(current);
+                specialityDAO.update(speciality);
+            } else {
+                newSpecialities.remove(speciality);
+            }
+        }
+
+        for (Speciality speciality : newSpecialities) {
+            current.addSpeciality(speciality);
+        }
     }
 }

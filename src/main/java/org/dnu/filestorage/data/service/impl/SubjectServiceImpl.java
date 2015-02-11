@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -44,7 +45,22 @@ public class SubjectServiceImpl extends GenericServiceImpl<SubjectDAO, Subject> 
                 resources.add(resourceDao.get(resource.getId()));
             }
         }
-        current.setResources(resources);
+
+        Iterator<Resource> resourceIterator = current.getResources().iterator();
+        while (resourceIterator.hasNext()) {
+            Resource resource = resourceIterator.next();
+            if (!resources.contains(resource)) {
+                resourceIterator.remove();
+                resource.getSubjects().remove(current);
+                resourceDao.update(resource);
+            } else {
+                resources.remove(resource);
+            }
+        }
+
+        for (Resource resource : resources) {
+            current.addResource(resource);
+        }
     }
 
     @Override
