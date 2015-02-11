@@ -77,6 +77,14 @@ public class FacultyController extends GenericController<FacultyService, Faculty
         return m;
     }
 
+    public Map<String, Object> create(@RequestBody Faculty json){
+        return null;
+    }
+
+    public Map<String, Object> update(@PathVariable Long id, @RequestBody Faculty json){
+        return null;
+    }
+
     @Override
     public Faculty get(@PathVariable Long id) {
         Faculty result = getService().get(id);
