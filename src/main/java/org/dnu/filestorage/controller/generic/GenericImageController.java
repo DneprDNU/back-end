@@ -79,13 +79,7 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public T get(@PathVariable Long id) {
-
-        NamedEntity resource = (NamedEntity) this.service.get(id);
-
-        if (!resource.getImage().isEmpty() && !resource.getImage().equals(defaultImage)) {
-            resource.setImage("http://80.240.139.45:8080/filestorage/files?fileName=" + resource.getImage());
-        }
-        return (T) resource;
+        return this.processImage(this.service.get(id));
     }
 
     public T processImage(T object){
