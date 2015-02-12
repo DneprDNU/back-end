@@ -3,6 +3,7 @@ package org.dnu.filestorage.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wordnik.swagger.annotations.Api;
 import org.dnu.filestorage.controller.generic.GenericController;
+import org.dnu.filestorage.controller.generic.GenericImageController;
 import org.dnu.filestorage.data.model.Department;
 import org.dnu.filestorage.data.model.Faculty;
 import org.dnu.filestorage.data.model.Resource;
@@ -25,65 +26,13 @@ import java.util.Map;
 @Controller
 @Api(value = "faculties", description = "Endpoint for faculty management")
 @RequestMapping("/rest/faculty")
-public class FacultyController extends GenericController<FacultyService, Faculty> {
+public class FacultyController extends GenericImageController<FacultyService, Faculty> {
 
     @Autowired
     public FacultyController(FacultyService service) {
-        super(service);
+        super(service, Faculty.class);
     }
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
-    private FileUploader fileUploader;
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    @ResponseBody
-    public Map<String, Object> update(@PathVariable Long id, @RequestParam(value = "resource") String facultyString,  @RequestParam(required = false) MultipartFile image) throws IOException {
-
-        Faculty faculty = objectMapper.readValue(facultyString, Faculty.class);
-
-        if (image != null) {
-            String imageUrl = fileUploader.uploadFile(image);
-            faculty.setImage(imageUrl);
-        }
-
-        Faculty updated = this.getService().update(faculty);
-
-        Map<String, Object> m = new HashMap<String, Object>();
-        m.put("success", true);
-        m.put("id", id);
-        m.put("updated", updated);
-        return m;
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, Object> create(@RequestParam(value = "resource") String facultyString, @RequestParam(required = false) MultipartFile image) throws IOException {
-
-        Faculty faculty = objectMapper.readValue(facultyString, Faculty.class);
-
-        if (image != null) {
-            String imageUrl = fileUploader.uploadFile(image);
-            faculty.setImage(imageUrl);
-        }
-
-        Faculty created = this.getService().create(faculty);
-
-        Map<String, Object> m = new HashMap<String, Object>();
-        m.put("success", true);
-        m.put("created", created);
-        return m;
-    }
-
-    public Map<String, Object> create(@RequestBody Faculty json){
-        return null;
-    }
-
-    public Map<String, Object> update(@PathVariable Long id, @RequestBody Faculty json){
-        return null;
-    }
 
     @Override
     public Faculty get(@PathVariable Long id) {
