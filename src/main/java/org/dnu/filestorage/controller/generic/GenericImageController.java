@@ -25,7 +25,7 @@ import java.util.Map;
  * @author demyura
  * @since 14.11.14
  */
-public class GenericImageController<S extends GenericService<T>, T extends Identifiable> {
+public abstract class GenericImageController<S extends GenericService<T>, T extends Identifiable> {
     private Logger logger = LoggerFactory.getLogger(GenericImageController.class);
 
     private S service;
@@ -34,9 +34,12 @@ public class GenericImageController<S extends GenericService<T>, T extends Ident
 
     String defaultImage = "http://dnu.thebodva.com/upload/b32f3d1ef28edf602362b91cb935886f.jpg";
 
-    private ObjectMapper objectMapper = new HibernateAwareObjectMapper();
+    @Autowired
+    private ObjectMapper objectMapper;
 
-    private FileUploader fileUploader = new HdfsFileUploader();
+    @Autowired
+    private FileUploader fileUploader;
+
 
     public GenericImageController(S service, Class<T> type) {
 
