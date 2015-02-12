@@ -42,6 +42,6 @@ public class FacultyController extends GenericImageController<FacultyService, Fa
                 department.setFaculty(null);  //workaround for recursion
             }
         }
-        return result;
+        return processImage(result);
     }
 }

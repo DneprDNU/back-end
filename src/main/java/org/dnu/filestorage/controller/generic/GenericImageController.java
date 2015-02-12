@@ -88,6 +88,15 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
         return (T) resource;
     }
 
+    public T processImage(T object){
+        NamedEntity resource = (NamedEntity) object;
+
+        if (!resource.getImage().isEmpty() && !resource.getImage().equals(defaultImage)) {
+            resource.setImage("http://80.240.139.45:8080/filestorage/files?fileName=" + resource.getImage());
+        }
+        return (T) resource;
+    }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseBody
     public Map<String, Object> update(@PathVariable Long id, @RequestParam(value = "resource") String string,  @RequestParam(required = false) MultipartFile image) throws IOException {
