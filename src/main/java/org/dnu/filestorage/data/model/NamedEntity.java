@@ -20,7 +20,7 @@ public class NamedEntity implements Serializable, Identifiable {
     private String name;
     @Column(length = 10000)
     @JsonIgnore
-    private String image;
+    private String image = "";
 
     public NamedEntity() {
     }
