@@ -85,7 +85,7 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
     public T processImage(T object){
         NamedEntity resource = (NamedEntity) object;
 
-        if (!resource.getImage().isEmpty() && !resource.getImage().equals(defaultImage)) {
+        if (resource.getImage() !=null && !resource.getImage().isEmpty() && !resource.getImage().equals(defaultImage)) {
             resource.setImage("http://80.240.139.45:8080/filestorage/files?fileName=" + resource.getImage());
         }
         return (T) resource;
