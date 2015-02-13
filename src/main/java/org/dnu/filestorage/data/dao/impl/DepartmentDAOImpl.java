@@ -17,7 +17,7 @@ public class DepartmentDAOImpl extends GenericDAOImpl<Department> implements Dep
     @Override
     public Department getDepartmentWithRelations(Long id) {
         Department result = (Department) entityManager.createNamedQuery("getDepartmentWithRelations")
-                .setParameter("departmentId", id).getSingleResult();
+                .setParameter("id", id).getSingleResult();
         result.getEmployees().size(); // workaround for JPA problem with multiple join fetch in named query
         return result;
     }
