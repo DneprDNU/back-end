@@ -66,7 +66,9 @@ public class SubjectServiceImpl extends GenericServiceImpl<SubjectDAO, Subject> 
     @Override
     protected void copyProperties(Subject current, Subject newEntity) {
         current.setName(newEntity.getName());
-        current.setImage(newEntity.getImage());
+        if (!newEntity.getImage().isEmpty()) {
+            current.setImage(newEntity.getImage());
+        }
 
         copyResources(current, newEntity);
     }

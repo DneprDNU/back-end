@@ -41,7 +41,9 @@ public class DepartmentServiceImpl extends GenericServiceImpl<DepartmentDAO, Dep
     protected void copyProperties(Department current, Department newEntity ) {
         current.setName(newEntity.getName());
         current.setShortName(newEntity.getShortName());
-        current.setImage(newEntity.getImage());
+        if (!newEntity.getImage().isEmpty()) {
+            current.setImage(newEntity.getImage());
+        }
 
         updateSpecialities(newEntity, current);
         updateEmployees(newEntity, current);

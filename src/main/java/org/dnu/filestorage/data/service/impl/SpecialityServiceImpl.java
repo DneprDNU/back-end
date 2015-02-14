@@ -66,7 +66,9 @@ public class SpecialityServiceImpl extends GenericServiceImpl<SpecialityDAO, Spe
     }
 
     private void copyFields(Speciality current, Speciality newEntity) {
-        current.setImage(newEntity.getImage());
+        if (!newEntity.getImage().isEmpty()) {
+            current.setImage(newEntity.getImage());
+        }
         current.setName(newEntity.getName());
         current.setCode(newEntity.getCode());
     }

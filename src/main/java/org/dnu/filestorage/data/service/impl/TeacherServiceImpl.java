@@ -40,6 +40,8 @@ public class TeacherServiceImpl extends GenericServiceImpl<TeacherDAO, Teacher> 
     @Override
     protected void copyProperties(Teacher current, Teacher newEntity) {
         current.setName(newEntity.getName());
-        current.setImage(newEntity.getImage());
+        if (!newEntity.getImage().isEmpty()) {
+            current.setImage(newEntity.getImage());
+        }
     }
 }

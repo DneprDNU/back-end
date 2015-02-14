@@ -38,7 +38,9 @@ public class FacultyServiceImpl extends GenericServiceImpl<FacultyDAO, Faculty> 
     @Override
     protected void copyProperties(Faculty current, Faculty newEntity) {
         current.setName(newEntity.getName());
-        current.setImage(newEntity.getImage());
+        if (!newEntity.getImage().isEmpty()) {
+            current.setImage(newEntity.getImage());
+        }
         current.setDescription(newEntity.getDescription());
         current.setShortName(newEntity.getShortName());
 

@@ -107,7 +107,9 @@ public class ResourceServiceImpl extends GenericServiceImpl<ResourceDAO, Resourc
 
     @Override
     protected void copyProperties(Resource current, Resource newEntity) {
-        current.setImage(newEntity.getImage());
+        if (!newEntity.getImage().isEmpty()) {
+            current.setImage(newEntity.getImage());
+        }
         current.setName(newEntity.getName());
         current.setAuthor(newEntity.getAuthor());
         current.setDescription(newEntity.getDescription());

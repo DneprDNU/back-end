@@ -100,6 +100,8 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
         if (image != null) {
             String imageUrl = fileUploader.uploadFile(image);
             ((NamedEntity)object).setImage(imageUrl);
+        }else{
+            ((NamedEntity)object).setImage("");
         }
 
        T updated = this.getService().update(object);
