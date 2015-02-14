@@ -38,7 +38,7 @@ public class DepartmentServiceImpl extends GenericServiceImpl<DepartmentDAO, Dep
     }
 
     @Override
-    protected void copyProperties(Department newEntity, Department current) {
+    protected void copyProperties(Department current, Department newEntity ) {
         current.setName(newEntity.getName());
         current.setShortName(newEntity.getShortName());
         current.setImage(newEntity.getImage());
