@@ -12,6 +12,9 @@ public class User implements Identifiable {
     private boolean enabled;
     private String userRole;
 
+    @OneToMany
+    private Faculty faculty;
+
     public User() {
     }
 
@@ -70,5 +73,13 @@ public class User implements Identifiable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
     }
 }
