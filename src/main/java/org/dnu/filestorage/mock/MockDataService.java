@@ -68,9 +68,10 @@ public class MockDataService {
                     subject.addResource(resource);
                     resourceDAO.update(resource);
                 }
-                subjectDAO.update(subject);
                 categoryDAO.update(category);
             }
+            subjectDAO.update(subject);
+
         }
 
         for (int f = 0; f < 10; ++f) {
