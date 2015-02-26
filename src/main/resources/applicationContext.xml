@@ -18,7 +18,7 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
-    <bean id="swaggerConfig" class="com.mangofactory.swagger.configuration.SpringSwaggerConfig"/>
+    <!--<bean id="swaggerConfig" class="com.mangofactory.swagger.configuration.SpringSwaggerConfig"/>-->
 
     <context:component-scan base-package="org.dnu.filestorage"/>
     <mvc:default-servlet-handler/>
