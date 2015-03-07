@@ -5,6 +5,7 @@ import org.dnu.filestorage.data.model.Identifiable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
@@ -32,6 +33,7 @@ public class GenericDAOImpl<T extends Identifiable> implements GenericDAO<T> {
         return entityManager.createQuery("select a from " + entityClass.getSimpleName() + " a"
                 , entityClass).getResultList();
     }
+
 
     @Override
     public T get(Object id) {
@@ -61,5 +63,20 @@ public class GenericDAOImpl<T extends Identifiable> implements GenericDAO<T> {
 
     public Class<T> getEntityClass() {
         return entityClass;
+    }
+
+    @Override
+    public int getCount() {
+        return (int) entityManager.createQuery("select count(a) from " + entityClass.getSimpleName() + " a")
+                .getSingleResult();
+    }
+
+    @Override
+    public List<T> list(int from, int to) {
+        TypedQuery<T> query = entityManager.createQuery("select a from " + entityClass.getSimpleName() + " a",
+                entityClass);
+        query.setFirstResult(from);
+        query.setMaxResults(to - from);
+        return query.getResultList();
     }
 }

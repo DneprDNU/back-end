@@ -58,6 +58,16 @@ public class GenericServiceImpl<D extends GenericDAO<T>, T extends Identifiable>
     }
 
     @Override
+    public int getCount() {
+        return dao.getCount();
+    }
+
+    @Override
+    public List<T> list(int from, int to) {
+        return dao.list(from, to);
+    }
+
+    @Override
     public void remove(T entity) {
         dao.remove(entity);
     }

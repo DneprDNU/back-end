@@ -138,4 +138,15 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
         return m;
     }
 
+    @RequestMapping(params = {"from", "to"})
+    @ResponseBody
+    public List<T> listPaged(@RequestParam int from, @RequestParam int to) {
+        return this.service.list(from, to);
+    }
+
+    @RequestMapping(value = "/count")
+    @ResponseBody
+    public Integer getCount() {
+        return this.service.getCount();
+    }
 }

@@ -24,4 +24,8 @@ public interface GenericDAO<T extends Identifiable> {
     }
 
     Class<T> getEntityClass();
+
+    int getCount();
+
+    List<T> list(int from, int to);
 }
