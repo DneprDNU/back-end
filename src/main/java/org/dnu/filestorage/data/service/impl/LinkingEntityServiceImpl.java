@@ -63,7 +63,7 @@ public class LinkingEntityServiceImpl implements LinkingEntityService {
     }
 
     @Override
-    public int getCount() {
+    public long getCount() {
         return dao.getCount();
     }
 

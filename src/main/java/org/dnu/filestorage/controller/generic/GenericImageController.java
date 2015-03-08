@@ -146,7 +146,7 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
 
     @RequestMapping(value = "/count")
     @ResponseBody
-    public Integer getCount() {
+    public Long getCount() {
         return this.service.getCount();
     }
 }

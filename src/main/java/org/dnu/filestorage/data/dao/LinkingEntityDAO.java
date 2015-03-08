@@ -19,7 +19,7 @@ public interface LinkingEntityDAO {
 
     void remove(LinkingEntity entity);
 
-    int getCount();
+    long getCount();
 
     List<LinkingEntity> list(int from, int to);
 }

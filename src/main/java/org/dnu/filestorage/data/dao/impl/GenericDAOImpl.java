@@ -66,8 +66,8 @@ public class GenericDAOImpl<T extends Identifiable> implements GenericDAO<T> {
     }
 
     @Override
-    public int getCount() {
-        return (int) entityManager.createQuery("select count(a) from " + entityClass.getSimpleName() + " a")
+    public long getCount() {
+        return (long) entityManager.createQuery("select count(a) from " + entityClass.getSimpleName() + " a")
                 .getSingleResult();
     }
 

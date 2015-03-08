@@ -19,7 +19,7 @@ public interface GenericService<T extends Identifiable> {
 
     void remove(Long id);
 
-    int getCount();
+    long getCount();
 
     List<T> list(int from, int to);
 

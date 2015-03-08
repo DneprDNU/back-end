@@ -42,7 +42,7 @@ public abstract class GenericController<S extends GenericService<T>, T extends I
 
     @RequestMapping(value = "/count")
     @ResponseBody
-    public Integer getCount() {
+    public Long getCount() {
         return this.service.getCount();
     }
 

@@ -58,7 +58,7 @@ public class GenericServiceImpl<D extends GenericDAO<T>, T extends Identifiable>
     }
 
     @Override
-    public int getCount() {
+    public long getCount() {
         return dao.getCount();
     }
 
