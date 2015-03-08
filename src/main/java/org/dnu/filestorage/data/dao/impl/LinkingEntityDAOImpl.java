@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -44,5 +45,20 @@ public class LinkingEntityDAOImpl implements LinkingEntityDAO {
     @Override
     public void remove(LinkingEntity entity) {
         entityManager.remove(entity);
+    }
+
+    @Override
+    public int getCount() {
+        return (int) entityManager.createQuery("select count(a) from LinkingEntity a")
+                .getSingleResult();
+    }
+
+    @Override
+    public List<LinkingEntity> list(int from, int to) {
+        TypedQuery<LinkingEntity> query = entityManager.createQuery("select a from LinkingEntity a",
+                LinkingEntity.class);
+        query.setFirstResult(from);
+        query.setMaxResults(to - from);
+        return query.getResultList();
     }
 }

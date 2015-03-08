@@ -18,4 +18,8 @@ public interface LinkingEntityDAO {
     LinkingEntity create(LinkingEntity entity);
 
     void remove(LinkingEntity entity);
+
+    int getCount();
+
+    List<LinkingEntity> list(int from, int to);
 }

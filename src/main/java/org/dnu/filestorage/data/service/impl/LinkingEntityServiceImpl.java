@@ -63,6 +63,16 @@ public class LinkingEntityServiceImpl implements LinkingEntityService {
     }
 
     @Override
+    public int getCount() {
+        return dao.getCount();
+    }
+
+    @Override
+    public List<LinkingEntity> list(int from, int to) {
+        return dao.list(from, to);
+    }
+
+    @Override
     public void remove(LinkingEntity entity) {
         dao.remove(entity);
     }
