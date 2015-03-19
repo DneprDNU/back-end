@@ -1,6 +1,7 @@
 package org.dnu.filestorage.controller.generic;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.dnu.filestorage.data.dto.Count;
 import org.dnu.filestorage.data.model.Identifiable;
 import org.dnu.filestorage.data.model.NamedEntity;
 import org.dnu.filestorage.data.service.GenericService;
@@ -146,7 +147,7 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
 
     @RequestMapping(value = "/count")
     @ResponseBody
-    public Long getCount() {
-        return this.service.getCount();
+    public Count getCount() {
+        return new Count(this.service.getCount());
     }
 }

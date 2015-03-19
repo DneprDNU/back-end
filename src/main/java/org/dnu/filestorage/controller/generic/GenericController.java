@@ -1,5 +1,6 @@
 package org.dnu.filestorage.controller.generic;
 
+import org.dnu.filestorage.data.dto.Count;
 import org.dnu.filestorage.data.model.Identifiable;
 import org.dnu.filestorage.data.service.GenericService;
 import org.slf4j.Logger;
@@ -42,8 +43,8 @@ public abstract class GenericController<S extends GenericService<T>, T extends I
 
     @RequestMapping(value = "/count")
     @ResponseBody
-    public Long getCount() {
-        return this.service.getCount();
+    public Count getCount() {
+        return new Count(this.service.getCount());
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
