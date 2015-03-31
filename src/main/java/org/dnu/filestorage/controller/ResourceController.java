@@ -2,6 +2,7 @@ package org.dnu.filestorage.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wordnik.swagger.annotations.Api;
+import org.dnu.filestorage.data.dto.Count;
 import org.dnu.filestorage.data.model.Category;
 import org.dnu.filestorage.data.model.Resource;
 import org.dnu.filestorage.data.model.Subject;
@@ -168,5 +169,17 @@ public class ResourceController {
     @ResponseBody
     public List<Resource> listByTeacherIdByLinks(@RequestParam("teacherId") Long teacherId) {
         return this.service.listResourcesByTeacherIdByLinks(teacherId);
+    }
+
+    @RequestMapping(params = {"from", "to"})
+    @ResponseBody
+    public List<Resource> listPaged(@RequestParam int from, @RequestParam int to) {
+        return this.service.list(from, to);
+    }
+
+    @RequestMapping(value = "/count")
+    @ResponseBody
+    public Count getCount() {
+        return new Count(this.service.getCount());
     }
 }
