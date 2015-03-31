@@ -8,6 +8,6 @@ import java.util.List;
  * @author demyura
  * @since 15.10.14
  */
-public interface SpecialityDAO extends GenericDAO<Speciality> {
+public interface SpecialityDAO extends GenericDAO<Speciality>, FilteredDAO<Speciality> {
     List<Speciality> getSpecialitiesByFacultyId(Long facultyId);
 }

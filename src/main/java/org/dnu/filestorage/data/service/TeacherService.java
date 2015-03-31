@@ -8,7 +8,7 @@ import java.util.List;
  * @author demyura
  * @since 15.10.14
  */
-public interface TeacherService extends GenericService<Teacher> {
+public interface TeacherService extends GenericService<Teacher>, FilteredService<Teacher> {
     List<Teacher> getTeachersBySpecialityId(Long specialityId);
 
     List<Teacher> getTeachersByDepartmentId(Long departmentId);

@@ -6,6 +6,6 @@ import org.dnu.filestorage.data.model.Department;
  * @author demyura
  * @since 15.10.14
  */
-public interface DepartmentDAO extends GenericDAO<Department> {
+public interface DepartmentDAO extends GenericDAO<Department>, FilteredDAO<Department> {
     Department getDepartmentWithRelations(Long id);
 }

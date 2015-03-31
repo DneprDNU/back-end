@@ -8,7 +8,7 @@ import java.util.List;
  * @author demyura
  * @since 15.10.14
  */
-public interface ResourceDAO extends GenericDAO<Resource> {
+public interface ResourceDAO extends GenericDAO<Resource>, FilteredDAO<Resource> {
 
     List<Resource> listByCategoryId(Long categoryId);
 

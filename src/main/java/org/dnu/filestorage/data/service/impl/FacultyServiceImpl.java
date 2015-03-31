@@ -67,4 +67,9 @@ public class FacultyServiceImpl extends GenericServiceImpl<FacultyDAO, Faculty> 
             current.addDepartment(department);
         }
     }
+
+    @Override
+    public List<Faculty> listByFacultyId(long facultyId) {
+        return dao.listByFacultyId(facultyId);
+    }
 }

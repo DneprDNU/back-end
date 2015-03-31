@@ -7,6 +7,7 @@ import org.dnu.filestorage.data.model.Department;
 import org.dnu.filestorage.data.model.Speciality;
 import org.dnu.filestorage.data.model.Teacher;
 import org.dnu.filestorage.data.service.DepartmentService;
+import org.dnu.filestorage.data.service.FilteredService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,8 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class DepartmentServiceImpl extends GenericServiceImpl<DepartmentDAO, Department> implements DepartmentService {
+public class DepartmentServiceImpl extends GenericServiceImpl<DepartmentDAO, Department>
+        implements DepartmentService, FilteredService<Department> {
     @Autowired
     private SpecialityDAO specialityDAO;
     @Autowired
@@ -97,5 +99,10 @@ public class DepartmentServiceImpl extends GenericServiceImpl<DepartmentDAO, Dep
         for (Speciality speciality : newSpecialities) {
             current.addSpeciality(speciality);
         }
+    }
+
+    @Override
+    public List<Department> listByFacultyId(long facultyId) {
+        return dao.listByFacultyId(facultyId);
     }
 }

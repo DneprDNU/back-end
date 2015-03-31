@@ -8,7 +8,7 @@ import java.util.List;
  * @author demyura
  * @since 15.10.14
  */
-public interface SubjectService extends GenericService<Subject> {
+public interface SubjectService extends GenericService<Subject>, FilteredService<Subject> {
 
     List<Subject> getByDepartmentId(Long departmentId);
 }

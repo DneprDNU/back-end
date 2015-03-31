@@ -1,6 +1,5 @@
 package org.dnu.filestorage.data.dao.impl;
 
-import org.dnu.filestorage.data.dao.FilteredDAO;
 import org.dnu.filestorage.data.dao.TeacherDAO;
 import org.dnu.filestorage.data.model.Teacher;
 import org.springframework.stereotype.Repository;
@@ -14,7 +13,7 @@ import java.util.List;
  */
 @Repository
 @Transactional
-public class TeacherDAOImpl extends GenericDAOImpl<Teacher> implements TeacherDAO, FilteredDAO<Teacher> {
+public class TeacherDAOImpl extends GenericDAOImpl<Teacher> implements TeacherDAO {
 
 
     @Override

@@ -77,4 +77,9 @@ public class SpecialityServiceImpl extends GenericServiceImpl<SpecialityDAO, Spe
     public Speciality get(Long id) {
         return dao.get(id);
     }
+
+    @Override
+    public List<Speciality> listByFacultyId(long facultyId) {
+        return dao.listByFacultyId(facultyId);
+    }
 }

@@ -120,4 +120,9 @@ public class ResourceServiceImpl extends GenericServiceImpl<ResourceDAO, Resourc
         copyCategories(current, newEntity);
         copySubjects(current, newEntity);
     }
+
+    @Override
+    public List<Resource> listByFacultyId(long facultyId) {
+        return dao.listByFacultyId(facultyId);
+    }
 }

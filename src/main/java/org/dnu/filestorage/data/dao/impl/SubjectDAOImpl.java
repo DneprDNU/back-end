@@ -1,6 +1,5 @@
 package org.dnu.filestorage.data.dao.impl;
 
-import org.dnu.filestorage.data.dao.FilteredDAO;
 import org.dnu.filestorage.data.dao.SubjectDAO;
 import org.dnu.filestorage.data.model.Subject;
 import org.springframework.stereotype.Repository;
@@ -14,7 +13,7 @@ import java.util.List;
  */
 @Repository
 @Transactional
-public class SubjectDAOImpl extends GenericDAOImpl<Subject> implements SubjectDAO, FilteredDAO<Subject> {
+public class SubjectDAOImpl extends GenericDAOImpl<Subject> implements SubjectDAO {
 
     @Override
     public List<Subject> getByDepartmentId(Long departmentId) {

@@ -72,4 +72,9 @@ public class SubjectServiceImpl extends GenericServiceImpl<SubjectDAO, Subject> 
 
         copyResources(current, newEntity);
     }
+
+    @Override
+    public List<Subject> listByFacultyId(long facultyId) {
+        return dao.listByFacultyId(facultyId);
+    }
 }

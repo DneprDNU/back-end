@@ -8,6 +8,6 @@ import java.util.List;
  * @author demyura
  * @since 15.10.14
  */
-public interface SpecialityService extends GenericService<Speciality> {
+public interface SpecialityService extends GenericService<Speciality>, FilteredService<Speciality> {
     List<Speciality> getSpecialitiesByFacultyId(Long facultyId);
 }

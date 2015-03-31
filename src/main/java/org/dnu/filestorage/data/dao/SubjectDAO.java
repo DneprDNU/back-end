@@ -8,7 +8,7 @@ import java.util.List;
  * @author demyura
  * @since 15.10.14
  */
-public interface SubjectDAO extends GenericDAO<Subject> {
+public interface SubjectDAO extends GenericDAO<Subject>, FilteredDAO<Subject> {
 
     List<Subject> getByDepartmentId(Long departmentId);
 }

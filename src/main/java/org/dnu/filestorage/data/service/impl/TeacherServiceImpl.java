@@ -44,4 +44,9 @@ public class TeacherServiceImpl extends GenericServiceImpl<TeacherDAO, Teacher> 
             current.setImage(newEntity.getImage());
         }
     }
+
+    @Override
+    public List<Teacher> listByFacultyId(long facultyId) {
+        return dao.listByFacultyId(facultyId);
+    }
 }
