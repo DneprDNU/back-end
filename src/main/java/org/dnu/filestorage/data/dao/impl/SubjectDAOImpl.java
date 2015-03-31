@@ -1,5 +1,6 @@
 package org.dnu.filestorage.data.dao.impl;
 
+import org.dnu.filestorage.data.dao.FilteredDAO;
 import org.dnu.filestorage.data.dao.SubjectDAO;
 import org.dnu.filestorage.data.model.Subject;
 import org.springframework.stereotype.Repository;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 @Repository
 @Transactional
-public class SubjectDAOImpl extends GenericDAOImpl<Subject> implements SubjectDAO {
+public class SubjectDAOImpl extends GenericDAOImpl<Subject> implements SubjectDAO, FilteredDAO<Subject> {
 
     @Override
     public List<Subject> getByDepartmentId(Long departmentId) {
@@ -26,5 +27,11 @@ public class SubjectDAOImpl extends GenericDAOImpl<Subject> implements SubjectDA
         Subject result = super.get(id);
         result.getResources().size();
         return result;
+    }
+
+    @Override
+    public List<Subject> listByFacultyId(long facultyId) {
+        return entityManager.createNamedQuery("listSubjectsByFacultyId", Subject.class)
+                .setParameter("facultyId", facultyId).getResultList();
     }
 }

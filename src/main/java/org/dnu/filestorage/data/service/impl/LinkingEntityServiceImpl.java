@@ -5,6 +5,7 @@ import org.dnu.filestorage.data.dao.SpecialityDAO;
 import org.dnu.filestorage.data.dao.SubjectDAO;
 import org.dnu.filestorage.data.dao.TeacherDAO;
 import org.dnu.filestorage.data.model.LinkingEntity;
+import org.dnu.filestorage.data.model.Speciality;
 import org.dnu.filestorage.data.service.LinkingEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,10 +43,24 @@ public class LinkingEntityServiceImpl implements LinkingEntityService {
     @Override
     public LinkingEntity update(LinkingEntity entity) {
         LinkingEntity current = dao.get(entity.getId());
-        current.setSpeciality(entity.getSpeciality() == null ? null : specialityDao.get(entity.getSpeciality().getId()));
+        copySpeciality(entity, current);
+
         current.setTeacher(entity.getTeacher() == null ? null : teacherDAO.get(entity.getTeacher().getId()));
         current.setSubject(entity.getSubject() == null ? null : subjectDAO.get(entity.getSubject().getId()));
         return dao.update(entity);
+    }
+
+    private void copySpeciality(LinkingEntity entity, LinkingEntity current) {
+        Speciality currentSpeciality = current.getSpeciality();
+        Speciality targetSpeciality = entity.getSpeciality() == null ? null :
+                specialityDao.get(entity.getSpeciality().getId());
+        if (targetSpeciality != currentSpeciality) {
+            if (currentSpeciality != null) {
+                currentSpeciality.getLinks().remove(this);
+                specialityDao.update(currentSpeciality);
+            }
+            current.setSpeciality(targetSpeciality);
+        }
     }
 
     @Override

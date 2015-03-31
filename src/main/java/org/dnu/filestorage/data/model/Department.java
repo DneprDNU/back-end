@@ -11,7 +11,9 @@ import java.util.List;
 @Entity
 @NamedQueries({@NamedQuery(name = "getDepartmentWithRelations", query = "select a from Department a " +
         "left join fetch a.specialities " +
-        " where a.id = :departmentId")})
+        " where a.id = :departmentId"),
+        @NamedQuery(name = "listByFacultyId", query = "select a from Department a " +
+                "where a.faculty.id=:facultyId")})
 public class Department extends NamedEntity {
     private String shortName;
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})

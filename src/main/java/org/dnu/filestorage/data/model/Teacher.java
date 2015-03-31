@@ -9,6 +9,8 @@ import java.util.List;
  * @since 07.10.14
  */
 @Entity
+@NamedQueries({@NamedQuery(name = "listTeachersByFacultyId", query = "select distinct t from Teacher t " +
+        "left join t.departments d left join d.faculty f where f.id=:facultyId")})
 public class Teacher extends NamedEntity {
     @OneToMany(mappedBy = "teacher", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     private List<LinkingEntity> links = new LinkedList<LinkingEntity>();

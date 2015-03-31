@@ -13,7 +13,10 @@ import java.util.List;
 @NamedQueries({@NamedQuery(name = "getResourcesByCategoryId", query = "select r from Resource r " +
         "left join fetch r.categories c where c.id=:categoryId"),
         @NamedQuery(name = "getResourcesByTeacherIdByLinks", query = "select distinct r from Resource r " +
-                "left join r.subjects s left join s.links l where l.teacher.id=:teacherId")})
+                "left join r.subjects s left join s.links l where l.teacher.id=:teacherId"),
+        @NamedQuery(name = "listResourcesByFaculty", query = "select distinct r from Resource r " +
+                "left join r.subjects s left join s.links l left join l.speciality sp " +
+                "left join sp.departments d left join d.faculty f where f.id=:facultyId")})
 public class Resource extends NamedEntity {
     @ManyToMany
     private List<Category> categories = new LinkedList<Category>();
