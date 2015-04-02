@@ -43,7 +43,7 @@ public class ResourceServiceImpl extends GenericServiceImpl<ResourceDAO, Resourc
 
     @Override
     public List<Resource> listResourcesByTeacherIdByLinks(Long teacherId) {
-        return listResourcesByTeacherIdByLinks(teacherId);
+        return dao.listResourcesByTeacherIdByLinks(teacherId);
     }
 
     @Override

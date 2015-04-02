@@ -49,7 +49,7 @@ public class LinkingEntityDAOImpl implements LinkingEntityDAO {
 
     @Override
     public long getCount() {
-        return (int) entityManager.createQuery("select count(a) from LinkingEntity a")
+        return (long) entityManager.createQuery("select count(a) from LinkingEntity a")
                 .getSingleResult();
     }
 
