@@ -28,9 +28,9 @@ public class TeacherController extends GenericImageController<TeacherService, Te
         super(service, Teacher.class);
     }
 
-    @RequestMapping(params = "facultyId")
-    @ResponseBody
-    public List<Speciality> listAllByFacultyId(@RequestParam("facultyId") Long facultyId) {
-        return getService().getSpecialitiesByFacultyId(facultyId);
-    }
+//    @RequestMapping(params = "facultyId")
+//    @ResponseBody
+//    public List<Speciality> listAllByFacultyId(@RequestParam("facultyId") Long facultyId) {
+//        return getService().getSpecialitiesByFacultyId(facultyId);
+//    }
 }
