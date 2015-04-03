@@ -1,7 +1,6 @@
 package org.dnu.filestorage.controller;
 
 import com.wordnik.swagger.annotations.Api;
-import org.dnu.filestorage.controller.generic.GenericController;
 import org.dnu.filestorage.controller.generic.GenericImageController;
 import org.dnu.filestorage.data.model.Department;
 import org.dnu.filestorage.data.service.DepartmentService;
@@ -22,4 +21,5 @@ public class DepartmentController extends GenericImageController<DepartmentServi
     public DepartmentController(DepartmentService service) {
         super(service, Department.class);
     }
+
 }

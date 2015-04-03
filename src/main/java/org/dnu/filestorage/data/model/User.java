@@ -12,7 +12,7 @@ public class User implements Identifiable {
     private boolean enabled;
     private String userRole;
 
-    @OneToMany
+    @ManyToOne
     private Faculty faculty;
 
     public User() {

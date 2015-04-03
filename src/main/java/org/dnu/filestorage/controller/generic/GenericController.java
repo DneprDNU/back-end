@@ -2,10 +2,16 @@ package org.dnu.filestorage.controller.generic;
 
 import org.dnu.filestorage.data.dto.Count;
 import org.dnu.filestorage.data.model.Identifiable;
+import org.dnu.filestorage.data.model.User;
+import org.dnu.filestorage.data.service.FilteredService;
 import org.dnu.filestorage.data.service.GenericService;
+import org.dnu.filestorage.data.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -18,6 +24,9 @@ import java.util.Map;
  */
 public abstract class GenericController<S extends GenericService<T>, T extends Identifiable> {
     private Logger logger = LoggerFactory.getLogger(GenericController.class);
+
+    @Autowired
+    private UserService userService;
 
     private S service;
 
@@ -87,4 +96,24 @@ public abstract class GenericController<S extends GenericService<T>, T extends I
         return m;
     }
 
+    @RequestMapping(params = "/filtered")
+    @ResponseBody
+    public List<T> listAllFiltered() {
+        if (service instanceof FilteredService) {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String name = auth.getName();
+            if (name != null) {
+                User user = getUserService().findByUserName(name);
+                if (user == null) {
+                    return this.service.list();
+                }
+                return ((FilteredService) service).listByFacultyId(user.getFaculty().getId());
+            }
+        }
+        return this.service.list();
+    }
+
+    public UserService getUserService() {
+        return userService;
+    }
 }

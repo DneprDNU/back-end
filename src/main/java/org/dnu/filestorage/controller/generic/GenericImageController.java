@@ -5,6 +5,7 @@ import org.dnu.filestorage.data.dto.Count;
 import org.dnu.filestorage.data.model.Identifiable;
 import org.dnu.filestorage.data.model.NamedEntity;
 import org.dnu.filestorage.data.service.GenericService;
+import org.dnu.filestorage.data.service.UserService;
 import org.dnu.filestorage.utils.FileUploader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,9 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
 
     @Autowired
     private FileUploader fileUploader;
+
+    @Autowired
+    private UserService userService;
 
 
     public GenericImageController(S service, Class<T> type) {
@@ -149,5 +153,15 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
     @ResponseBody
     public Count getCount() {
         return new Count(this.service.getCount());
+    }
+
+    @RequestMapping(params = "/filtered")
+    @ResponseBody
+    public List<T> listAllFiltered() {
+        return this.service.list();
+    }
+
+    public UserService getUserService() {
+        return userService;
     }
 }
