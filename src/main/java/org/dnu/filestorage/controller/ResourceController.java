@@ -118,10 +118,10 @@ public class ResourceController {
     public Resource get(@PathVariable Long id) throws UnknownHostException {
         Resource resource = this.service.get(id);
         if (!resource.getResource().isEmpty() && !resource.getImage().equals(defaultImage)) {
-            resource.setResource("http://80.240.139.45:8080/filestorage/files?fileName=" + resource.getResource());
+            resource.setResource("http://212.3.125.102:8080/filestorage/files?fileName=" + resource.getResource());
         }
         if (!resource.getImage().isEmpty() && !resource.getImage().equals(defaultImage)) {
-            resource.setImage("http://80.240.139.45:8080/filestorage/files?fileName=" + resource.getImage());
+            resource.setImage("http://212.3.125.102:8080/filestorage/files?fileName=" + resource.getImage());
         }
         return resource;
     }

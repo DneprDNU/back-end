@@ -64,7 +64,7 @@ public class SearchController {
             resource.setId(Long.parseLong(searchHits[i].id()));
             resource.setCategories(categories);
             if (!resource.getImage().isEmpty() && !resource.getImage().equals(defaultImage)) {
-                resource.setImage("http://80.240.139.45:8080/filestorage/files?fileName=" + searchHits[i].getSource().get("image"));
+                resource.setImage("http://212.3.125.102:8080/filestorage/files?fileName=" + searchHits[i].getSource().get("image"));
             }
             else{
                 resource.setImage((String)searchHits[i].getSource().get("image"));
