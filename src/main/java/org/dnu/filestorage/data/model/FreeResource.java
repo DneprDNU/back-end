@@ -10,8 +10,7 @@ import java.util.List;
 public class FreeResource extends NamedEntity {
     private String description;
 
-    @Column(length = 10000)
-    private String resource;
+       private String resource;
 
     @ManyToMany
     private List<Category> categories = new LinkedList<Category>();

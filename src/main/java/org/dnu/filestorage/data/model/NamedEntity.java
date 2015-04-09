@@ -18,7 +18,6 @@ public class NamedEntity implements Serializable, Identifiable {
     @Column(name = "id")
     private Long id;
     private String name;
-    @Column(length = 10000)
     @JsonIgnore
     private String image = "";
 

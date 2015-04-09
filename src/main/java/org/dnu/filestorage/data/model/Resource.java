@@ -32,7 +32,6 @@ public class Resource extends NamedEntity {
 
     private String description;
 
-    @Column(length = 10000)
     private String resource;
 
     public Resource() {
