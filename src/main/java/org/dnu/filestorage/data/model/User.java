@@ -6,6 +6,9 @@ import javax.persistence.*;
 @Table(name = "users")
 public class User implements Identifiable {
 
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
     private Long id;
     private String username;
     private String password;
@@ -64,9 +67,6 @@ public class User implements Identifiable {
         this.userRole = userRole;
     }
 
-    @Override
-    @Id
-    @GeneratedValue()
     public Long getId() {
         return this.id;
     }
