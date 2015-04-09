@@ -61,7 +61,7 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
 
         if (image != null) {
             String imageUrl = fileUploader.uploadFile(image);
-            ((NamedEntity) object).setImage(imageUrl);
+            ((NamedEntity) object).setImage("http://212.3.125.102:8080/filestorage/files?fileName=" +imageUrl);
         }
 
         T created = this.getService().create(object);
@@ -80,10 +80,6 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
 
     public T processImage(T object) {
         NamedEntity resource = (NamedEntity) object;
-
-        if (resource.getImage() != null && !resource.getImage().isEmpty() && !resource.getImage().equals(defaultImage)) {
-            resource.setImage("http://212.3.125.102:8080/filestorage/files?fileName=" + resource.getImage());
-        }
         return (T) resource;
     }
 
@@ -95,7 +91,7 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
 
         if (image != null) {
             String imageUrl = fileUploader.uploadFile(image);
-            ((NamedEntity) object).setImage(imageUrl);
+            ((NamedEntity) object).setImage("http://212.3.125.102:8080/filestorage/files?fileName=" +imageUrl);
         } else {
             ((NamedEntity) object).setImage("");
         }

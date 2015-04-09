@@ -96,11 +96,11 @@ public class ResourceController {
 
         if (file != null) {
             String fileUrl = fileUploader.uploadFile(file);
-            res.setResource(fileUrl);
+            res.setResource("http://212.3.125.102:8080/filestorage/files?fileName=" +fileUrl);
         }
         if (image != null) {
             String imageUrl = fileUploader.uploadFile(image);
-            res.setImage(imageUrl);
+            res.setImage("http://212.3.125.102:8080/filestorage/files?fileName=" +imageUrl);
         }
 
         Resource created = service.create(res);
@@ -117,12 +117,6 @@ public class ResourceController {
     @ResponseBody
     public Resource get(@PathVariable Long id) throws UnknownHostException {
         Resource resource = this.service.get(id);
-        if (!resource.getResource().isEmpty() && !resource.getImage().equals(defaultImage)) {
-            resource.setResource("http://212.3.125.102:8080/filestorage/files?fileName=" + resource.getResource());
-        }
-        if (!resource.getImage().isEmpty() && !resource.getImage().equals(defaultImage)) {
-            resource.setImage("http://212.3.125.102:8080/filestorage/files?fileName=" + resource.getImage());
-        }
         return resource;
     }
 
@@ -134,11 +128,11 @@ public class ResourceController {
 
         if (file != null) {
             String fileUrl = fileUploader.uploadFile(file);
-            resource.setResource(fileUrl);
+            resource.setResource("http://212.3.125.102:8080/filestorage/files?fileName=" +fileUrl);
         }
         if (image != null) {
             String imageUrl = fileUploader.uploadFile(image);
-            resource.setImage(imageUrl);
+            resource.setImage("http://212.3.125.102:8080/filestorage/files?fileName=" +imageUrl);
         }
 
         Resource updated = this.service.update(resource);
