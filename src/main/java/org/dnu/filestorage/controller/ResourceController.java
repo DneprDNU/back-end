@@ -55,32 +55,6 @@ public class ResourceController {
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.setDisallowedFields("resource", "image");
-
-        binder.registerCustomEditor(List.class, "categories", new CustomCollectionEditor(List.class) {
-            protected Object convertElement(Object element) {
-                if (element instanceof Category) {
-                    return element;
-                }
-                if (element instanceof String) {
-                    Category category = categoryService.get(Long.valueOf((String) element));
-                    return category;
-                }
-                return null;
-            }
-        });
-
-        binder.registerCustomEditor(List.class, "subjects", new CustomCollectionEditor(List.class) {
-            protected Object convertElement(Object element) {
-                if (element instanceof Category) {
-                    return element;
-                }
-                if (element instanceof String) {
-                    Subject subject = subjectService.get(Long.valueOf((String) element));
-                    return subject;
-                }
-                return null;
-            }
-        });
     }
 
     @RequestMapping
