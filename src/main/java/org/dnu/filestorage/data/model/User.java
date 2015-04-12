@@ -13,7 +13,7 @@ public class User implements Identifiable {
     private String username;
     private String password;
     private boolean enabled;
-    private String userRole;
+    private String userRole = "ROLE_ADMIN";
 
     @ManyToOne
     private Faculty faculty;

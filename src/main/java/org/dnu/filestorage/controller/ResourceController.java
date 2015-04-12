@@ -14,6 +14,7 @@ import org.dnu.filestorage.utils.FileUploader;
 import org.dnu.filestorage.utils.HibernateAwareObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -175,5 +176,31 @@ public class ResourceController {
     @ResponseBody
     public Count getCount() {
         return new Count(this.service.getCount());
+    }
+
+    @RequestMapping(method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public Map<String, Object> create(@RequestBody Resource json) throws IOException {
+
+        Resource created = this.service.create(json);
+        resourceSearchRepository.index(created);
+
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("success", true);
+        m.put("created", created);
+        return m;
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseBody
+    public Map<String, Object> update(@PathVariable Long id, @RequestBody Resource json) throws IOException {
+        Resource updated = this.service.update(json);
+        resourceSearchRepository.update(updated);
+
+        Map<String, Object> m = new HashMap<String, Object>();
+        m.put("success", true);
+        m.put("id", id);
+        m.put("updated", updated);
+        return m;
     }
 }
