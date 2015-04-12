@@ -2,6 +2,7 @@ package org.dnu.filestorage.controller;
 
 import com.wordnik.swagger.annotations.Api;
 import org.dnu.filestorage.controller.generic.GenericController;
+import org.dnu.filestorage.controller.generic.GenericImageController;
 import org.dnu.filestorage.data.model.Speciality;
 import org.dnu.filestorage.data.service.SpecialityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,11 @@ import java.util.List;
 @Controller
 @Api(value = "specialities", description = "Endpoint for speciality management")
 @RequestMapping("/rest/speciality")
-public class SpecialityController extends GenericController<SpecialityService, Speciality> {
+public class SpecialityController extends GenericImageController<SpecialityService, Speciality> {
 
     @Autowired
     public SpecialityController(SpecialityService service) {
-        super(service);
+        super(service, Speciality.class);
     }
 
     @RequestMapping(params = "facultyId")
