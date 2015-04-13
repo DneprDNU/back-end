@@ -1,15 +1,14 @@
 package org.dnu.filestorage.data.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * @author demyura
  * @since 15.10.14
  */
 @Entity
+@NamedQueries({@NamedQuery(name = "removeLinksBySubject", query = "delete LinkingEntity e where " +
+        "e.subject.id=:subjectId")})
 public class LinkingEntity implements Identifiable {
     @Id
     @GeneratedValue
