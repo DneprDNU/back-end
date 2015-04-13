@@ -19,7 +19,7 @@ import java.util.List;
 public class Resource extends NamedEntity {
     @ManyToMany(mappedBy = "resources")
     private List<Category> categories = new LinkedList<Category>();
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "resources")
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Subject> subjects = new LinkedList<Subject>();
 
     @ManyToOne()
