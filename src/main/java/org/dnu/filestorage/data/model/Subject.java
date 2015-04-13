@@ -15,7 +15,7 @@ import java.util.List;
                 "left join s.links l left join l.speciality sp left join sp.departments d left join d.faculty f " +
                 "where f.id=:facultyId")})
 public class Subject extends NamedEntity {
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "subjects")
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Resource> resources = new LinkedList<Resource>();
 
     @OneToMany(mappedBy = "subject", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
