@@ -32,7 +32,7 @@ public class Resource extends NamedEntity {
     private String description;
 
     @JsonIgnore
-    private String file;
+    private String fileR;
 
     public Resource() {
 
@@ -43,7 +43,7 @@ public class Resource extends NamedEntity {
         this.year = year;
         this.author = author;
         this.description = description;
-        this.file = resourceURL;
+        this.fileR = resourceURL;
     }
 
     public Resource addCategory(Category category) {
@@ -112,14 +112,14 @@ public class Resource extends NamedEntity {
         this.description = description;
     }
 
-    @JsonProperty("file")
-    public String getFile() {
-        return file;
+    @JsonProperty("fileR")
+    public String getFileR() {
+        return fileR;
     }
 
     @JsonIgnore
-    public void setFile(String file) {
-        this.file = file;
+    public void setFileR(String fileR) {
+        this.fileR = fileR;
     }
 
     public Speciality getSpeciality() {

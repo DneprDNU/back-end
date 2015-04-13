@@ -68,7 +68,7 @@ public class ResourceController {
 
         if (file != null) {
             String fileUrl = fileUploader.uploadFile(file);
-            res.setFile("http://212.3.125.102:8080/filestorage/files?fileName=" + fileUrl);
+            res.setFileR("http://212.3.125.102:8080/filestorage/files?fileName=" + fileUrl);
         }
         if (image != null) {
             String imageUrl = fileUploader.uploadFile(image);
@@ -100,7 +100,7 @@ public class ResourceController {
 
         if (file != null) {
             String fileUrl = fileUploader.uploadFile(file);
-            resource.setFile("http://212.3.125.102:8080/filestorage/files?fileName=" + fileUrl);
+            resource.setFileR("http://212.3.125.102:8080/filestorage/files?fileName=" + fileUrl);
         }
         if (image != null) {
             String imageUrl = fileUploader.uploadFile(image);
