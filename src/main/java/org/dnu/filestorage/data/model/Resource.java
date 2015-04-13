@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
 
-@JsonDeserialize(using = ResourceDeserializer.class)
 @Entity
 @Table(name = "resources")
 @NamedQueries({@NamedQuery(name = "getResourcesByCategoryId", query = "select r from Resource r " +
