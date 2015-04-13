@@ -2,8 +2,6 @@ package org.dnu.filestorage.data.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import org.dnu.filestorage.utils.ResourceDeserializer;
 
 import javax.persistence.*;
 import java.util.LinkedList;
@@ -34,7 +32,7 @@ public class Resource extends NamedEntity {
     private String description;
 
     @JsonIgnore
-    private String resource;
+    private String file;
 
     public Resource() {
 
@@ -45,7 +43,7 @@ public class Resource extends NamedEntity {
         this.year = year;
         this.author = author;
         this.description = description;
-        this.resource = resourceURL;
+        this.file = resourceURL;
     }
 
     public Resource addCategory(Category category) {
@@ -114,14 +112,14 @@ public class Resource extends NamedEntity {
         this.description = description;
     }
 
-    @JsonProperty("resource")
-    public String getResource() {
-        return resource;
+    @JsonProperty("file")
+    public String getFile() {
+        return file;
     }
 
     @JsonIgnore
-    public void setResource(String resource) {
-        this.resource = resource;
+    public void setFile(String file) {
+        this.file = file;
     }
 
     public Speciality getSpeciality() {

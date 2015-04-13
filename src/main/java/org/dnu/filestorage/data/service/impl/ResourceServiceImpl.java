@@ -113,7 +113,7 @@ public class ResourceServiceImpl extends GenericServiceImpl<ResourceDAO, Resourc
         current.setName(newEntity.getName());
         current.setAuthor(newEntity.getAuthor());
         current.setDescription(newEntity.getDescription());
-        current.setResource(newEntity.getResource());
+        current.setFile(newEntity.getFile());
         current.setYear(newEntity.getYear());
 
         copySpeciality(current, newEntity);

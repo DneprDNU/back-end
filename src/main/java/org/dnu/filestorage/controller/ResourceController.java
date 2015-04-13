@@ -3,9 +3,7 @@ package org.dnu.filestorage.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wordnik.swagger.annotations.Api;
 import org.dnu.filestorage.data.dto.Count;
-import org.dnu.filestorage.data.model.Category;
 import org.dnu.filestorage.data.model.Resource;
-import org.dnu.filestorage.data.model.Subject;
 import org.dnu.filestorage.data.service.CategoryService;
 import org.dnu.filestorage.data.service.ResourceService;
 import org.dnu.filestorage.data.service.SubjectService;
@@ -13,7 +11,6 @@ import org.dnu.filestorage.search.ResourceSearchRepository;
 import org.dnu.filestorage.utils.FileUploader;
 import org.dnu.filestorage.utils.HibernateAwareObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -71,7 +68,7 @@ public class ResourceController {
 
         if (file != null) {
             String fileUrl = fileUploader.uploadFile(file);
-            res.setResource("http://212.3.125.102:8080/filestorage/files?fileName=" +fileUrl);
+            res.setFile("http://212.3.125.102:8080/filestorage/files?fileName=" + fileUrl);
         }
         if (image != null) {
             String imageUrl = fileUploader.uploadFile(image);
@@ -103,7 +100,7 @@ public class ResourceController {
 
         if (file != null) {
             String fileUrl = fileUploader.uploadFile(file);
-            resource.setResource("http://212.3.125.102:8080/filestorage/files?fileName=" +fileUrl);
+            resource.setFile("http://212.3.125.102:8080/filestorage/files?fileName=" + fileUrl);
         }
         if (image != null) {
             String imageUrl = fileUploader.uploadFile(image);
