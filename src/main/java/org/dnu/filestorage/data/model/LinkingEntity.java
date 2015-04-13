@@ -7,7 +7,7 @@ import javax.persistence.*;
  * @since 15.10.14
  */
 @Entity
-@NamedQueries({@NamedQuery(name = "removeLinksBySubject", query = "delete LinkingEntity e where " +
+@NamedQueries({@NamedQuery(name = "removeLinksBySubject", query = "delete from LinkingEntity e where " +
         "e.subject.id=:subjectId")})
 public class LinkingEntity implements Identifiable {
     @Id
