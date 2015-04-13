@@ -18,7 +18,7 @@ public class Subject extends NamedEntity {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Resource> resources = new LinkedList<Resource>();
 
-    @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "subject")
+    @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<LinkingEntity> links = new LinkedList<LinkingEntity>();
 
     public Subject() {
