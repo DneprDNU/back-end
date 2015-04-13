@@ -1,5 +1,7 @@
 package org.dnu.filestorage.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.dnu.filestorage.utils.ResourceDeserializer;
 
@@ -31,6 +33,7 @@ public class Resource extends NamedEntity {
 
     private String description;
 
+    @JsonIgnore
     private String resource;
 
     public Resource() {
@@ -111,10 +114,12 @@ public class Resource extends NamedEntity {
         this.description = description;
     }
 
+    @JsonProperty("resource")
     public String getResource() {
         return resource;
     }
 
+    @JsonIgnore
     public void setResource(String resource) {
         this.resource = resource;
     }
