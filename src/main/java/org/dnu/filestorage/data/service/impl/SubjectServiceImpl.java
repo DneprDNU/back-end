@@ -77,4 +77,13 @@ public class SubjectServiceImpl extends GenericServiceImpl<SubjectDAO, Subject> 
     public List<Subject> listByFacultyId(long facultyId) {
         return dao.listByFacultyId(facultyId);
     }
+
+    @Override
+    public void remove(Long id) {
+        Subject subject = get(id);
+        for (Resource resource : subject.getResources()) {
+            resource.getSubjects().remove(subject);
+        }
+        super.remove(subject);
+    }
 }
