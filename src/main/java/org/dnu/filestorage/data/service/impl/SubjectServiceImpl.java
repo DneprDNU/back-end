@@ -1,5 +1,6 @@
 package org.dnu.filestorage.data.service.impl;
 
+import org.dnu.filestorage.data.dao.LinkingEntityDAO;
 import org.dnu.filestorage.data.dao.ResourceDAO;
 import org.dnu.filestorage.data.dao.SubjectDAO;
 import org.dnu.filestorage.data.model.Resource;
@@ -22,6 +23,8 @@ import java.util.List;
 public class SubjectServiceImpl extends GenericServiceImpl<SubjectDAO, Subject> implements SubjectService {
     @Autowired
     private ResourceDAO resourceDao;
+    @Autowired
+    private LinkingEntityDAO linkingEntityDAO;
 
     @Autowired
     public SubjectServiceImpl(SubjectDAO dao) {
@@ -84,6 +87,9 @@ public class SubjectServiceImpl extends GenericServiceImpl<SubjectDAO, Subject> 
         for (Resource resource : subject.getResources()) {
             resource.getSubjects().remove(subject);
         }
+//        for (LinkingEntity linkingEntity:subject.getLinks()){
+//            linkingEntityDAO.remove(linkingEntity);
+//        }
         super.remove(subject);
     }
 }
