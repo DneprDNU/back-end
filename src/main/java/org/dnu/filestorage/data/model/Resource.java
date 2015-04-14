@@ -130,13 +130,13 @@ public class Resource extends NamedEntity {
         this.speciality = speciality;
     }
 
-    @PreRemove
-    public void removeFromCategoryAndSubject() {
-        for (Category category : categories) {
-            category.getResources().remove(this);
-        }
-        for (Subject subject : subjects) {
-            subject.getResources().remove(this);
-        }
-    }
+//    @PreRemove
+//    public void removeFromCategoryAndSubject() {
+//        for (Category category : categories) {
+//            category.getResources().remove(this);
+//        }
+//        for (Subject subject : subjects) {
+//            subject.getResources().remove(this);
+//        }
+//    }
 }
