@@ -1,6 +1,9 @@
 package org.dnu.filestorage.search;
 
+import org.dnu.filestorage.data.model.LinkingEntity;
 import org.dnu.filestorage.data.model.Resource;
+import org.dnu.filestorage.data.model.Subject;
+import org.dnu.filestorage.data.model.Teacher;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
@@ -17,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Service for all interactions between application and Elastic Search server.
@@ -43,6 +48,15 @@ public class ResourceSearchRepository {
      * @throws IOException Exception.
      */
     private String buildDocument(Resource resource) throws IOException {
+        List<Subject> subjects = resource.getSubjects();
+        List<Teacher> teachers = new ArrayList<Teacher>();
+
+        for (Subject subject : subjects){
+            for (LinkingEntity linkingEntity : subject.getLinks()){
+                 teachers.add(linkingEntity.getTeacher());
+            }
+        }
+
         XContentBuilder builder = XContentFactory.jsonBuilder()
                 .startObject()
                 .field("resourceName", resource.getName())
@@ -51,6 +65,8 @@ public class ResourceSearchRepository {
                 .field("year", resource.getYear())
                 .field("speciality", resource.getSpeciality())
                 .field("categories", resource.getCategories())
+                .field("subjects", subjects)
+                .field("teachers", teachers)
                 .field("image", resource.getImage())
                 .endObject();
         return builder.string();
@@ -83,6 +99,12 @@ public class ResourceSearchRepository {
                 .get();
     }
 
+    public void delete(Long id) throws IOException {
+        client.prepareDelete("resources_cluster", "resource", String.valueOf(id))
+                .execute()
+                .actionGet();
+    }
+
     /**
      * Search for resources by user query.
      *
@@ -96,7 +118,7 @@ public class ResourceSearchRepository {
         if (query == null || query.isEmpty()) {
             queryBuilder = QueryBuilders.matchAllQuery();
         } else {
-            queryBuilder = QueryBuilders.multiMatchQuery(query, "resourceName", "author", "description", "year", "speciality", "categories", "image");
+            queryBuilder = QueryBuilders.multiMatchQuery(query, "resourceName", "author", "description", "year", "speciality", "categories", "image", "subjects", "teachers");
         }
 
         SearchResponse response = client.prepareSearch("resources_cluster")
