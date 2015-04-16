@@ -46,7 +46,7 @@ public class GenericServiceImpl<D extends GenericDAO<T>, T extends Identifiable>
             T currentEntity = dao.create(dao.getEntityClass().newInstance());
             copyProperties(currentEntity, entity);
             dao.update(currentEntity);
-            return currentEntity;
+            return get(currentEntity.getId());
         } catch (Exception e) {
             dao.create(entity);
         }
