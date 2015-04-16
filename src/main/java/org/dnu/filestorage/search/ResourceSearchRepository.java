@@ -1,9 +1,7 @@
 package org.dnu.filestorage.search;
 
-import org.dnu.filestorage.data.model.LinkingEntity;
-import org.dnu.filestorage.data.model.Resource;
-import org.dnu.filestorage.data.model.Subject;
-import org.dnu.filestorage.data.model.Teacher;
+import org.dnu.filestorage.data.model.*;
+import org.dnu.filestorage.data.service.TeacherService;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
@@ -29,6 +27,8 @@ import java.util.List;
 @Service
 public class ResourceSearchRepository {
 
+    @Autowired
+    private TeacherService teacherService;
 
     /**
      * A client provides a one stop interface for performing actions/operations against the Elastic Search cluster.
@@ -49,13 +49,7 @@ public class ResourceSearchRepository {
      */
     private String buildDocument(Resource resource) throws IOException {
         List<Subject> subjects = resource.getSubjects();
-        List<Teacher> teachers = new ArrayList<Teacher>();
-
-        for (Subject subject : subjects){
-            for (LinkingEntity linkingEntity : subject.getLinks()){
-                 teachers.add(linkingEntity.getTeacher());
-            }
-        }
+        List<Teacher> teachers = teacherService.getTeachersBySpecialityId(resource.getSpeciality().getId());
 
         XContentBuilder builder = XContentFactory.jsonBuilder()
                 .startObject()
