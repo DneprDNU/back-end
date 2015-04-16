@@ -76,7 +76,6 @@ public class ResourceController {
         }
 
         Resource created = service.create(res);
-        created.getSubjects().size();
 
         resourceSearchRepository.index(created);
 

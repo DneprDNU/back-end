@@ -63,4 +63,9 @@ public class Teacher extends NamedEntity {
     public void setSpecialities(List<Speciality> specialities) {
         this.specialities = specialities;
     }
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }
