@@ -24,7 +24,7 @@ import java.util.Map;
  * @since 14.11.14
  */
 public abstract class GenericImageController<S extends GenericService<T>, T extends Identifiable> {
-    String defaultImage = "http://dnu.thebodva.com/upload/b32f3d1ef28edf602362b91cb935886f.jpg";
+    String defaultImage = "http://cumbrianrun.co.uk/wp-content/uploads/2014/02/default-placeholder.png";
     private Logger logger = LoggerFactory.getLogger(GenericImageController.class);
     private S service;
     private Class<T> type;
@@ -80,6 +80,10 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
 
     public T processImage(T object) {
         NamedEntity resource = (NamedEntity) object;
+        if (resource.getImage() == null || resource.getImage().isEmpty()) {
+            resource.setImage(this.defaultImage);
+        }
+
         return (T) resource;
     }
 

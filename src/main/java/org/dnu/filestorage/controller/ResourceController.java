@@ -33,7 +33,7 @@ import java.util.Map;
 @RequestMapping("/rest/resource")
 public class ResourceController {
 
-    String defaultImage = "http://dnu.thebodva.com/upload/b32f3d1ef28edf602362b91cb935886f.jpg";
+    String defaultImage = "http://cumbrianrun.co.uk/wp-content/uploads/2014/02/default-placeholder.png";
 
     @Autowired
     ResourceSearchRepository resourceSearchRepository;
@@ -89,6 +89,9 @@ public class ResourceController {
     @ResponseBody
     public Resource get(@PathVariable Long id) throws UnknownHostException {
         Resource resource = this.service.get(id);
+        if (resource.getImage() == null || resource.getImage().isEmpty()) {
+            resource.setImage(this.defaultImage);
+        }
         return resource;
     }
 
@@ -109,6 +112,8 @@ public class ResourceController {
 
         Resource updated = this.service.update(resource);
 
+        resourceSearchRepository.update(updated);
+
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("success", true);
         m.put("id", id);
@@ -118,8 +123,9 @@ public class ResourceController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public Map<String, Object> delete(@PathVariable Long id) {
+    public Map<String, Object> delete(@PathVariable Long id) throws IOException {
         this.service.remove(id);
+        resourceSearchRepository.delete(id);
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("success", true);
         return m;
