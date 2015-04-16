@@ -37,7 +37,11 @@ public class GenericDAOImpl<T extends Identifiable> implements GenericDAO<T> {
 
     @Override
     public T get(Object id) {
-        return entityManager.find(entityClass, id);
+        try {
+            return entityManager.find(entityClass, id);
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 
     @Override

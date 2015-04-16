@@ -61,4 +61,9 @@ public class LinkingEntityDAOImpl implements LinkingEntityDAO {
         query.setMaxResults(to - from);
         return query.getResultList();
     }
+
+    @Override
+    public void removeLinksBySubjectId(Long subjectId) {
+        entityManager.createNamedQuery("removeLinksBySubject").setParameter("subjectId", subjectId).executeUpdate();
+    }
 }

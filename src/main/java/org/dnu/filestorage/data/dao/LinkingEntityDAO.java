@@ -22,4 +22,6 @@ public interface LinkingEntityDAO {
     long getCount();
 
     List<LinkingEntity> list(int from, int to);
+
+    void removeLinksBySubjectId(Long subjectId);
 }

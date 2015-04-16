@@ -33,7 +33,8 @@ public class GenericServiceImpl<D extends GenericDAO<T>, T extends Identifiable>
     public T update(T entity) {
         T currentEntity = dao.get(entity.getId());
         copyProperties(currentEntity, entity);
-        return dao.update(currentEntity);
+        dao.update(currentEntity);
+        return get(entity.getId());
     }
 
     protected void copyProperties(T current, T newEntity) {

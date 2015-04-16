@@ -17,7 +17,7 @@ import java.util.List;
                 "left join r.subjects s left join s.links l left join l.speciality sp " +
                 "left join sp.departments d left join d.faculty f where f.id=:facultyId")})
 public class Resource extends NamedEntity {
-    @ManyToMany
+    @ManyToMany()
     private List<Category> categories = new LinkedList<Category>();
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Subject> subjects = new LinkedList<Subject>();
@@ -129,4 +129,14 @@ public class Resource extends NamedEntity {
     public void setSpeciality(Speciality speciality) {
         this.speciality = speciality;
     }
+
+//    @PreRemove
+//    public void removeFromCategoryAndSubject() {
+//        for (Category category : categories) {
+//            category.getResources().remove(this);
+//        }
+//        for (Subject subject : subjects) {
+//            subject.getResources().remove(this);
+//        }
+//    }
 }
