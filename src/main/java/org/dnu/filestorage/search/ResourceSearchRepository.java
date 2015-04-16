@@ -1,6 +1,9 @@
 package org.dnu.filestorage.search;
 
-import org.dnu.filestorage.data.model.*;
+import org.dnu.filestorage.data.model.LinkingEntity;
+import org.dnu.filestorage.data.model.Resource;
+import org.dnu.filestorage.data.model.Subject;
+import org.dnu.filestorage.data.model.Teacher;
 import org.dnu.filestorage.data.service.TeacherService;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
@@ -49,7 +52,10 @@ public class ResourceSearchRepository {
      */
     private String buildDocument(Resource resource) throws IOException {
         List<Subject> subjects = resource.getSubjects();
-        List<Teacher> teachers = teacherService.getTeachersBySpecialityId(resource.getSpeciality().getId());
+        List<Teacher> teachers = new ArrayList<Teacher>();
+        for (Subject subject : subjects){
+         teachers.addAll(teacherService.getTeachersBySubjectId(subject.getId()));
+        }
 
         XContentBuilder builder = XContentFactory.jsonBuilder()
                 .startObject()

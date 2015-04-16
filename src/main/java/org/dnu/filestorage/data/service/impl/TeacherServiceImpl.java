@@ -33,6 +33,11 @@ public class TeacherServiceImpl extends GenericServiceImpl<TeacherDAO, Teacher> 
     }
 
     @Override
+    public List<Teacher> getTeachersBySubjectId(Long departmentId) {
+        return dao.getTeachersBySubjectId(departmentId);
+    }
+
+    @Override
     public Teacher get(Long id) {
         return dao.get(id);
     }
