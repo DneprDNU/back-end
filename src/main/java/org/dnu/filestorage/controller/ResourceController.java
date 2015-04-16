@@ -76,8 +76,9 @@ public class ResourceController {
         }
 
         Resource created = service.create(res);
+        created.getSubjects().size();
 
-        resourceSearchRepository.index(res);
+        resourceSearchRepository.index(created);
 
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("success", true);
@@ -111,8 +112,9 @@ public class ResourceController {
         }
 
         Resource updated = this.service.update(resource);
+        updated.getSubjects().size();
 
-        resourceSearchRepository.update(resource);
+        resourceSearchRepository.update(updated);
 
         Map<String, Object> m = new HashMap<String, Object>();
         m.put("success", true);
