@@ -20,7 +20,7 @@ public class Category extends NamedEntity {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
     private List<Resource> resources = new LinkedList<Resource>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
     private List<FreeResource> freeResources = new LinkedList<FreeResource>();
     @Transient
     private int resourceCount;
