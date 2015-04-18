@@ -83,11 +83,11 @@ public class SubjectServiceImpl extends GenericServiceImpl<SubjectDAO, Subject> 
 
     @Override
     public void remove(Long id) {
-        Subject subject = get(id);
-        for (Resource resource : subject.getResources()) {
-            resource.getSubjects().remove(subject);
-        }
-        linkingEntityDAO.removeLinksBySubjectId(id);
-        super.remove(subject);
+//        Subject subject = get(id);
+//        for (Resource resource : subject.getResources()) {
+//            resource.getSubjects().remove(subject);
+//        }
+//        linkingEntityDAO.removeLinksBySubjectId(id);
+        super.remove(id);
     }
 }

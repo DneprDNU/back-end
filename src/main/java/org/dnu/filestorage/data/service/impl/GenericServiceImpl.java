@@ -42,15 +42,16 @@ public class GenericServiceImpl<D extends GenericDAO<T>, T extends Identifiable>
 
     @Override
     public T create(T entity) {
+        T result;
         try {
             T currentEntity = dao.create(dao.getEntityClass().newInstance());
             copyProperties(currentEntity, entity);
             dao.update(currentEntity);
-            return get(currentEntity.getId());
+            result = get(currentEntity.getId());
         } catch (Exception e) {
-            dao.create(entity);
+            result = dao.create(entity);
         }
-        return entity;
+        return result;
     }
 
     @Override

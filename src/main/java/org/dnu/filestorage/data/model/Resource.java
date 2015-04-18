@@ -19,7 +19,7 @@ import java.util.List;
 public class Resource extends NamedEntity {
     @ManyToMany()
     private List<Category> categories = new LinkedList<Category>();
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "resources")
     private List<Subject> subjects = new LinkedList<Subject>();
 
     @ManyToOne()
@@ -130,13 +130,13 @@ public class Resource extends NamedEntity {
         this.speciality = speciality;
     }
 
-//    @PreRemove
-//    public void removeFromCategoryAndSubject() {
-//        for (Category category : categories) {
-//            category.getResources().remove(this);
-//        }
-//        for (Subject subject : subjects) {
-//            subject.getResources().remove(this);
-//        }
-//    }
+    @PreRemove
+    public void removeFromCategoryAndSubject() {
+        for (Category category : categories) {
+            category.getResources().remove(this);
+        }
+        for (Subject subject : subjects) {
+            subject.getResources().remove(this);
+        }
+    }
 }

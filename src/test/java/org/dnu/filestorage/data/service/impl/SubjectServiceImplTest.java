@@ -1,9 +1,7 @@
 package org.dnu.filestorage.data.service.impl;
 
-import org.dnu.filestorage.data.model.Resource;
-import org.dnu.filestorage.data.model.Subject;
-import org.dnu.filestorage.data.service.ResourceService;
-import org.dnu.filestorage.data.service.SubjectService;
+import org.dnu.filestorage.data.model.*;
+import org.dnu.filestorage.data.service.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,26 +22,43 @@ public class SubjectServiceImplTest {
     @Autowired
     ResourceService resourceService;
 
+    @Autowired
+    TeacherService teacherService;
+
+    @Autowired
+    SpecialityService specialityService;
+
+    @Autowired
+    LinkingEntityService linkingEntityService;
+
     @Test
     public void testSubjectsWithResources() throws Exception {
-        Subject subject = new Subject("subject one");
-        subject = subjectService.create(subject);
-
         Resource resource = new Resource("r1", "y", "a", "d", "r", "i");
         resource = resourceService.create(resource);
 
-        Subject jsonSubjectFromClient = new Subject("subject two");
-        jsonSubjectFromClient.setId(subject.getId());
-        jsonSubjectFromClient.getResources().add(resource);
+        Teacher teacher = new Teacher("a");
+        teacher = teacherService.create(teacher);
 
-        subjectService.update(jsonSubjectFromClient);
+        Speciality speciality = new Speciality("a", "a");
+        speciality = specialityService.create(speciality);
+
+        Subject subject = new Subject("subject one");
+        subject.addResource(resource);
+        subject = subjectService.create(subject);
+
+        LinkingEntity link = new LinkingEntity(speciality, subject, teacher);
+        linkingEntityService.create(link);
+
 
         Assert.assertEquals(1, subjectService.get(subject.getId()).getResources().size());
         Assert.assertEquals(1, resourceService.get(resource.getId()).getSubjects().size());
-
+        Assert.assertEquals(1, subject.getLinks().size());
+        Assert.assertEquals(1, teacher.getLinks().size());
+        Assert.assertEquals(1, speciality.getLinks().size());
 
         subjectService.remove(subject.getId());
 
         Assert.assertEquals(0, resourceService.get(resource.getId()).getSubjects().size());
+        Assert.assertEquals(0, linkingEntityService.list().size());
     }
 }

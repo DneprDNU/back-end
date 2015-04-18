@@ -55,7 +55,6 @@ public class ResourceServiceImplTest {
         Assert.assertEquals(1, resourceService.get(resource.getId()).getSubjects().size());
         Assert.assertEquals(1, categoryService.get(category.getId()).getResources().size());
 
-
         resourceService.remove(resource.getId());
 
         Assert.assertEquals(0, categoryService.get(category.getId()).getResources().size());
