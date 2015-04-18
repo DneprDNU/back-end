@@ -31,6 +31,12 @@ public class TeacherDAOImpl extends GenericDAOImpl<Teacher> implements TeacherDA
     }
 
     @Override
+    public List<Teacher> getTeachersBySubjectId(Long subjectId) {
+        return entityManager.createNamedQuery("listTeachersBySubjectId", Teacher.class)
+                .setParameter("subjectId", subjectId).getResultList();
+    }
+
+    @Override
     public List<Teacher> listByFacultyId(long facultyId) {
         return getTeachersByFacultyId(facultyId);
     }

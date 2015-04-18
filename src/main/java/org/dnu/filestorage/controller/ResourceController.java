@@ -111,6 +111,7 @@ public class ResourceController {
         }
 
         Resource updated = this.service.update(resource);
+        updated.getSubjects().size();
 
         resourceSearchRepository.update(updated);
 

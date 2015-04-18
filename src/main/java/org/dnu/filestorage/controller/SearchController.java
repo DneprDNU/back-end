@@ -23,7 +23,7 @@ import java.util.List;
 @Api(value = "search", description = "Endpoint for search")
 public class SearchController {
 
-    String defaultImage = "http://dnu.thebodva.com/upload/b32f3d1ef28edf602362b91cb935886f.jpg";
+    String defaultImage = "http://cumbrianrun.co.uk/wp-content/uploads/2014/02/default-placeholder.png";
 
     @Autowired
     ResourceSearchRepository resourceSearchRepository;
@@ -67,7 +67,7 @@ public class SearchController {
                 resource.setImage("http://212.3.125.102:8080/filestorage/files?fileName=" + searchHits[i].getSource().get("image"));
             }
             else{
-                resource.setImage((String)searchHits[i].getSource().get("image"));
+                resource.setImage(this.defaultImage);
             }
 
             resources[i] = resource;

@@ -12,4 +12,6 @@ public interface TeacherService extends GenericService<Teacher>, FilteredService
     List<Teacher> getTeachersBySpecialityId(Long specialityId);
 
     List<Teacher> getTeachersByDepartmentId(Long departmentId);
+
+    List<Teacher> getTeachersBySubjectId(Long departmentId);
 }

@@ -59,4 +59,9 @@ public class Subject extends NamedEntity {
     public void setLinks(List<LinkingEntity> links) {
         this.links = links;
     }
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }

@@ -10,7 +10,9 @@ import java.util.List;
  */
 @Entity
 @NamedQueries({@NamedQuery(name = "listTeachersByFacultyId", query = "select distinct t from Teacher t " +
-        "left join t.departments d left join d.faculty f where f.id=:facultyId")})
+        "left join t.departments d left join d.faculty f where f.id=:facultyId"),
+        @NamedQuery(name = "listTeachersBySubjectId", query = "select distinct t from Teacher t " +
+                "left join t.links l left join l.subject sp where sp.id=:subjectId")})
 public class Teacher extends NamedEntity {
     @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "teacher")
     private List<LinkingEntity> links = new LinkedList<LinkingEntity>();
@@ -60,5 +62,10 @@ public class Teacher extends NamedEntity {
 
     public void setSpecialities(List<Speciality> specialities) {
         this.specialities = specialities;
+    }
+
+    @Override
+    public String toString() {
+        return this.getName();
     }
 }

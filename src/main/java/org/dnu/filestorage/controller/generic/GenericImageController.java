@@ -63,6 +63,9 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
             String imageUrl = fileUploader.uploadFile(image);
             ((NamedEntity) object).setImage("http://212.3.125.102:8080/filestorage/files?fileName=" +imageUrl);
         }
+        else {
+            ((NamedEntity) object).setImage(defaultImage);
+        }
 
         T created = this.getService().create(object);
 
@@ -96,9 +99,7 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
         if (image != null) {
             String imageUrl = fileUploader.uploadFile(image);
             ((NamedEntity) object).setImage("http://212.3.125.102:8080/filestorage/files?fileName=" +imageUrl);
-        } else {
-            ((NamedEntity) object).setImage("");
-        }
+        } 
 
         T updated = this.getService().update(object);
 
@@ -123,6 +124,7 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
     public Map<String, Object> create(@RequestBody T json) {
         logger.debug("create() with body {} of type {}", json, json.getClass());
 
+        ((NamedEntity) json).setImage(defaultImage);
         T created = this.service.create(json);
 
         Map<String, Object> m = new HashMap<String, Object>();

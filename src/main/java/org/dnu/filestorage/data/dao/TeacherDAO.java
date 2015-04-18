@@ -10,4 +10,6 @@ import java.util.List;
  */
 public interface TeacherDAO extends GenericDAO<Teacher>, FilteredDAO<Teacher> {
     List<Teacher> getTeachersByFacultyId(Long facultyId);
+
+    List<Teacher> getTeachersBySubjectId(Long subjectId);
 }
