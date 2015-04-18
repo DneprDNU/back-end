@@ -102,7 +102,8 @@ public class ResourceServiceImpl extends GenericServiceImpl<ResourceDAO, Resourc
     }
 
     private void copySpeciality(Resource current, Resource newEntity) {
-        current.setSpeciality(newEntity.getSpeciality() == null ? null : specialityDao.get(newEntity.getId()));
+        current.setSpeciality(newEntity.getSpeciality() == null ? null :
+                specialityDao.get(newEntity.getSpeciality().getId()));
     }
 
     @Override
