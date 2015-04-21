@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class ResourceServiceImpl extends GenericServiceImpl<ResourceDAO, Resource> implements ResourceService {
+public class ResourceServiceImpl extends GenericFilteredService<ResourceDAO, Resource> implements ResourceService {
 
     @Autowired
     private SpecialityDAO specialityDao;
@@ -120,10 +120,5 @@ public class ResourceServiceImpl extends GenericServiceImpl<ResourceDAO, Resourc
         copySpeciality(current, newEntity);
         copyCategories(current, newEntity);
         copySubjects(current, newEntity);
-    }
-
-    @Override
-    public List<Resource> listByFacultyId(long facultyId) {
-        return dao.listByFacultyId(facultyId);
     }
 }

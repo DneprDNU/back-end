@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class SpecialityServiceImpl extends GenericServiceImpl<SpecialityDAO, Speciality> implements SpecialityService {
+public class SpecialityServiceImpl extends GenericFilteredService<SpecialityDAO, Speciality> implements SpecialityService {
 
     @Autowired
     private TeacherDAO teacherDao;
@@ -76,10 +76,5 @@ public class SpecialityServiceImpl extends GenericServiceImpl<SpecialityDAO, Spe
     @Override
     public Speciality get(Long id) {
         return dao.get(id);
-    }
-
-    @Override
-    public List<Speciality> listByFacultyId(long facultyId) {
-        return dao.listByFacultyId(facultyId);
     }
 }

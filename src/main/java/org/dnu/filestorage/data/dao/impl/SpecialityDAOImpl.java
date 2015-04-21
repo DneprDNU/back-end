@@ -35,4 +35,10 @@ public class SpecialityDAOImpl extends GenericDAOImpl<Speciality> implements Spe
     public List<Speciality> listByFacultyId(long facultyId) {
         return getSpecialitiesByFacultyId(facultyId);
     }
+
+    @Override
+    public List<Speciality> listByFacultyId(long facultyId, int from, int to) {
+        return entityManager.createNamedQuery("getSpecialitiesByFacultyId").setParameter("facultyId", facultyId)
+                .setFirstResult(from).setMaxResults(to - from).getResultList();
+    }
 }

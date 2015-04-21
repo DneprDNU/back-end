@@ -4,14 +4,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wordnik.swagger.annotations.Api;
 import org.dnu.filestorage.data.dto.Count;
 import org.dnu.filestorage.data.model.Resource;
-import org.dnu.filestorage.data.service.CategoryService;
-import org.dnu.filestorage.data.service.ResourceService;
-import org.dnu.filestorage.data.service.SubjectService;
+import org.dnu.filestorage.data.model.User;
+import org.dnu.filestorage.data.service.*;
 import org.dnu.filestorage.search.ResourceSearchRepository;
 import org.dnu.filestorage.utils.FileUploader;
 import org.dnu.filestorage.utils.HibernateAwareObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -34,9 +35,10 @@ import java.util.Map;
 public class ResourceController {
 
     String defaultImage = "http://cumbrianrun.co.uk/wp-content/uploads/2014/02/default-placeholder.png";
-
     @Autowired
     ResourceSearchRepository resourceSearchRepository;
+    @Autowired
+    private UserService userService;
     @Autowired
     private FileUploader fileUploader;
     @Autowired
@@ -72,7 +74,7 @@ public class ResourceController {
         }
         if (image != null) {
             String imageUrl = fileUploader.uploadFile(image);
-            res.setImage("http://212.3.125.102:8080/filestorage/files?fileName=" +imageUrl);
+            res.setImage("http://212.3.125.102:8080/filestorage/files?fileName=" + imageUrl);
         }
 
         Resource created = service.create(res);
@@ -97,7 +99,7 @@ public class ResourceController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public Map<String, Object> update(MultipartRequest multipartRequest ,@PathVariable Long id, @RequestParam(value = "resource") String resourceString, @RequestParam(required = false) MultipartFile file, @RequestParam(required = false) MultipartFile image) throws IOException {
+    public Map<String, Object> update(MultipartRequest multipartRequest, @PathVariable Long id, @RequestParam(value = "resource") String resourceString, @RequestParam(required = false) MultipartFile file, @RequestParam(required = false) MultipartFile image) throws IOException {
 
         Resource resource = objectMapper.readValue(resourceString, Resource.class);
 
@@ -107,7 +109,7 @@ public class ResourceController {
         }
         if (image != null) {
             String imageUrl = fileUploader.uploadFile(image);
-            resource.setImage("http://212.3.125.102:8080/filestorage/files?fileName=" +imageUrl);
+            resource.setImage("http://212.3.125.102:8080/filestorage/files?fileName=" + imageUrl);
         }
 
         Resource updated = this.service.update(resource);
@@ -180,5 +182,41 @@ public class ResourceController {
         m.put("id", id);
         m.put("updated", updated);
         return m;
+    }
+
+    @RequestMapping(value = "/filtered")
+    @ResponseBody
+    public List<Resource> listAllFiltered() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        if (name != null) {
+            User user = getUserService().findByUserName(name);
+            if (user == null ||
+                    (user.getUserRole() != null && user.getUserRole().contains("ROLE_SUPERADMIN"))) {
+                return this.service.list();
+            }
+            return ((FilteredService) service).listByFacultyId(user.getFaculty().getId());
+        }
+        return this.service.list();
+    }
+
+    @RequestMapping(value = "/filtered", params = {"from", "to"})
+    @ResponseBody
+    public List<Resource> listAllFilteredWithPagination(@RequestParam int from, @RequestParam int to) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        if (name != null) {
+            User user = getUserService().findByUserName(name);
+            if (user == null ||
+                    (user.getUserRole() != null && user.getUserRole().contains("ROLE_SUPERADMIN"))) {
+                return this.service.list(from, to);
+            }
+            return ((FilteredService) service).listByFacultyId(user.getFaculty().getId(), from, to);
+        }
+        return this.service.list();
+    }
+
+    public UserService getUserService() {
+        return userService;
     }
 }

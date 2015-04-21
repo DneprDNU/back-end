@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class SubjectServiceImpl extends GenericServiceImpl<SubjectDAO, Subject> implements SubjectService {
+public class SubjectServiceImpl extends GenericFilteredService<SubjectDAO, Subject> implements SubjectService {
     @Autowired
     private ResourceDAO resourceDao;
     @Autowired
@@ -74,11 +74,6 @@ public class SubjectServiceImpl extends GenericServiceImpl<SubjectDAO, Subject> 
         }
 
         copyResources(current, newEntity);
-    }
-
-    @Override
-    public List<Subject> listByFacultyId(long facultyId) {
-        return dao.listByFacultyId(facultyId);
     }
 
     @Override

@@ -96,7 +96,7 @@ public abstract class GenericController<S extends GenericService<T>, T extends I
         return m;
     }
 
-    @RequestMapping(params = "/filtered")
+    @RequestMapping(value = "/filtered")
     @ResponseBody
     public List<T> listAllFiltered() {
         if (service instanceof FilteredService) {
@@ -104,10 +104,29 @@ public abstract class GenericController<S extends GenericService<T>, T extends I
             String name = auth.getName();
             if (name != null) {
                 User user = getUserService().findByUserName(name);
-                if (user == null) {
+                if (user == null ||
+                        (user.getUserRole() != null && user.getUserRole().contains("ROLE_SUPERADMIN"))) {
                     return this.service.list();
                 }
                 return ((FilteredService) service).listByFacultyId(user.getFaculty().getId());
+            }
+        }
+        return this.service.list();
+    }
+
+    @RequestMapping(value = "/filtered", params = {"from", "to"})
+    @ResponseBody
+    public List<T> listAllFilteredWithPagination(@RequestParam int from, @RequestParam int to) {
+        if (service instanceof FilteredService) {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String name = auth.getName();
+            if (name != null) {
+                User user = getUserService().findByUserName(name);
+                if (user == null ||
+                        (user.getUserRole() != null && user.getUserRole().contains("ROLE_SUPERADMIN"))) {
+                    return this.service.list(from, to);
+                }
+                return ((FilteredService) service).listByFacultyId(user.getFaculty().getId(), from, to);
             }
         }
         return this.service.list();

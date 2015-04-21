@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.dnu.filestorage.data.dto.Count;
 import org.dnu.filestorage.data.model.Identifiable;
 import org.dnu.filestorage.data.model.NamedEntity;
+import org.dnu.filestorage.data.model.User;
+import org.dnu.filestorage.data.service.FilteredService;
 import org.dnu.filestorage.data.service.GenericService;
 import org.dnu.filestorage.data.service.UserService;
 import org.dnu.filestorage.utils.FileUploader;
@@ -11,6 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -98,7 +102,7 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
 
         if (image != null) {
             String imageUrl = fileUploader.uploadFile(image);
-            ((NamedEntity) object).setImage("http://212.3.125.102:8080/filestorage/files?fileName=" +imageUrl);
+            ((NamedEntity) object).setImage("http://212.3.125.102:8080/filestorage/files?fileName=" + imageUrl);
         } 
 
         T updated = this.getService().update(object);
@@ -157,12 +161,41 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
         return new Count(this.service.getCount());
     }
 
-    @RequestMapping(params = "/filtered")
+    @RequestMapping(value = "/filtered")
     @ResponseBody
     public List<T> listAllFiltered() {
+        if (service instanceof FilteredService) {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String name = auth.getName();
+            if (name != null) {
+                User user = getUserService().findByUserName(name);
+                if (user == null ||
+                        (user.getUserRole() != null && user.getUserRole().contains("ROLE_SUPERADMIN"))) {
+                    return this.service.list();
+                }
+                return ((FilteredService) service).listByFacultyId(user.getFaculty().getId());
+            }
+        }
         return this.service.list();
     }
 
+    @RequestMapping(value = "/filtered", params = {"from", "to"})
+    @ResponseBody
+    public List<T> listAllFilteredWithPagination(@RequestParam int from, @RequestParam int to) {
+        if (service instanceof FilteredService) {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String name = auth.getName();
+            if (name != null) {
+                User user = getUserService().findByUserName(name);
+                if (user == null ||
+                        (user.getUserRole() != null && user.getUserRole().contains("ROLE_SUPERADMIN"))) {
+                    return this.service.list(from, to);
+                }
+                return ((FilteredService) service).listByFacultyId(user.getFaculty().getId(), from, to);
+            }
+        }
+        return this.service.list();
+    }
     public UserService getUserService() {
         return userService;
     }
