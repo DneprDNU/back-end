@@ -1,5 +1,7 @@
 package org.dnu.filestorage.security;
 
+import org.dnu.filestorage.data.model.User;
+import org.dnu.filestorage.data.service.UserService;
 import org.dnu.filestorage.security.transfer.TokenTransfer;
 import org.dnu.filestorage.security.transfer.UserTransfer;
 import org.slf4j.Logger;
@@ -33,7 +35,10 @@ import java.util.List;
 public class AuthenticationController {
 
     @Autowired
-    private UserDetailsService userService;
+    private UserDetailsService userDetailsService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     @Qualifier("authenticationManager")
@@ -57,7 +62,9 @@ public class AuthenticationController {
         }
         UserDetails userDetails = (UserDetails) principal;
 
-        return new UserTransfer(userDetails.getUsername(), this.createRoleMap(userDetails));
+        User user = userService.findByUserName(userDetails.getUsername());
+
+        return new UserTransfer(user.getId(), userDetails.getUsername(), this.createRoleMap(userDetails));
     }
 
     /**
@@ -84,7 +91,7 @@ public class AuthenticationController {
          * Reload user as password of authentication principal will be null after authorization and
 		 * password is needed for token generation
 		 */
-        UserDetails userDetails = this.userService.loadUserByUsername(username);
+        UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
 
         return new TokenTransfer(TokenUtils.createToken(userDetails));
     }
