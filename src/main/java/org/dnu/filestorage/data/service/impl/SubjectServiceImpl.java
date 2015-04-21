@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class SubjectServiceImpl extends GenericServiceImpl<SubjectDAO, Subject> implements SubjectService {
+public class SubjectServiceImpl extends GenericFilteredService<SubjectDAO, Subject> implements SubjectService {
     @Autowired
     private ResourceDAO resourceDao;
     @Autowired
@@ -77,17 +77,12 @@ public class SubjectServiceImpl extends GenericServiceImpl<SubjectDAO, Subject> 
     }
 
     @Override
-    public List<Subject> listByFacultyId(long facultyId) {
-        return dao.listByFacultyId(facultyId);
-    }
-
-    @Override
     public void remove(Long id) {
-        Subject subject = get(id);
-        for (Resource resource : subject.getResources()) {
-            resource.getSubjects().remove(subject);
-        }
-        linkingEntityDAO.removeLinksBySubjectId(id);
-        super.remove(subject);
+//        Subject subject = get(id);
+//        for (Resource resource : subject.getResources()) {
+//            resource.getSubjects().remove(subject);
+//        }
+//        linkingEntityDAO.removeLinksBySubjectId(id);
+        super.remove(id);
     }
 }

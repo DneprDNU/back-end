@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class DepartmentServiceImpl extends GenericServiceImpl<DepartmentDAO, Department>
+public class DepartmentServiceImpl extends GenericFilteredService<DepartmentDAO, Department>
         implements DepartmentService, FilteredService<Department> {
     @Autowired
     private SpecialityDAO specialityDAO;
@@ -101,8 +101,4 @@ public class DepartmentServiceImpl extends GenericServiceImpl<DepartmentDAO, Dep
         }
     }
 
-    @Override
-    public List<Department> listByFacultyId(long facultyId) {
-        return dao.listByFacultyId(facultyId);
-    }
 }

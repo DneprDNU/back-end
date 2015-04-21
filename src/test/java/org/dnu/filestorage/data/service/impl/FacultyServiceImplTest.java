@@ -53,5 +53,7 @@ public class FacultyServiceImplTest {
         faculty = facultyService.get(faculty.getId());
         assertEquals(1, faculty.getDepartments().size());
         assertNull(departmentService.get(department2.getId()).getFaculty());
+
+
     }
 }

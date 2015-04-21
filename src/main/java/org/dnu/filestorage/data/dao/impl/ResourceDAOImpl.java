@@ -40,4 +40,10 @@ public class ResourceDAOImpl extends GenericDAOImpl<Resource> implements Resourc
         return entityManager.createNamedQuery("listResourcesByFaculty", Resource.class)
                 .setParameter("facultyId", facultyId).getResultList();
     }
+
+    @Override
+    public List<Resource> listByFacultyId(long facultyId, int from, int to) {
+        return entityManager.createNamedQuery("listResourcesByFaculty", Resource.class)
+                .setParameter("facultyId", facultyId).setFirstResult(from).setMaxResults(to - from).getResultList();
+    }
 }

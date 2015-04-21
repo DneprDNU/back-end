@@ -33,4 +33,10 @@ public class SubjectDAOImpl extends GenericDAOImpl<Subject> implements SubjectDA
         return entityManager.createNamedQuery("listSubjectsByFacultyId", Subject.class)
                 .setParameter("facultyId", facultyId).getResultList();
     }
+
+    @Override
+    public List<Subject> listByFacultyId(long facultyId, int from, int to) {
+        return entityManager.createNamedQuery("listSubjectsByFacultyId", Subject.class)
+                .setParameter("facultyId", facultyId).setFirstResult(from).setMaxResults(to - from).getResultList();
+    }
 }

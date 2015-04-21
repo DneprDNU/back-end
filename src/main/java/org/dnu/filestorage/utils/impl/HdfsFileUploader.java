@@ -38,11 +38,11 @@ public class HdfsFileUploader implements FileUploader {
         try {
             Configuration configuration = new Configuration();
             FileSystem hdfs = FileSystem.get(new URI(hdfsUrl), configuration);
-            Path file = new Path(hdfsUrl + FOLDER + multipartFile.getName());
+            Path file = new Path(hdfsUrl + FOLDER + multipartFile.getOriginalFilename());
             int i = 0;
             while (hdfs.exists(file)) {
                 i++;
-                file = new Path(hdfsUrl + FOLDER + multipartFile.getName() + i);
+                file = new Path(hdfsUrl + FOLDER + multipartFile.getOriginalFilename() + i);
             }
 
             BufferedOutputStream os = new BufferedOutputStream(hdfs.create(file));

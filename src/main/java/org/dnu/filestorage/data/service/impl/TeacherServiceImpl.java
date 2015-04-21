@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class TeacherServiceImpl extends GenericServiceImpl<TeacherDAO, Teacher> implements TeacherService {
+public class TeacherServiceImpl extends GenericFilteredService<TeacherDAO, Teacher> implements TeacherService {
 
     @Autowired
     public TeacherServiceImpl(TeacherDAO dao) {
@@ -48,10 +48,5 @@ public class TeacherServiceImpl extends GenericServiceImpl<TeacherDAO, Teacher> 
         if (!newEntity.getImage().isEmpty()) {
             current.setImage(newEntity.getImage());
         }
-    }
-
-    @Override
-    public List<Teacher> listByFacultyId(long facultyId) {
-        return dao.listByFacultyId(facultyId);
     }
 }

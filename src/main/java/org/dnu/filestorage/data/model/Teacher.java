@@ -14,7 +14,7 @@ import java.util.List;
         @NamedQuery(name = "listTeachersBySubjectId", query = "select distinct t from Teacher t " +
                 "left join t.links l left join l.subject sp where sp.id=:subjectId")})
 public class Teacher extends NamedEntity {
-    @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "teacher")
     private List<LinkingEntity> links = new LinkedList<LinkingEntity>();
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "employees")

@@ -28,4 +28,10 @@ public class DepartmentDAOImpl extends GenericDAOImpl<Department> implements Dep
         return entityManager.createNamedQuery("listByFacultyId", Department.class)
                 .setParameter("facultyId", facultyId).getResultList();
     }
+
+    @Override
+    public List<Department> listByFacultyId(long facultyId, int from, int to) {
+        return entityManager.createNamedQuery("listByFacultyId", Department.class)
+                .setParameter("facultyId", facultyId).setFirstResult(from).setMaxResults(to - from).getResultList();
+    }
 }

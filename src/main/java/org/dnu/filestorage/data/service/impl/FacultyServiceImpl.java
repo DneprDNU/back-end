@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class FacultyServiceImpl extends GenericServiceImpl<FacultyDAO, Faculty> implements FacultyService {
+public class FacultyServiceImpl extends GenericFilteredService<FacultyDAO, Faculty> implements FacultyService {
 
     @Autowired
     private DepartmentDAO departmentDAO;
@@ -66,10 +66,5 @@ public class FacultyServiceImpl extends GenericServiceImpl<FacultyDAO, Faculty> 
         for (Department department : departmentList) {
             current.addDepartment(department);
         }
-    }
-
-    @Override
-    public List<Faculty> listByFacultyId(long facultyId) {
-        return dao.listByFacultyId(facultyId);
     }
 }

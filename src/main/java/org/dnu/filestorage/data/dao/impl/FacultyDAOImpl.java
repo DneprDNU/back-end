@@ -28,4 +28,9 @@ public class FacultyDAOImpl extends GenericDAOImpl<Faculty> implements FacultyDA
     public List<Faculty> listByFacultyId(long facultyId) {
         return new LinkedList<Faculty>(Arrays.asList(get(facultyId)));
     }
+
+    @Override
+    public List<Faculty> listByFacultyId(long facultyId, int from, int to) {
+        return listByFacultyId(facultyId);
+    }
 }
