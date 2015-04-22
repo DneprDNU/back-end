@@ -12,6 +12,7 @@ import org.dnu.filestorage.utils.FileUploader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,6 +29,7 @@ import java.util.Map;
  * @since 14.11.14
  */
 public abstract class GenericImageController<S extends GenericService<T>, T extends Identifiable> {
+    public static final String IMAGES_URL = "http://212.3.125.102:8080/filestorage/resources/";
     String defaultImage = "http://cumbrianrun.co.uk/wp-content/uploads/2014/02/default-placeholder.png";
     private Logger logger = LoggerFactory.getLogger(GenericImageController.class);
     private S service;
@@ -36,7 +38,12 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
     private ObjectMapper objectMapper;
 
     @Autowired
+    @Qualifier("hdfsFileUploader")
     private FileUploader fileUploader;
+
+    @Autowired
+    @Qualifier("resourceFileUploader")
+    private FileUploader resourceUploader;
 
     @Autowired
     private UserService userService;
@@ -64,10 +71,9 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
         T object = objectMapper.readValue(string, type);
 
         if (image != null) {
-            String imageUrl = fileUploader.uploadFile(image);
-            ((NamedEntity) object).setImage("http://212.3.125.102:8080/filestorage/files?fileName=" +imageUrl);
-        }
-        else {
+            String imageUrl = resourceUploader.uploadFile(image);
+            ((NamedEntity) object).setImage(IMAGES_URL + imageUrl);
+        } else {
             ((NamedEntity) object).setImage(defaultImage);
         }
 
@@ -101,9 +107,9 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
         T object = objectMapper.readValue(string, type);
 
         if (image != null) {
-            String imageUrl = fileUploader.uploadFile(image);
-            ((NamedEntity) object).setImage("http://212.3.125.102:8080/filestorage/files?fileName=" + imageUrl);
-        } 
+            String imageUrl = resourceUploader.uploadFile(image);
+            ((NamedEntity) object).setImage(IMAGES_URL + imageUrl);
+        }
 
         T updated = this.getService().update(object);
 
@@ -196,6 +202,7 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
         }
         return this.service.list();
     }
+
     public UserService getUserService() {
         return userService;
     }

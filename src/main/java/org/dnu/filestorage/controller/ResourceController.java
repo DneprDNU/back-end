@@ -10,6 +10,7 @@ import org.dnu.filestorage.search.ResourceSearchRepository;
 import org.dnu.filestorage.utils.FileUploader;
 import org.dnu.filestorage.utils.HibernateAwareObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,13 +35,20 @@ import java.util.Map;
 @RequestMapping("/rest/resource")
 public class ResourceController {
 
+    public static final String IMAGES_URL = "http://212.3.125.102:8080/filestorage/resources/";
     String defaultImage = "http://cumbrianrun.co.uk/wp-content/uploads/2014/02/default-placeholder.png";
     @Autowired
     ResourceSearchRepository resourceSearchRepository;
     @Autowired
     private UserService userService;
     @Autowired
+    @Qualifier("hdfsFileUploader")
     private FileUploader fileUploader;
+
+    @Autowired
+    @Qualifier("resourceFileUploader")
+    private FileUploader resourceUploader;
+
     @Autowired
     private CategoryService categoryService;
     @Autowired
@@ -73,8 +81,8 @@ public class ResourceController {
             res.setFileR("http://212.3.125.102:8080/filestorage/files?fileName=" + fileUrl);
         }
         if (image != null) {
-            String imageUrl = fileUploader.uploadFile(image);
-            res.setImage("http://212.3.125.102:8080/filestorage/files?fileName=" + imageUrl);
+            String imageUrl = resourceUploader.uploadFile(image);
+            res.setImage(IMAGES_URL + imageUrl);
         }
 
         Resource created = service.create(res);
@@ -108,8 +116,8 @@ public class ResourceController {
             resource.setFileR("http://212.3.125.102:8080/filestorage/files?fileName=" + fileUrl);
         }
         if (image != null) {
-            String imageUrl = fileUploader.uploadFile(image);
-            resource.setImage("http://212.3.125.102:8080/filestorage/files?fileName=" + imageUrl);
+            String imageUrl = resourceUploader.uploadFile(image);
+            resource.setImage(IMAGES_URL + imageUrl);
         }
 
         Resource updated = this.service.update(resource);

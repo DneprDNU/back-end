@@ -1,6 +1,7 @@
 package org.dnu.filestorage.utils.impl;
 
 import org.dnu.filestorage.utils.FileUploader;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,8 +14,9 @@ import java.net.URLEncoder;
  */
 @Component("resourceFileUploader")
 public class ResourceFileUploader implements FileUploader {
-
     public static final String FOLDER = "/resources/";
+    @Value("resources.dir")
+    private String resourcesBaseDir;
 
     @Override
     public InputStream getFile(String fileName) {
@@ -30,12 +32,12 @@ public class ResourceFileUploader implements FileUploader {
     public String uploadFile(MultipartFile multipartFile) {
         try {
             String fileName = URLEncoder.encode(multipartFile.getOriginalFilename(), "UTF-8");
-            File f = new File(FOLDER + fileName);
+            File f = new File(resourcesBaseDir + "/" + fileName);
 
             int i = 0;
             while (f.exists()) {
                 i++;
-                f = new File(FOLDER + i + fileName);
+                f = new File(resourcesBaseDir + "/" + i + fileName);
             }
 
             byte[] bytes = multipartFile.getBytes();
@@ -45,9 +47,9 @@ public class ResourceFileUploader implements FileUploader {
             stream.close();
 
             if (i != 0) {
-                return FOLDER + i + fileName;
+                return i + fileName;
             } else {
-                return FOLDER + fileName;
+                return fileName;
             }
         } catch (IOException e) {
             e.printStackTrace();
