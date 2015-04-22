@@ -15,7 +15,7 @@ import java.net.URLEncoder;
 @Component("resourceFileUploader")
 public class ResourceFileUploader implements FileUploader {
     public static final String FOLDER = "/resources/";
-    @Value("resources.dir")
+    @Value("${resources.dir}")
     private String resourcesBaseDir;
 
     @Override
