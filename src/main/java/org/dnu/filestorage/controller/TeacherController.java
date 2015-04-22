@@ -1,9 +1,7 @@
 package org.dnu.filestorage.controller;
 
 import com.wordnik.swagger.annotations.Api;
-import org.dnu.filestorage.controller.generic.GenericController;
 import org.dnu.filestorage.controller.generic.GenericImageController;
-import org.dnu.filestorage.data.model.Speciality;
 import org.dnu.filestorage.data.model.Teacher;
 import org.dnu.filestorage.data.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +25,19 @@ public class TeacherController extends GenericImageController<TeacherService, Te
     public TeacherController(TeacherService service) {
         super(service, Teacher.class);
     }
+
+    @RequestMapping(params = "specialityId")
+    @ResponseBody
+    public List<Teacher> getTeachersBySpecialityId(@RequestParam("specialityId") Long specialityId) {
+        return getService().getTeachersBySpecialityId(specialityId);
+    }
+
+    @RequestMapping(params = "subjectId")
+    @ResponseBody
+    public List<Teacher> getTeachersBySubjectId(@RequestParam("subjectId") Long subjectId) {
+        return getService().getTeachersBySubjectId(subjectId);
+    }
+
 
 //    @RequestMapping(params = "facultyId")
 //    @ResponseBody

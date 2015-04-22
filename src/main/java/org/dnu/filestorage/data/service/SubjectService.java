@@ -11,4 +11,6 @@ import java.util.List;
 public interface SubjectService extends GenericService<Subject>, FilteredService<Subject> {
 
     List<Subject> getByDepartmentId(Long departmentId);
+
+    List<Subject> listBySpecialityId(Long specialityId);
 }

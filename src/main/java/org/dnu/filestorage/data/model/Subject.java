@@ -13,7 +13,10 @@ import java.util.List;
         "left join s.links l left join l.speciality sp left join sp.departments d where d.id=:departmentId"),
         @NamedQuery(name = "listSubjectsByFacultyId", query = "select distinct s from Subject s " +
                 "left join s.links l left join l.speciality sp left join sp.departments d left join d.faculty f " +
-                "where f.id=:facultyId")})
+                "where f.id=:facultyId"),
+        @NamedQuery(name = "getSubjectsBySpecialityIdByLinks", query = "select distinct s from Subject s " +
+                "left join s.links l left join l.speciality sp where sp.id=:specialityId")
+})
 public class Subject extends NamedEntity {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Resource> resources = new LinkedList<Resource>();

@@ -24,7 +24,7 @@ public class TeacherServiceImpl extends GenericFilteredService<TeacherDAO, Teach
 
     @Override
     public List<Teacher> getTeachersBySpecialityId(Long specialityId) {
-        return null;
+        return dao.getTeachersBySpecialityId(specialityId);
     }
 
     @Override

@@ -12,4 +12,6 @@ public interface TeacherDAO extends GenericDAO<Teacher>, FilteredDAO<Teacher> {
     List<Teacher> getTeachersByFacultyId(Long facultyId);
 
     List<Teacher> getTeachersBySubjectId(Long subjectId);
+
+    List<Teacher> getTeachersBySpecialityId(Long specialityId);
 }

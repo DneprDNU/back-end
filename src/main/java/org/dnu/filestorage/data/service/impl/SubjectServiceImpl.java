@@ -37,6 +37,11 @@ public class SubjectServiceImpl extends GenericFilteredService<SubjectDAO, Subje
     }
 
     @Override
+    public List<Subject> listBySpecialityId(Long specialityId) {
+        return dao.getBySpecialityId(specialityId);
+    }
+
+    @Override
     public Subject get(Long id) {
         return dao.get(id);
     }

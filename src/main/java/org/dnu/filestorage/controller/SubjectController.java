@@ -1,7 +1,6 @@
 package org.dnu.filestorage.controller;
 
 import com.wordnik.swagger.annotations.Api;
-import org.dnu.filestorage.controller.generic.GenericController;
 import org.dnu.filestorage.controller.generic.GenericImageController;
 import org.dnu.filestorage.data.model.Subject;
 import org.dnu.filestorage.data.service.SubjectService;
@@ -31,5 +30,11 @@ public class SubjectController extends GenericImageController<SubjectService, Su
     @ResponseBody
     public List<Subject> getSubjectsByDepartmentId(@RequestParam("departmentId") Long departmentId) {
         return getService().getByDepartmentId(departmentId);
+    }
+
+    @RequestMapping(params = "specialityId")
+    @ResponseBody
+    public List<Subject> getSubjectsBySpecialityId(@RequestParam("specialityId") Long specialityId) {
+        return getService().listBySpecialityId(specialityId);
     }
 }

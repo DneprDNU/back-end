@@ -12,7 +12,9 @@ import java.util.List;
 @NamedQueries({@NamedQuery(name = "listTeachersByFacultyId", query = "select distinct t from Teacher t " +
         "left join t.departments d left join d.faculty f where f.id=:facultyId"),
         @NamedQuery(name = "listTeachersBySubjectId", query = "select distinct t from Teacher t " +
-                "left join t.links l left join l.subject sp where sp.id=:subjectId")})
+                "left join t.links l left join l.subject sp where sp.id=:subjectId"),
+        @NamedQuery(name = "listTeachersBySpecialityIdByLinks", query = "select distinct t from Teacher t " +
+                "left join t.links l left join l.speciality sp where sp.id=:specialityId")})
 public class Teacher extends NamedEntity {
     @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "teacher")
     private List<LinkingEntity> links = new LinkedList<LinkingEntity>();

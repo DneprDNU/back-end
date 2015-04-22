@@ -22,6 +22,12 @@ public class SubjectDAOImpl extends GenericDAOImpl<Subject> implements SubjectDA
     }
 
     @Override
+    public List<Subject> getBySpecialityId(Long specialityId) {
+        return entityManager.createNamedQuery("getSubjectsBySpecialityIdByLinks", Subject.class)
+                .setParameter("specialityId", specialityId).getResultList();
+    }
+
+    @Override
     public Subject get(Object id) {
         Subject result = super.get(id);
         result.getResources().size();
