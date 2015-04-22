@@ -41,12 +41,12 @@ public class ResourceFileUploader implements FileUploader {
 
         try {
             String fileName = URLEncoder.encode(multipartFile.getOriginalFilename(), "UTF-8");
-            File f = new File(resourcesBaseDir + "/" + fileName);
+            File f = new File(resourcesBaseDir + File.pathSeparator + fileName);
 
             int i = 0;
             while (f.exists()) {
                 i++;
-                f = new File(resourcesBaseDir + "/" + i + fileName);
+                f = new File(resourcesBaseDir + File.pathSeparator + i + fileName);
             }
 
             byte[] bytes = multipartFile.getBytes();
