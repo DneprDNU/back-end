@@ -28,7 +28,9 @@ public class FileController {
             InputStream is = fileUploader.getFile(fileName);
             if (is != null) {
                 org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
+
                 response.setContentType("application/force-download");
+                response.setContentLength(is.available());
                 response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
                 response.flushBuffer();
             }

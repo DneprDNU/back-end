@@ -12,8 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedOutputStream;
 import java.io.InputStream;
 import java.net.URI;
+import java.net.URLEncoder;
 
-@Component
+@Component("hdfsFileUploader")
 public class HdfsFileUploader implements FileUploader {
 
     public static final String FOLDER = "/resources/";
@@ -36,13 +37,14 @@ public class HdfsFileUploader implements FileUploader {
     public String uploadFile(MultipartFile multipartFile) {
 
         try {
+            String fileName = URLEncoder.encode(multipartFile.getOriginalFilename(), "UTF-8");
             Configuration configuration = new Configuration();
             FileSystem hdfs = FileSystem.get(new URI(hdfsUrl), configuration);
-            Path file = new Path(hdfsUrl + FOLDER + multipartFile.getOriginalFilename());
+            Path file = new Path(hdfsUrl + FOLDER + fileName);
             int i = 0;
             while (hdfs.exists(file)) {
                 i++;
-                file = new Path(hdfsUrl + FOLDER + multipartFile.getOriginalFilename() + i);
+                file = new Path(hdfsUrl + FOLDER + fileName + i);
             }
 
             BufferedOutputStream os = new BufferedOutputStream(hdfs.create(file));
