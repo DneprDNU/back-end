@@ -37,7 +37,8 @@ public class HdfsFileUploader implements FileUploader {
     public String uploadFile(MultipartFile multipartFile) {
 
         try {
-            String fileName = URLEncoder.encode(multipartFile.getOriginalFilename(), "UTF-8");
+            String fileName = URLEncoder.encode(ResourceFileUploader
+                    .prepareFileName(multipartFile.getOriginalFilename()), "UTF-8");
             Configuration configuration = new Configuration();
             FileSystem hdfs = FileSystem.get(new URI(hdfsUrl), configuration);
             Path file = new Path(hdfsUrl + FOLDER + fileName);

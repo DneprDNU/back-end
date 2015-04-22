@@ -18,6 +18,10 @@ public class ResourceFileUploader implements FileUploader {
     @Value("${resources.dir}")
     private String resourcesBaseDir;
 
+    public static String prepareFileName(String originalFilename) {
+        return originalFilename.replaceAll("[\\s:\\\\/*?|<>&#]", "_");
+    }
+
     @Override
     public InputStream getFile(String fileName) {
         try {
@@ -40,7 +44,7 @@ public class ResourceFileUploader implements FileUploader {
         }
 
         try {
-            String fileName = URLEncoder.encode(multipartFile.getOriginalFilename(), "UTF-8");
+            String fileName = URLEncoder.encode(prepareFileName(multipartFile.getOriginalFilename()), "UTF-8");
             File f = new File(resourcesBaseDir + File.pathSeparator + fileName);
 
             int i = 0;
