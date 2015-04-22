@@ -30,6 +30,15 @@ public class ResourceFileUploader implements FileUploader {
 
     @Override
     public String uploadFile(MultipartFile multipartFile) {
+        File root = new File(resourcesBaseDir);
+        if (!root.exists()) {
+            try {
+                root.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         try {
             String fileName = URLEncoder.encode(multipartFile.getOriginalFilename(), "UTF-8");
             File f = new File(resourcesBaseDir + "/" + fileName);
