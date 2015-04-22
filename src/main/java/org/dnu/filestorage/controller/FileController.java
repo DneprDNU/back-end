@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLDecoder;
 
 /**
  * @author demyura
@@ -33,7 +34,8 @@ public class FileController {
 
                 response.setContentType("application/force-download");
                 response.setContentLength(is.available());
-                response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+                response.setHeader("Content-Disposition", "attachment; filename="
+                        + URLDecoder.decode(fileName, "UTF-8"));
                 response.flushBuffer();
             }
         } catch (IOException ex) {
