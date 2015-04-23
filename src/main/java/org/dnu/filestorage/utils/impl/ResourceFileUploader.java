@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.net.URLEncoder;
 
 /**
  * @author demyura
@@ -19,7 +18,7 @@ public class ResourceFileUploader implements FileUploader {
     private String resourcesBaseDir;
 
     public static String prepareFileName(String originalFilename) {
-        return originalFilename.replaceAll("[\\s:\\\\/*?|<>&#]", "_");
+        return originalFilename.replaceAll("[\\s:\\\\/*?|<>&#~\\^]", "_");
     }
 
     @Override
@@ -44,7 +43,7 @@ public class ResourceFileUploader implements FileUploader {
         }
 
         try {
-            String fileName = URLEncoder.encode(prepareFileName(multipartFile.getOriginalFilename()), "UTF-8");
+            String fileName = prepareFileName(multipartFile.getOriginalFilename());
             File f = new File(resourcesBaseDir + File.separator + fileName);
 
             int i = 0;
