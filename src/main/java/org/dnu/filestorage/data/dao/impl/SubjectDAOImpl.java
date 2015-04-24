@@ -1,5 +1,7 @@
 package org.dnu.filestorage.data.dao.impl;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.dnu.filestorage.data.dao.SubjectDAO;
 import org.dnu.filestorage.data.model.Subject;
 import org.springframework.stereotype.Repository;
@@ -13,6 +15,7 @@ import java.util.List;
  */
 @Repository
 @Transactional
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@subjectId")
 public class SubjectDAOImpl extends GenericDAOImpl<Subject> implements SubjectDAO {
 
     @Override
