@@ -63,8 +63,9 @@ public class SearchController {
             Resource resource = new Resource(resourceName, year, author, description, "", "");
             resource.setId(Long.parseLong(searchHits[i].id()));
             resource.setCategories(categories);
-            if (!resource.getImage().equals(defaultImage) && !resource.getImage().isEmpty()) {
-                resource.setImage((String)searchHits[i].getSource().get("image"));
+            String image = (String)searchHits[i].getSource().get("image");
+            if (!resource.getImage().equals(defaultImage) && !image.isEmpty()) {
+                resource.setImage(image);
             }
             else{
                 resource.setImage(this.defaultImage);

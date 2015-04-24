@@ -73,7 +73,7 @@ public class SpecialityServiceImpl extends GenericFilteredService<SpecialityDAO,
 
     private void copyDepartments(Speciality current, Speciality newEntity) {
         List<Department> departments = new LinkedList<Department>();
-        if (newEntity.getSupervisors() != null) {
+        if (newEntity.getDepartments() != null) {
             for (Department department : newEntity.getDepartments()) {
                 departments.add(departmentDao.get(department.getId()));
             }
