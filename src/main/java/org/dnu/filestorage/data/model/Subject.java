@@ -20,7 +20,8 @@ import java.util.List;
         @NamedQuery(name = "getSubjectsBySpecialityIdByLinks", query = "select distinct s from Subject s " +
                 "left join s.links l left join l.speciality sp where sp.id=:specialityId")
 })
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@subjectId")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
+        scope = Subject.class)
 public class Subject extends NamedEntity {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Resource> resources = new LinkedList<Resource>();

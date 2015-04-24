@@ -22,7 +22,8 @@ import java.util.List;
                 "left join r.categories c " +
                 "left join fetch r.subjects s " +
                 "where r.id = :resourceId")})
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@resourceId")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
+        scope = Resource.class)
 public class Resource extends NamedEntity {
     @ManyToMany()
     private List<Category> categories = new LinkedList<Category>();
@@ -38,7 +39,7 @@ public class Resource extends NamedEntity {
 
     private String description;
 
-    @JsonIgnore
+    //    @JsonIgnore
     private String fileR;
 
     public Resource() {
