@@ -1,7 +1,9 @@
 package org.dnu.filestorage.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.LinkedList;
@@ -20,6 +22,7 @@ import java.util.List;
                 "left join r.categories c " +
                 "left join fetch r.subjects s " +
                 "where r.id = :resourceId")})
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@resourceId")
 public class Resource extends NamedEntity {
     @ManyToMany()
     private List<Category> categories = new LinkedList<Category>();

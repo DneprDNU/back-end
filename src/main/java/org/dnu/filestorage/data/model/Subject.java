@@ -1,5 +1,8 @@
 package org.dnu.filestorage.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,6 +20,7 @@ import java.util.List;
         @NamedQuery(name = "getSubjectsBySpecialityIdByLinks", query = "select distinct s from Subject s " +
                 "left join s.links l left join l.speciality sp where sp.id=:specialityId")
 })
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@subjectId")
 public class Subject extends NamedEntity {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Resource> resources = new LinkedList<Resource>();

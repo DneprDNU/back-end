@@ -1,7 +1,5 @@
 package org.dnu.filestorage.data.dao.impl;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.dnu.filestorage.data.dao.ResourceDAO;
 import org.dnu.filestorage.data.model.Resource;
 import org.springframework.stereotype.Repository;
@@ -15,7 +13,6 @@ import java.util.List;
  */
 @Repository
 @Transactional
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@resourceId")
 public class ResourceDAOImpl extends GenericDAOImpl<Resource> implements ResourceDAO {
 
     @Override
