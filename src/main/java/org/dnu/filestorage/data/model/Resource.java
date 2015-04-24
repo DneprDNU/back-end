@@ -18,7 +18,7 @@ import java.util.List;
                 "left join sp.departments d left join d.faculty f where f.id=:facultyId"),
         @NamedQuery(name = "Resource.loadWithRelations", query = "select r from Resource r " +
                 "left join r.categories c " +
-                "left join r.subjects s " +
+                "left join fetch r.subjects s " +
                 "where r.id = :resourceId")})
 public class Resource extends NamedEntity {
     @ManyToMany()
