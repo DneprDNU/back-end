@@ -1,7 +1,9 @@
 package org.dnu.filestorage.data.service.impl;
 
+import org.dnu.filestorage.data.dao.DepartmentDAO;
 import org.dnu.filestorage.data.dao.SpecialityDAO;
 import org.dnu.filestorage.data.dao.TeacherDAO;
+import org.dnu.filestorage.data.model.Department;
 import org.dnu.filestorage.data.model.Speciality;
 import org.dnu.filestorage.data.model.Teacher;
 import org.dnu.filestorage.data.service.SpecialityService;
@@ -25,6 +27,9 @@ public class SpecialityServiceImpl extends GenericFilteredService<SpecialityDAO,
     private TeacherDAO teacherDao;
 
     @Autowired
+    private DepartmentDAO departmentDao;
+
+    @Autowired
     public SpecialityServiceImpl(SpecialityDAO dao) {
         super(dao);
     }
@@ -38,6 +43,7 @@ public class SpecialityServiceImpl extends GenericFilteredService<SpecialityDAO,
     protected void copyProperties(Speciality current, Speciality newEntity) {
         copyFields(current, newEntity);
         copySupervisors(current, newEntity);
+        copyDepartments(current, newEntity);
     }
 
     private void copySupervisors(Speciality current, Speciality newEntity) {
@@ -62,6 +68,31 @@ public class SpecialityServiceImpl extends GenericFilteredService<SpecialityDAO,
 
         for (Teacher teacher : supervisors) {
             current.addSupervisor(teacher);
+        }
+    }
+
+    private void copyDepartments(Speciality current, Speciality newEntity) {
+        List<Department> departments = new LinkedList<Department>();
+        if (newEntity.getSupervisors() != null) {
+            for (Department department : newEntity.getDepartments()) {
+                departments.add(departmentDao.get(department.getId()));
+            }
+        }
+
+        Iterator<Department> departmentIterator = current.getDepartments().iterator();
+        while (departmentIterator.hasNext()) {
+            Department department = departmentIterator.next();
+            if (!departments.contains(department)) {
+                departmentIterator.remove();
+                department.getSpecialities().remove(current);
+                departmentDao.update(department);
+            } else {
+                departments.remove(department);
+            }
+        }
+
+        for (Department department : departments) {
+            current.addDepartment(department);
         }
     }
 
