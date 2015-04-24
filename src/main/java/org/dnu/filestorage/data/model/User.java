@@ -1,9 +1,14 @@
 package org.dnu.filestorage.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
+        scope = User.class)
 public class User implements Identifiable {
 
     @Id

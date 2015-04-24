@@ -1,5 +1,8 @@
 package org.dnu.filestorage.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +18,8 @@ import java.util.List;
                 "left join t.links l left join l.subject sp where sp.id=:subjectId"),
         @NamedQuery(name = "listTeachersBySpecialityIdByLinks", query = "select distinct t from Teacher t " +
                 "left join t.links l left join l.speciality sp where sp.id=:specialityId")})
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
+        scope = Teacher.class)
 public class Teacher extends NamedEntity {
     @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "teacher")
     private List<LinkingEntity> links = new LinkedList<LinkingEntity>();

@@ -1,12 +1,16 @@
 package org.dnu.filestorage.data.model;
 
-import javax.persistence.Column;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import java.util.LinkedList;
 import java.util.List;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
+        scope = FreeResource.class)
 public class FreeResource extends NamedEntity {
     private String description;
 

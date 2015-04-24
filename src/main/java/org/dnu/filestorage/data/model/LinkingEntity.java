@@ -1,5 +1,8 @@
 package org.dnu.filestorage.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 
 /**
@@ -9,6 +12,8 @@ import javax.persistence.*;
 @Entity
 @NamedQueries({@NamedQuery(name = "removeLinksBySubject", query = "delete from LinkingEntity e where " +
         "e.subject.id=:subjectId")})
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
+        scope = LinkingEntity.class)
 public class LinkingEntity implements Identifiable {
     @Id
     @GeneratedValue
