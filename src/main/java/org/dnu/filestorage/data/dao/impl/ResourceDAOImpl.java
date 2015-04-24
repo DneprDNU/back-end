@@ -17,13 +17,13 @@ public class ResourceDAOImpl extends GenericDAOImpl<Resource> implements Resourc
 
     @Override
     public List<Resource> listByCategoryId(Long categoryId) {
-        return entityManager.createNamedQuery("getResourcesByCategoryId", Resource.class)
+        return entityManager.createNamedQuery("Resource.getResourcesByCategoryId", Resource.class)
                 .setParameter("categoryId", categoryId).getResultList();
     }
 
     @Override
     public List<Resource> listResourcesByTeacherIdByLinks(Long teacherId) {
-        return entityManager.createNamedQuery("getResourcesByTeacherIdByLinks", Resource.class)
+        return entityManager.createNamedQuery("Resource.getResourcesByTeacherIdByLinks", Resource.class)
                 .setParameter("teacherId", teacherId).getResultList();
     }
 
@@ -35,13 +35,13 @@ public class ResourceDAOImpl extends GenericDAOImpl<Resource> implements Resourc
 
     @Override
     public List<Resource> listByFacultyId(long facultyId) {
-        return entityManager.createNamedQuery("listResourcesByFaculty", Resource.class)
+        return entityManager.createNamedQuery("Resource.listResourcesByFaculty", Resource.class)
                 .setParameter("facultyId", facultyId).getResultList();
     }
 
     @Override
     public List<Resource> listByFacultyId(long facultyId, int from, int to) {
-        return entityManager.createNamedQuery("listResourcesByFaculty", Resource.class)
+        return entityManager.createNamedQuery("Resource.listResourcesByFaculty", Resource.class)
                 .setParameter("facultyId", facultyId).setFirstResult(from).setMaxResults(to - from).getResultList();
     }
 }
