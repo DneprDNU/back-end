@@ -30,7 +30,7 @@ public class ResourceDAOImpl extends GenericDAOImpl<Resource> implements Resourc
     @Override
     public Resource get(Object id) {
         return entityManager.createNamedQuery("Resource.loadWithRelations", Resource.class)
-                .setParameter("id", id).getSingleResult();
+                .setParameter("resourceId", id).getSingleResult();
     }
 
     @Override
