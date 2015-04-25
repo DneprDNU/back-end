@@ -1,8 +1,5 @@
 package org.dnu.filestorage.data.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,8 +11,8 @@ import java.util.List;
 @Entity
 @NamedQueries({@NamedQuery(name = "getFacultyWithRelations", query = "select f from Faculty f " +
         "left join fetch f.departments where f.id = :facultyId")})
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
-        scope = Faculty.class)
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
+//        scope = Faculty.class)
 public class Faculty extends NamedEntity {
     private String shortName;
     private String description;

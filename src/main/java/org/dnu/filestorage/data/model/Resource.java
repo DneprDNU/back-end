@@ -39,7 +39,7 @@ public class Resource extends NamedEntity {
 
     private String description;
 
-    //    @JsonIgnore
+    @JsonIgnore
     private String fileR;
 
     public Resource() {

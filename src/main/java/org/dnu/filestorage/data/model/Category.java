@@ -1,7 +1,5 @@
 package org.dnu.filestorage.data.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -17,8 +15,8 @@ import java.util.List;
  * @since 07.10.14
  */
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
-        scope = Category.class)
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
+//        scope = Category.class)
 public class Category extends NamedEntity {
     @LazyCollection(LazyCollectionOption.EXTRA)
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
