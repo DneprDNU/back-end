@@ -102,6 +102,7 @@ public class SpecialityServiceImpl extends GenericFilteredService<SpecialityDAO,
         }
         current.setName(newEntity.getName());
         current.setCode(newEntity.getCode());
+        current.setDescription(newEntity.getDescription());
     }
 
     @Override

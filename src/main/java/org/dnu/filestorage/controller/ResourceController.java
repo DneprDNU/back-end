@@ -11,7 +11,6 @@ import org.dnu.filestorage.utils.FileUploader;
 import org.dnu.filestorage.utils.HibernateAwareObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -166,7 +165,7 @@ public class ResourceController {
         return new Count(this.service.getCount());
     }
 
-    @RequestMapping(method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> create(@RequestBody Resource json) throws IOException {
 
@@ -179,7 +178,7 @@ public class ResourceController {
         return m;
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseBody
     public Map<String, Object> update(@PathVariable Long id, @RequestBody Resource json) throws IOException {
         Resource updated = this.service.update(json);

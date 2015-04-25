@@ -13,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -129,7 +128,7 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
         return m;
     }
 
-    @RequestMapping(method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> create(@RequestBody T json) {
         logger.debug("create() with body {} of type {}", json, json.getClass());
@@ -143,7 +142,7 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
         return m;
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseBody
     public Map<String, Object> update(@PathVariable Long id, @RequestBody T json) {
         T updated = this.service.update(json);

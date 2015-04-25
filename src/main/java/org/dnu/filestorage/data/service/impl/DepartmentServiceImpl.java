@@ -43,12 +43,19 @@ public class DepartmentServiceImpl extends GenericFilteredService<DepartmentDAO,
     protected void copyProperties(Department current, Department newEntity ) {
         current.setName(newEntity.getName());
         current.setShortName(newEntity.getShortName());
+        current.setDescription(newEntity.getDescription());
+        current.setAddress(newEntity.getAddress());
+        current.setPhone(newEntity.getPhone());
         if (!newEntity.getImage().isEmpty()) {
             current.setImage(newEntity.getImage());
+        }
+        if (newEntity.getDirector() != null) {
+            current.setDirector(teacherDAO.get(newEntity.getDirector().getId()));
         }
 
         updateSpecialities(newEntity, current);
         updateEmployees(newEntity, current);
+
     }
 
     private void updateEmployees(Department newEntity, Department current) {

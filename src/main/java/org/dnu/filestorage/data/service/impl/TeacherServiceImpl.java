@@ -48,5 +48,8 @@ public class TeacherServiceImpl extends GenericFilteredService<TeacherDAO, Teach
         if (!newEntity.getImage().isEmpty()) {
             current.setImage(newEntity.getImage());
         }
+        current.setEmail(newEntity.getEmail());
+        current.setPhone(newEntity.getPhone());
+        current.setSkype(newEntity.getSkype());
     }
 }

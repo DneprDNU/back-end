@@ -24,6 +24,11 @@ public class Department extends NamedEntity {
     private List<Teacher> employees = new LinkedList<Teacher>();
     @ManyToOne(fetch = FetchType.LAZY)
     private Faculty faculty;
+    private String description;
+    @OneToOne()
+    private Teacher director;
+    private String address;
+    private String phone;
 
     public Department() {
     }
@@ -89,5 +94,37 @@ public class Department extends NamedEntity {
 
     public void setFaculty(Faculty faculty) {
         this.faculty = faculty;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Teacher getDirector() {
+        return director;
+    }
+
+    public void setDirector(Teacher director) {
+        this.director = director;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

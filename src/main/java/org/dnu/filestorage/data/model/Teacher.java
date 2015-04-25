@@ -18,7 +18,8 @@ import java.util.List;
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
 //        scope = Teacher.class)
 public class Teacher extends NamedEntity {
-    @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "teacher")
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "teacher")
     private List<LinkingEntity> links = new LinkedList<LinkingEntity>();
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "employees")
@@ -26,6 +27,9 @@ public class Teacher extends NamedEntity {
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "supervisors")
     private List<Speciality> specialities = new LinkedList<Speciality>();
+    private String email;
+    private String phone;
+    private String skype;
 
 
     public Teacher() {
@@ -68,8 +72,34 @@ public class Teacher extends NamedEntity {
         this.specialities = specialities;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getSkype() {
+        return skype;
+    }
+
+    public void setSkype(String skype) {
+        this.skype = skype;
+    }
+
     @Override
     public String toString() {
         return this.getName();
     }
+
+
 }

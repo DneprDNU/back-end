@@ -24,6 +24,8 @@ public class Speciality extends NamedEntity {
     @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "speciality")
     private List<LinkingEntity> links = new LinkedList<LinkingEntity>();
 
+    private String description;
+
     public Speciality() {
     }
 
@@ -91,6 +93,14 @@ public class Speciality extends NamedEntity {
 
     public void setDepartments(List<Department> departments) {
         this.departments = departments;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
