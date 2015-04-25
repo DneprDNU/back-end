@@ -104,9 +104,13 @@ public class ResourceController {
         return resource;
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, params = {"resource"})
     @ResponseBody
-    public Map<String, Object> update(MultipartRequest multipartRequest, @PathVariable Long id, @RequestParam(value = "resource") String resourceString, @RequestParam(required = false) MultipartFile file, @RequestParam(required = false) MultipartFile image) throws IOException {
+    public Map<String, Object> update(MultipartRequest multipartRequest, @PathVariable Long id,
+                                      @RequestParam(value = "resource") String resourceString,
+                                      @RequestParam(required = false) MultipartFile file,
+                                      @RequestParam(required = false) MultipartFile image)
+            throws IOException {
 
         Resource resource = objectMapper.readValue(resourceString, Resource.class);
 
