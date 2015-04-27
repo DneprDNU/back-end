@@ -22,8 +22,6 @@ public class Category extends NamedEntity {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
     private List<Resource> resources = new LinkedList<Resource>();
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
-    private List<FreeResource> freeResources = new LinkedList<FreeResource>();
     @Transient
     private int resourceCount;
 
@@ -48,16 +46,6 @@ public class Category extends NamedEntity {
         return this;
     }
 
-    public Category addFreeResource(FreeResource resource) {
-        if (!getFreeResources().contains(resource)) {
-            getFreeResources().add(resource);
-        }
-        if (!resource.getCategories().contains(this)) {
-            resource.getCategories().add(this);
-        }
-        return this;
-    }
-
     public synchronized List<Resource> getResources() {
         if (resources == null) {
             resources = new LinkedList<>();
@@ -67,17 +55,6 @@ public class Category extends NamedEntity {
 
     public void setResources(List<Resource> resources) {
         this.resources = resources;
-    }
-
-    public synchronized List<FreeResource> getFreeResources() {
-        if (freeResources == null) {
-            freeResources = new LinkedList<>();
-        }
-        return freeResources;
-    }
-
-    public void setFreeResources(List<FreeResource> freeResources) {
-        this.freeResources = freeResources;
     }
 
     public int getResourceCount() {

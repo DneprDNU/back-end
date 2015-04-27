@@ -10,11 +10,10 @@ import java.util.List;
 //        scope = FreeResource.class)
 public class FreeResource extends NamedEntity {
     private String description;
-
-       private String resource;
+    private String resource;
 
     @ManyToMany
-    private List<Category> categories = new LinkedList<Category>();
+    private List<FreeResourceCategory> categories = new LinkedList<FreeResourceCategory>();
 
     public FreeResource() {
 
@@ -26,7 +25,7 @@ public class FreeResource extends NamedEntity {
         this.resource = resourceURL;
     }
 
-    public FreeResource addCategory(Category category) {
+    public FreeResource addCategory(FreeResourceCategory category) {
         if (!getCategories().contains(category)) {
             getCategories().add(category);
         }
@@ -52,14 +51,14 @@ public class FreeResource extends NamedEntity {
         this.resource = resource;
     }
 
-    public synchronized List<Category> getCategories() {
+    public synchronized List<FreeResourceCategory> getCategories() {
         if (categories == null) {
             categories = new LinkedList<>();
         }
         return categories;
     }
 
-    public void setCategories(List<Category> categories) {
+    public void setCategories(List<FreeResourceCategory> categories) {
         this.categories = categories;
     }
 }
