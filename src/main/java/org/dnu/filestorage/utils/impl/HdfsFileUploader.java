@@ -45,7 +45,7 @@ public class HdfsFileUploader implements FileUploader {
             int i = 0;
             while (hdfs.exists(file)) {
                 i++;
-                file = new Path(hdfsUrl + FOLDER + FilenameUtils.getBaseName(fileName) + i
+                file = new Path(hdfsUrl + FOLDER + FilenameUtils.getBaseName(fileName) + i + "."
                         + FilenameUtils.getExtension(fileName));
             }
 
