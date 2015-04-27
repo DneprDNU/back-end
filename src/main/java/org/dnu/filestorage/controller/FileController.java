@@ -32,11 +32,10 @@ public class FileController {
         try {
             InputStream is = fileUploader.getFile(fileName);
             if (is != null) {
-                org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
-
                 response.setContentType(tika.detect(is));
                 response.setContentLength(is.available());
                 response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", fileName));
+                org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
                 response.flushBuffer();
             }
         } catch (IOException ex) {
