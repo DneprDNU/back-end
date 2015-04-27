@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartRequest;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -207,6 +208,9 @@ public class ResourceController {
                     (user.getUserRole() != null && user.getUserRole().contains("ROLE_SUPERADMIN"))) {
                 return this.service.list();
             }
+            if (user.getFaculty() == null) {
+                return new LinkedList<>();
+            }
             return ((FilteredService) service).listByFacultyId(user.getFaculty().getId());
         }
         return this.service.list();
@@ -222,6 +226,9 @@ public class ResourceController {
             if (user == null ||
                     (user.getUserRole() != null && user.getUserRole().contains("ROLE_SUPERADMIN"))) {
                 return this.service.list(from, to);
+            }
+            if (user.getFaculty() == null) {
+                return new LinkedList<>();
             }
             return ((FilteredService) service).listByFacultyId(user.getFaculty().getId(), from, to);
         }

@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -108,6 +109,9 @@ public abstract class GenericController<S extends GenericService<T>, T extends I
                         (user.getUserRole() != null && user.getUserRole().contains("ROLE_SUPERADMIN"))) {
                     return this.service.list();
                 }
+                if (user.getFaculty() == null) {
+                    return new LinkedList<>();
+                }
                 return ((FilteredService) service).listByFacultyId(user.getFaculty().getId());
             }
         }
@@ -125,6 +129,9 @@ public abstract class GenericController<S extends GenericService<T>, T extends I
                 if (user == null ||
                         (user.getUserRole() != null && user.getUserRole().contains("ROLE_SUPERADMIN"))) {
                     return this.service.list(from, to);
+                }
+                if (user.getFaculty() == null) {
+                    return new LinkedList<>();
                 }
                 return ((FilteredService) service).listByFacultyId(user.getFaculty().getId(), from, to);
             }
