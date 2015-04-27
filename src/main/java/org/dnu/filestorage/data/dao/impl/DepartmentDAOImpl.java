@@ -17,7 +17,7 @@ public class DepartmentDAOImpl extends GenericDAOImpl<Department> implements Dep
 
     @Override
     public Department getDepartmentWithRelations(Long id) {
-        Department result = (Department) entityManager.createNamedQuery("getDepartmentWithRelations")
+        Department result = (Department) entityManager.createNamedQuery("Department.getDepartmentWithRelations")
                 .setParameter("departmentId", id).getSingleResult();
         result.getEmployees().size(); // workaround for JPA problem with multiple join fetch in named query
         return result;
@@ -25,13 +25,19 @@ public class DepartmentDAOImpl extends GenericDAOImpl<Department> implements Dep
 
     @Override
     public List<Department> listByFacultyId(long facultyId) {
-        return entityManager.createNamedQuery("listByFacultyId", Department.class)
+        return entityManager.createNamedQuery("Department.listByFacultyId", Department.class)
                 .setParameter("facultyId", facultyId).getResultList();
     }
 
     @Override
     public List<Department> listByFacultyId(long facultyId, int from, int to) {
-        return entityManager.createNamedQuery("listByFacultyId", Department.class)
+        return entityManager.createNamedQuery("Department.listByFacultyId", Department.class)
                 .setParameter("facultyId", facultyId).setFirstResult(from).setMaxResults(to - from).getResultList();
+    }
+
+    @Override
+    public long filteredCount(long facultyId) {
+        return (long) entityManager.createNamedQuery("Department.filteredCount")
+                .setParameter("facultyId", facultyId).getSingleResult();
     }
 }

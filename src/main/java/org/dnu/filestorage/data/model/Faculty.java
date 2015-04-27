@@ -9,7 +9,7 @@ import java.util.List;
  * @since 28.09.14
  */
 @Entity
-@NamedQueries({@NamedQuery(name = "getFacultyWithRelations", query = "select f from Faculty f " +
+@NamedQueries({@NamedQuery(name = "Faculty.getFacultyWithRelations", query = "select f from Faculty f " +
         "left join fetch f.departments where f.id = :facultyId")})
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
 //        scope = Faculty.class)

@@ -12,13 +12,16 @@ import java.util.List;
  * @since 07.10.14
  */
 @Entity
-@NamedQueries({@NamedQuery(name = "getSubjectsByDepartmentIdByLinks", query = "select distinct s from Subject s " +
+@NamedQueries({@NamedQuery(name = "Subject.getSubjectsByDepartmentIdByLinks", query = "select distinct s from Subject s " +
         "left join s.links l left join l.speciality sp left join sp.departments d where d.id=:departmentId"),
-        @NamedQuery(name = "listSubjectsByFacultyId", query = "select distinct s from Subject s " +
+        @NamedQuery(name = "Subject.listSubjectsByFacultyId", query = "select distinct s from Subject s " +
                 "left join s.links l left join l.speciality sp left join sp.departments d left join d.faculty f " +
                 "where f.id=:facultyId"),
-        @NamedQuery(name = "getSubjectsBySpecialityIdByLinks", query = "select distinct s from Subject s " +
-                "left join s.links l left join l.speciality sp where sp.id=:specialityId")
+        @NamedQuery(name = "Subject.getSubjectsBySpecialityIdByLinks", query = "select distinct s from Subject s " +
+                "left join s.links l left join l.speciality sp where sp.id=:specialityId"),
+        @NamedQuery(name = "Subject.filteredCount", query = "select count(distinct s) from Subject s " +
+                "left join s.links l left join l.speciality sp left join sp.departments d " +
+                "left join d.faculty f where f.id = :facultyId")
 })
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
         scope = Subject.class)

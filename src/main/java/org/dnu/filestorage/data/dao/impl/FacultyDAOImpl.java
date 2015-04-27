@@ -19,10 +19,9 @@ public class FacultyDAOImpl extends GenericDAOImpl<Faculty> implements FacultyDA
 
     @Override
     public Faculty getFacultyWithRelations(Long id) {
-        return (Faculty) entityManager.createNamedQuery("getFacultyWithRelations").setParameter("facultyId", id)
+        return (Faculty) entityManager.createNamedQuery("Faculty.getFacultyWithRelations").setParameter("facultyId", id)
                 .getSingleResult();
     }
-
 
     @Override
     public List<Faculty> listByFacultyId(long facultyId) {
@@ -32,5 +31,10 @@ public class FacultyDAOImpl extends GenericDAOImpl<Faculty> implements FacultyDA
     @Override
     public List<Faculty> listByFacultyId(long facultyId, int from, int to) {
         return listByFacultyId(facultyId);
+    }
+
+    @Override
+    public long filteredCount(long facultyId) {
+        return get(facultyId) == null ? 0 : 1;
     }
 }

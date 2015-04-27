@@ -12,4 +12,6 @@ public interface FilteredDAO<T extends Identifiable> {
     List<T> listByFacultyId(long facultyId);
 
     List<T> listByFacultyId(long facultyId, int from, int to);
+
+    long filteredCount(long facultyId);
 }

@@ -9,12 +9,14 @@ import java.util.List;
  * @since 07.10.14
  */
 @Entity
-@NamedQueries({@NamedQuery(name = "listTeachersByFacultyId", query = "select distinct t from Teacher t " +
+@NamedQueries({@NamedQuery(name = "Teacher.listTeachersByFacultyId", query = "select distinct t from Teacher t " +
         "left join t.departments d left join d.faculty f where f.id=:facultyId"),
-        @NamedQuery(name = "listTeachersBySubjectId", query = "select distinct t from Teacher t " +
+        @NamedQuery(name = "Teacher.listTeachersBySubjectId", query = "select distinct t from Teacher t " +
                 "left join t.links l left join l.subject sp where sp.id=:subjectId"),
-        @NamedQuery(name = "listTeachersBySpecialityIdByLinks", query = "select distinct t from Teacher t " +
-                "left join t.links l left join l.speciality sp where sp.id=:specialityId")})
+        @NamedQuery(name = "Teacher.listTeachersBySpecialityIdByLinks", query = "select distinct t from Teacher t " +
+                "left join t.links l left join l.speciality sp where sp.id=:specialityId"),
+        @NamedQuery(name = "Teacher.filteredCount", query = "select count(distinct t) from Teacher t " +
+                "left join t.departments d left join d.faculty f where f.id=:facultyId")})
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
 //        scope = Teacher.class)
 public class Teacher extends NamedEntity {

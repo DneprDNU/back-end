@@ -52,4 +52,10 @@ public class TeacherDAOImpl extends GenericDAOImpl<Teacher> implements TeacherDA
         return entityManager.createNamedQuery("listTeachersByFacultyId", Teacher.class)
                 .setParameter("facultyId", facultyId).setFirstResult(from).setMaxResults(to - from).getResultList();
     }
+
+    @Override
+    public long filteredCount(long facultyId) {
+        return (long) entityManager.createNamedQuery("Teacher.filteredCount")
+                .setParameter("facultyId", facultyId).getSingleResult();
+    }
 }

@@ -165,6 +165,21 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
     @RequestMapping(value = "/count")
     @ResponseBody
     public Count getCount() {
+        if (service instanceof FilteredService) {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String name = auth.getName();
+            if (name != null) {
+                User user = getUserService().findByUserName(name);
+                if (user == null ||
+                        (user.getUserRole() != null && user.getUserRole().contains("ROLE_SUPERADMIN"))) {
+                    new Count(this.service.getCount());
+                }
+                if (user.getFaculty() == null) {
+                    return new Count(0l);
+                }
+                return new Count(((FilteredService) service).filteredCount(user.getFaculty().getId()));
+            }
+        }
         return new Count(this.service.getCount());
     }
 

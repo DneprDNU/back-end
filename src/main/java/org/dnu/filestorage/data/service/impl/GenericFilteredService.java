@@ -26,4 +26,9 @@ public abstract class GenericFilteredService<D extends GenericDAO<T>, T extends 
     public List<T> listByFacultyId(long facultyId, int from, int to) {
         return ((FilteredDAO<T>) dao).listByFacultyId(facultyId, from, to);
     }
+
+    @Override
+    public long filteredCount(long facultyId) {
+        return ((FilteredDAO<T>) dao).filteredCount(facultyId);
+    }
 }

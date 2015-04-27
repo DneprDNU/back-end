@@ -19,7 +19,7 @@ public class SpecialityDAOImpl extends GenericDAOImpl<Speciality> implements Spe
     public List<Speciality> getSpecialitiesByFacultyId(Long facultyId) {
 //        CriteriaBuilder builder=entityManager.getCriteriaBuilder();
 //        builder.
-        return entityManager.createNamedQuery("getSpecialitiesByFacultyId").setParameter("facultyId", facultyId)
+        return entityManager.createNamedQuery("Speciality.getSpecialitiesByFacultyId", Speciality.class).setParameter("facultyId", facultyId)
                 .getResultList();
     }
 
@@ -38,7 +38,13 @@ public class SpecialityDAOImpl extends GenericDAOImpl<Speciality> implements Spe
 
     @Override
     public List<Speciality> listByFacultyId(long facultyId, int from, int to) {
-        return entityManager.createNamedQuery("getSpecialitiesByFacultyId").setParameter("facultyId", facultyId)
+        return entityManager.createNamedQuery("Speciality.getSpecialitiesByFacultyId", Speciality.class).setParameter("facultyId", facultyId)
                 .setFirstResult(from).setMaxResults(to - from).getResultList();
+    }
+
+    @Override
+    public long filteredCount(long facultyId) {
+        return (long) entityManager.createNamedQuery("Speciality.filteredCount")
+                .setParameter("facultyId", facultyId).getSingleResult();
     }
 }

@@ -9,10 +9,12 @@ import java.util.List;
  * @since 28.09.14
  */
 @Entity
-@NamedQueries({@NamedQuery(name = "getDepartmentWithRelations", query = "select a from Department a " +
+@NamedQueries({@NamedQuery(name = "Department.getDepartmentWithRelations", query = "select a from Department a " +
         "left join fetch a.specialities " +
         " where a.id = :departmentId"),
-        @NamedQuery(name = "listByFacultyId", query = "select a from Department a " +
+        @NamedQuery(name = "Department.listByFacultyId", query = "select a from Department a " +
+                "where a.faculty.id=:facultyId"),
+        @NamedQuery(name = "Department.filteredCount", query = "select count(distinct a) from Department a " +
                 "where a.faculty.id=:facultyId")})
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
 //        scope = Department.class)

@@ -9,9 +9,12 @@ import java.util.List;
  * @since 07.10.14
  */
 @Entity
-@NamedQueries({@NamedQuery(name = "getSpecialitiesByFacultyId", query = "select a from Speciality as a " +
+@NamedQueries({@NamedQuery(name = "Speciality.getSpecialitiesByFacultyId", query = "select a from Speciality as a " +
         "left join a.departments d left join d.faculty f " +
-        " where f.id=:facultyId")})
+        " where f.id=:facultyId"),
+        @NamedQuery(name = "Speciality.filteredCount", query = "select count(distinct s) from Speciality s " +
+                "left join s.departments d left join d.faculty f " +
+                "where f.id = :facultyId")})
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
 //        scope = Speciality.class)
 public class Speciality extends NamedEntity {
