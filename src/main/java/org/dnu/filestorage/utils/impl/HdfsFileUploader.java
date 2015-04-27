@@ -1,6 +1,7 @@
 package org.dnu.filestorage.utils.impl;
 
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -44,7 +45,8 @@ public class HdfsFileUploader implements FileUploader {
             int i = 0;
             while (hdfs.exists(file)) {
                 i++;
-                file = new Path(hdfsUrl + FOLDER + fileName + i);
+                file = new Path(hdfsUrl + FOLDER + FilenameUtils.getBaseName(fileName) + i
+                        + FilenameUtils.getExtension(fileName));
             }
 
             BufferedOutputStream os = new BufferedOutputStream(hdfs.create(file));

@@ -1,6 +1,7 @@
 package org.dnu.filestorage.controller;
 
 import com.wordnik.swagger.annotations.Api;
+import org.apache.tika.Tika;
 import org.dnu.filestorage.utils.FileUploader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,6 +24,8 @@ public class FileController {
     @Qualifier("hdfsFileUploader")
     private FileUploader fileUploader;
 
+    private Tika tika = new Tika();
+
     @RequestMapping("/files")
     public void getFile(@RequestParam("fileName") String fileName,
                         HttpServletResponse response) {
@@ -31,10 +34,9 @@ public class FileController {
             if (is != null) {
                 org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
 
-                response.setContentType("application/force-download");
+                response.setContentType(tika.detect(is));
                 response.setContentLength(is.available());
-                response.setHeader("Content-Disposition", "attachment; filename="
-                        + fileName);
+                response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", fileName));
                 response.flushBuffer();
             }
         } catch (IOException ex) {
