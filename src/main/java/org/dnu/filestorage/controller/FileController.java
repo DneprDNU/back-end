@@ -35,8 +35,10 @@ public class FileController {
                 response.setContentType(tika.detect(is));
                 response.setContentLength(is.available());
                 response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", fileName));
+                response.setCharacterEncoding("utf-8");
                 org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
                 response.flushBuffer();
+                is.close();
             }
         } catch (IOException ex) {
             throw new RuntimeException("IOError writing file to output stream");

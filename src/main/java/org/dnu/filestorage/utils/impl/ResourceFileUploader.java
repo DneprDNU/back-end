@@ -24,7 +24,7 @@ public class ResourceFileUploader implements FileUploader {
     @Override
     public InputStream getFile(String fileName) {
         try {
-            return new FileInputStream(fileName);
+            return new FileInputStream(resourcesBaseDir + File.separator + fileName);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

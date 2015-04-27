@@ -61,7 +61,7 @@ public abstract class GenericController<S extends GenericService<T>, T extends I
                 User user = getUserService().findByUserName(name);
                 if (user == null ||
                         (user.getUserRole() != null && user.getUserRole().contains("ROLE_SUPERADMIN"))) {
-                    new Count(this.service.getCount());
+                    return new Count(this.service.getCount());
                 }
                 if (user.getFaculty() == null) {
                     return new Count(0l);
