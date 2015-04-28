@@ -47,6 +47,11 @@ public class ResourceServiceImpl extends GenericFilteredService<ResourceDAO, Res
     }
 
     @Override
+    public void updateDownloads(String filename) {
+        dao.updateDownloads(filename);
+    }
+
+    @Override
     public Resource get(Long id) {
         return dao.get(id);
     }
@@ -114,7 +119,9 @@ public class ResourceServiceImpl extends GenericFilteredService<ResourceDAO, Res
         current.setName(newEntity.getName());
         current.setAuthor(newEntity.getAuthor());
         current.setDescription(newEntity.getDescription());
-        current.setFileR(newEntity.getFileR());
+        if (!newEntity.getFileR().isEmpty()) {
+            current.setFileR(newEntity.getFileR());
+        }
         current.setYear(newEntity.getYear());
 
         copySpeciality(current, newEntity);

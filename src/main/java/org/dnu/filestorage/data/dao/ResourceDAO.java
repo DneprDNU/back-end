@@ -13,4 +13,6 @@ public interface ResourceDAO extends GenericDAO<Resource>, FilteredDAO<Resource>
     List<Resource> listByCategoryId(Long categoryId);
 
     List<Resource> listResourcesByTeacherIdByLinks(Long teacherId);
+
+    void updateDownloads(String filename);
 }

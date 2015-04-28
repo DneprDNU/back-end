@@ -24,7 +24,9 @@ import java.util.List;
                 "where r.id = :resourceId"),
         @NamedQuery(name = "Resource.filteredCount", query = "select count(distinct r) from Resource r " +
                 "left join r.subjects s left join s.links l left join l.speciality sp " +
-                "left join sp.departments d left join d.faculty f where f.id=:facultyId")})
+                "left join sp.departments d left join d.faculty f where f.id=:facultyId"),
+        @NamedQuery(name = "Resource.addDownload", query = "update Resource r set r.downloads = r.downloads + 1 " +
+                "where r.fileR = :fileName")})
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
         scope = Resource.class)
 public class Resource extends NamedEntity {
@@ -42,7 +44,8 @@ public class Resource extends NamedEntity {
 
     private String description;
 
-    @JsonIgnore
+    private Long downloads = 0l;
+
     private String fileR;
 
     public Resource() {
@@ -139,6 +142,14 @@ public class Resource extends NamedEntity {
 
     public void setSpeciality(Speciality speciality) {
         this.speciality = speciality;
+    }
+
+    public Long getDownloads() {
+        return downloads;
+    }
+
+    public void setDownloads(Long downloads) {
+        this.downloads = downloads;
     }
 
     @PreRemove

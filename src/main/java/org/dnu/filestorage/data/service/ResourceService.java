@@ -13,4 +13,6 @@ public interface ResourceService extends GenericService<Resource>, FilteredServi
     List<Resource> listByCategoryId(Long categoryId);
 
     List<Resource> listResourcesByTeacherIdByLinks(Long teacherId);
+
+    void updateDownloads(String filename);
 }

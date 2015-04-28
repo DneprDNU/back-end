@@ -28,6 +28,12 @@ public class ResourceDAOImpl extends GenericDAOImpl<Resource> implements Resourc
     }
 
     @Override
+    public void updateDownloads(String filename) {
+        entityManager.createNamedQuery("Resource.addDownload")
+                .setParameter("fileName", filename).executeUpdate();
+    }
+
+    @Override
     public Resource get(Object id) {
         return entityManager.createNamedQuery("Resource.loadWithRelations", Resource.class)
                 .setParameter("resourceId", id).getSingleResult();

@@ -5,6 +5,7 @@ import eu.medsea.mimeutil.MimeType;
 import eu.medsea.mimeutil.MimeUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.tika.Tika;
+import org.dnu.filestorage.data.service.ResourceService;
 import org.dnu.filestorage.utils.FileUploader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,6 +31,9 @@ public class FileController {
     @Qualifier("hdfsFileUploader")
     private FileUploader fileUploader;
 
+    @Autowired
+    private ResourceService resourceService;
+
     private Tika tika = new Tika();
     private MimeUtil mimeUtil = new MimeUtil();
 
@@ -39,6 +43,7 @@ public class FileController {
         try {
             InputStream is = fileUploader.getFile(fileName);
             if (is != null) {
+                resourceService.updateDownloads(ResourceController.IMAGES_URL + fileName);
                 String contentType = "";
                 MimeUtil.registerMimeDetector("eu.medsea.mimeutil.detector.MagicMimeMimeDetector");
                 Collection mimeTypes = MimeUtil.getMimeTypes(fileName);
@@ -60,7 +65,6 @@ public class FileController {
                 IOUtils.copy(is, response.getOutputStream());
                 response.getOutputStream().close();
                 is.close();
-
 
                 /*HttpHeaders headers = new HttpHeaders();
                 headers.setContentDispositionFormData("attachment", fileName);

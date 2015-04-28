@@ -60,4 +60,17 @@ public class ResourceServiceImplTest {
         Assert.assertEquals(0, categoryService.get(category.getId()).getResources().size());
         Assert.assertEquals(0, subjectService.get(subject.getId()).getResources().size());
     }
+
+    @Test
+    public void testResourcesDownloadsCount() throws Exception {
+
+        Resource resource = new Resource("r1", "y", "a", "d", "r", "i");
+        resource = resourceService.create(resource);
+        Assert.assertEquals((Long)0l, resource.getDownloads());
+        resourceService.updateDownloads("r");
+
+        Resource updatedResource = resourceService.get(resource.getId());
+
+        Assert.assertEquals((Long)1l, updatedResource.getDownloads());
+    }
 }
