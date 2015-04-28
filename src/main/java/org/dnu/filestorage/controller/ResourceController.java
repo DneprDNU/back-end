@@ -36,6 +36,8 @@ import java.util.Map;
 @RequestMapping("/rest/resource")
 public class ResourceController {
 
+    public static final String RESOURCES_URL = "http://212.3.125.102:8080/filestorage/files?fileName=";
+
     public static final String IMAGES_URL = "http://212.3.125.102:8080/filestorage/resources/";
     String defaultImage = "http://cumbrianrun.co.uk/wp-content/uploads/2014/02/default-placeholder.png";
     @Autowired
@@ -79,7 +81,7 @@ public class ResourceController {
 
         if (file != null) {
             String fileUrl = fileUploader.uploadFile(file);
-            res.setFileR("http://212.3.125.102:8080/filestorage/files?fileName=" + fileUrl);
+            res.setFileR(RESOURCES_URL + fileUrl);
         }
         if (image != null) {
             String imageUrl = resourceUploader.uploadFile(image);

@@ -43,7 +43,7 @@ public class FileController {
         try {
             InputStream is = fileUploader.getFile(fileName);
             if (is != null) {
-                resourceService.updateDownloads(ResourceController.IMAGES_URL + fileName);
+                resourceService.updateDownloads(ResourceController.RESOURCES_URL + fileName);
                 String contentType = "";
                 MimeUtil.registerMimeDetector("eu.medsea.mimeutil.detector.MagicMimeMimeDetector");
                 Collection mimeTypes = MimeUtil.getMimeTypes(fileName);
