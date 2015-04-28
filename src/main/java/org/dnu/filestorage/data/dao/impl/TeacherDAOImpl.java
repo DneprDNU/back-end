@@ -26,19 +26,19 @@ public class TeacherDAOImpl extends GenericDAOImpl<Teacher> implements TeacherDA
 
     @Override
     public List<Teacher> getTeachersByFacultyId(Long facultyId) {
-        return entityManager.createNamedQuery("listTeachersByFacultyId", Teacher.class)
+        return entityManager.createNamedQuery("Teacher.listTeachersByFacultyId", Teacher.class)
                 .setParameter("facultyId", facultyId).getResultList();
     }
 
     @Override
     public List<Teacher> getTeachersBySubjectId(Long subjectId) {
-        return entityManager.createNamedQuery("listTeachersBySubjectId", Teacher.class)
+        return entityManager.createNamedQuery("Teacher.listTeachersBySubjectId", Teacher.class)
                 .setParameter("subjectId", subjectId).getResultList();
     }
 
     @Override
     public List<Teacher> getTeachersBySpecialityId(Long specialityId) {
-        return entityManager.createNamedQuery("listTeachersBySpecialityIdByLinks", Teacher.class)
+        return entityManager.createNamedQuery("Teacher.listTeachersBySpecialityIdByLinks", Teacher.class)
                 .setParameter("specialityId", specialityId).getResultList();
     }
 
@@ -49,7 +49,7 @@ public class TeacherDAOImpl extends GenericDAOImpl<Teacher> implements TeacherDA
 
     @Override
     public List<Teacher> listByFacultyId(long facultyId, int from, int to) {
-        return entityManager.createNamedQuery("listTeachersByFacultyId", Teacher.class)
+        return entityManager.createNamedQuery("Teacher.listTeachersByFacultyId", Teacher.class)
                 .setParameter("facultyId", facultyId).setFirstResult(from).setMaxResults(to - from).getResultList();
     }
 
