@@ -1,6 +1,8 @@
 package org.dnu.filestorage.controller;
 
 import com.wordnik.swagger.annotations.Api;
+import eu.medsea.mimeutil.MimeUtil;
+import org.apache.commons.io.IOUtils;
 import org.apache.tika.Tika;
 import org.dnu.filestorage.utils.FileUploader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,7 @@ public class FileController {
     private FileUploader fileUploader;
 
     private Tika tika = new Tika();
+    private MimeUtil mimeUtil = new MimeUtil();
 
     @RequestMapping("/files")
     public void getFile(@RequestParam("fileName") String fileName,
@@ -32,13 +35,20 @@ public class FileController {
         try {
             InputStream is = fileUploader.getFile(fileName);
             if (is != null) {
-                response.setContentType(tika.detect(is));
+                response.setContentType("application/force-download");
                 response.setContentLength(is.available());
-                response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", fileName));
                 response.setCharacterEncoding("utf-8");
-                org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
+                response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", fileName));
+                IOUtils.copy(is, response.getOutputStream());
                 response.flushBuffer();
                 is.close();
+
+                /*HttpHeaders headers = new HttpHeaders();
+                headers.setContentDispositionFormData("attachment", fileName);
+                headers.setContentLength(is.available());
+                headers.set*/
+
+//                return new HttpEntity<>(new InputStreamResource(is), headers);
             }
         } catch (IOException ex) {
             throw new RuntimeException("IOError writing file to output stream");
