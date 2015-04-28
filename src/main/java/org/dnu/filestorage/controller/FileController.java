@@ -1,6 +1,7 @@
 package org.dnu.filestorage.controller;
 
 import com.wordnik.swagger.annotations.Api;
+import eu.medsea.mimeutil.MimeType;
 import eu.medsea.mimeutil.MimeUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.tika.Tika;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * @author demyura
@@ -35,13 +39,26 @@ public class FileController {
         try {
             InputStream is = fileUploader.getFile(fileName);
             if (is != null) {
-                response.setContentType("application/force-download");
+                String contentType = "";
+                MimeUtil.registerMimeDetector("eu.medsea.mimeutil.detector.MagicMimeMimeDetector");
+                Collection mimeTypes = MimeUtil.getMimeTypes(fileName);
+                if (mimeTypes.isEmpty()) {
+                    contentType = "text/plain";
+                } else {
+                    Iterator iterator = mimeTypes.iterator();
+                    MimeType mimeType = (MimeType) iterator.next();
+                    contentType = mimeType.getMediaType() + "/" + mimeType.getSubType();
+                }
+
+                response.setContentType(contentType);
                 response.setContentLength(is.available());
-                response.setCharacterEncoding("utf-8");
-                response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", fileName));
-                IOUtils.copy(is, response.getOutputStream());
+                response.setHeader("Content-Disposition",
+                        new String(("attachment; filename=\"" + fileName + "\"").getBytes(), StandardCharsets.UTF_8));
                 response.flushBuffer();
+                IOUtils.copy(is, response.getOutputStream());
+                response.getOutputStream().close();
                 is.close();
+
 
                 /*HttpHeaders headers = new HttpHeaders();
                 headers.setContentDispositionFormData("attachment", fileName);
