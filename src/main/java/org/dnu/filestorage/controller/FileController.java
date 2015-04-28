@@ -54,7 +54,8 @@ public class FileController {
                 response.setContentLength(is.available());
                 response.setCharacterEncoding("UTF-8");
                 response.setHeader("Content-Disposition",
-                        "attachment; filename=\"" + URLEncoder.encode(fileName, "UTF-8") + "\"");
+                        "attachment; filename=\"" + fileName + "\"; "
+                                + "filename*=UTF-8\'\'" + URLEncoder.encode(fileName, "UTF-8"));
                 response.flushBuffer();
                 IOUtils.copy(is, response.getOutputStream());
                 response.getOutputStream().close();
