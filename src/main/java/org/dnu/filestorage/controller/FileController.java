@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
+import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -52,8 +52,9 @@ public class FileController {
 
                 response.setContentType(contentType);
                 response.setContentLength(is.available());
+                response.setCharacterEncoding("UTF-8");
                 response.setHeader("Content-Disposition",
-                        new String(("attachment; filename=\"" + fileName + "\"").getBytes(), StandardCharsets.UTF_8));
+                        URLEncoder.encode("attachment; filename=\"" + fileName + "\"", "UTF-8"));
                 response.flushBuffer();
                 IOUtils.copy(is, response.getOutputStream());
                 response.getOutputStream().close();
