@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.NoResultException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -89,7 +90,11 @@ public abstract class GenericController<S extends GenericService<T>, T extends I
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public T get(@PathVariable Long id) {
-        return this.service.get(id);
+        try {
+            return this.service.get(id);
+        } catch (NoResultException | NullPointerException e) {
+            throw new NotFoundException();
+        }
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = {MediaType.APPLICATION_JSON_VALUE})

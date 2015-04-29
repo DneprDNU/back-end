@@ -19,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.NoResultException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -89,7 +90,11 @@ public abstract class GenericImageController<S extends GenericService<T>, T exte
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public T get(@PathVariable Long id) {
-        return this.processImage(this.service.get(id));
+        try {
+            return this.processImage(this.service.get(id));
+        } catch (NoResultException | NullPointerException e) {
+            throw new GenericController.NotFoundException();
+        }
     }
 
     public T processImage(T object) {

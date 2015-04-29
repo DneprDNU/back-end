@@ -2,6 +2,7 @@ package org.dnu.filestorage.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wordnik.swagger.annotations.Api;
+import org.dnu.filestorage.controller.generic.GenericController;
 import org.dnu.filestorage.data.dto.Count;
 import org.dnu.filestorage.data.model.Resource;
 import org.dnu.filestorage.data.model.User;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
+import javax.persistence.NoResultException;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.HashMap;
@@ -101,11 +103,15 @@ public class ResourceController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Resource get(@PathVariable Long id) throws UnknownHostException {
-        Resource resource = this.service.get(id);
-        if (resource.getImage() == null || resource.getImage().isEmpty()) {
-            resource.setImage(this.defaultImage);
+        try {
+            Resource resource = this.service.get(id);
+            if (resource.getImage() == null || resource.getImage().isEmpty()) {
+                resource.setImage(this.defaultImage);
+            }
+            return resource;
+        } catch (NoResultException | NullPointerException e) {
+            throw new GenericController.NotFoundException();
         }
-        return resource;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT, params = {"resource"})
