@@ -46,6 +46,7 @@ public class Resource extends NamedEntity {
 
     private Long downloads = 0l;
 
+    @JsonIgnore
     private String fileR;
 
     public Resource() {
