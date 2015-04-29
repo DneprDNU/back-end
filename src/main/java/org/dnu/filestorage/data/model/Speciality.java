@@ -113,4 +113,11 @@ public class Speciality extends NamedEntity {
     public String toString() {
         return this.getName();
     }
+
+    @PreRemove
+    public void preRemove() {
+        for (Department department : departments) {
+            department.getSpecialities().remove(this);
+        }
+    }
 }
