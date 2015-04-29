@@ -1,9 +1,11 @@
 package org.dnu.filestorage.data.dao.impl;
 
+import org.dnu.filestorage.controller.generic.GenericController;
 import org.dnu.filestorage.data.dao.GenericDAO;
 import org.dnu.filestorage.data.model.Identifiable;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
@@ -39,8 +41,8 @@ public class GenericDAOImpl<T extends Identifiable> implements GenericDAO<T> {
     public T get(Object id) {
         try {
             return entityManager.find(entityClass, id);
-        } catch (NullPointerException e) {
-            return null;
+        } catch (NoResultException | NullPointerException e) {
+            throw new GenericController.NotFoundException();
         }
     }
 
