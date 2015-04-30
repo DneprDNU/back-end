@@ -30,8 +30,8 @@ public class Department extends NamedEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Faculty faculty;
     private String description;
-    @OneToOne()
-    private Teacher director;
+    //    @OneToOne()
+    private String director;
     private String address;
     private String phone;
 
@@ -109,11 +109,11 @@ public class Department extends NamedEntity {
         this.description = description;
     }
 
-    public Teacher getDirector() {
+    public String getDirector() {
         return director;
     }
 
-    public void setDirector(Teacher director) {
+    public void setDirector(String director) {
         this.director = director;
     }
 
