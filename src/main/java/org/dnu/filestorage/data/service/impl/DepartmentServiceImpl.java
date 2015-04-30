@@ -40,7 +40,7 @@ public class DepartmentServiceImpl extends GenericFilteredService<DepartmentDAO,
     }
 
     @Override
-    protected void copyProperties(Department current, Department newEntity ) {
+    protected void copyProperties(Department current, Department newEntity) {
         current.setName(newEntity.getName());
         current.setShortName(newEntity.getShortName());
         current.setDescription(newEntity.getDescription());
@@ -49,9 +49,7 @@ public class DepartmentServiceImpl extends GenericFilteredService<DepartmentDAO,
         if (!newEntity.getImage().isEmpty()) {
             current.setImage(newEntity.getImage());
         }
-        if (newEntity.getDirector() != null) {
-            current.setDirector(teacherDAO.get(newEntity.getDirector().getId()));
-        }
+        current.setDirector(newEntity.getDirector());
 
         updateSpecialities(newEntity, current);
         updateEmployees(newEntity, current);
