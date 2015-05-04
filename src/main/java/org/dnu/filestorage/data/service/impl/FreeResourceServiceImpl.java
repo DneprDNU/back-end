@@ -30,10 +30,6 @@ public class FreeResourceServiceImpl extends GenericServiceImpl<FreeResourceDAO,
         super(dao);
     }
 
-    @Override
-    public FreeResource create(FreeResource entity) {
-        return dao.create(entity);
-    }
 
     @Override
     protected void copyProperties(FreeResource current, FreeResource newEntity) {
