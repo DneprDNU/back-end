@@ -40,9 +40,9 @@ public class SearchController {
     public Resource[] search(@RequestParam(required = false) String searchKey) throws IOException {
 
         // We need to handle Ukrainian symbols.
-        if (searchKey != null) {
-            searchKey = new String((searchKey).getBytes("ISO-8859-1"), "UTF-8");
-        }
+//        if (searchKey != null) {
+//            searchKey = new String((searchKey).getBytes("ISO-8859-1"), "UTF-8");
+//        }
 
         SearchHit[] searchHits = resourceSearchRepository.search(searchKey);
         Resource[] resources = new Resource[searchHits.length];
