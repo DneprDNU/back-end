@@ -72,4 +72,17 @@ public class LinkingEntity implements Identifiable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    @PreRemove
+    public void preRemove() {
+        if (speciality != null) {
+            speciality.getLinks().remove(this);
+        }
+        if (teacher != null) {
+            teacher.getLinks().remove(this);
+        }
+        if (subject != null) {
+            subject.getLinks().remove(this);
+        }
+    }
 }
