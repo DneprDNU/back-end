@@ -1,5 +1,6 @@
 package org.dnu.filestorage.data.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -20,6 +21,7 @@ import java.util.List;
 public class Category extends NamedEntity {
     @LazyCollection(LazyCollectionOption.EXTRA)
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
+    @JsonManagedReference
     private List<Resource> resources = new LinkedList<Resource>();
 
     @Transient

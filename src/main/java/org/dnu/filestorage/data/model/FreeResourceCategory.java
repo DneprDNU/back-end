@@ -1,5 +1,7 @@
 package org.dnu.filestorage.data.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
@@ -15,6 +17,7 @@ import java.util.List;
 //        scope = Category.class)
 public class FreeResourceCategory extends NamedEntity {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
+    @JsonManagedReference
     private List<FreeResource> freeResources = new LinkedList<FreeResource>();
 
     public FreeResourceCategory() {

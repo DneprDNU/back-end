@@ -1,5 +1,8 @@
 package org.dnu.filestorage.data.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,12 +25,15 @@ import java.util.List;
 public class Teacher extends NamedEntity {
     @OneToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "teacher")
+    @JsonManagedReference
     private List<LinkingEntity> links = new LinkedList<LinkingEntity>();
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "employees")
+    @JsonBackReference
     private List<Department> departments = new LinkedList<Department>();
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "supervisors")
+    @JsonBackReference
     private List<Speciality> specialities = new LinkedList<Speciality>();
     private String email;
     private String phone;
@@ -54,7 +60,7 @@ public class Teacher extends NamedEntity {
 
     public synchronized List<Department> getDepartments() {
         if (departments == null) {
-            departments = new LinkedList<>();
+            departments = new LinkedList<Department>();
         }
         return departments;
     }
@@ -103,5 +109,13 @@ public class Teacher extends NamedEntity {
         return this.getName();
     }
 
-
+    @PreRemove
+    public void preRemove() {
+        for (Department department : departments) {
+            department.getEmployees().remove(this);
+        }
+        for (Speciality speciality : specialities) {
+            speciality.getSupervisors().remove(this);
+        }
+    }
 }

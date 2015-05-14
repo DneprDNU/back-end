@@ -1,7 +1,6 @@
 package org.dnu.filestorage.data.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.LinkedList;
@@ -23,14 +22,16 @@ import java.util.List;
                 "left join s.links l left join l.speciality sp left join sp.departments d " +
                 "left join d.faculty f where f.id = :facultyId")
 })
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
-        scope = Subject.class)
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
+//        scope = Subject.class)
 public class Subject extends NamedEntity {
     @ManyToMany(fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Resource> resources = new LinkedList<Resource>();
 
     @OneToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "subject")
+    @JsonManagedReference
     private List<LinkingEntity> links = new LinkedList<LinkingEntity>();
 
     public Subject() {

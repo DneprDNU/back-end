@@ -1,5 +1,7 @@
 package org.dnu.filestorage.data.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,6 +21,7 @@ public class Faculty extends NamedEntity {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,
             mappedBy = "faculty")
+    @JsonManagedReference
     private List<Department> departments = new LinkedList<Department>();
 
     public Faculty() {

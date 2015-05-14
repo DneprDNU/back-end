@@ -1,7 +1,7 @@
 package org.dnu.filestorage.data.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.LinkedList;
@@ -18,16 +18,19 @@ import java.util.List;
         @NamedQuery(name = "Speciality.filteredCount", query = "select count(distinct s) from Speciality s " +
                 "left join s.departments d left join d.faculty f " +
                 "where f.id = :facultyId")})
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
-        scope = Speciality.class)
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
+//        scope = Speciality.class)
 public class Speciality extends NamedEntity {
     private String code;
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @JsonBackReference
     private List<Teacher> supervisors = new LinkedList<Teacher>();
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "specialities")
+    @JsonBackReference
     private List<Department> departments = new LinkedList<Department>();
 
     @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "speciality")
+    @JsonManagedReference
     private List<LinkingEntity> links = new LinkedList<LinkingEntity>();
 
     private String description;
