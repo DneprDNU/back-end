@@ -157,7 +157,7 @@ public abstract class GenericController<S extends GenericService<T>, T extends I
                 return ((FilteredService) service).listByFacultyId(user.getFaculty().getId(), from, to);
             }
         }
-        return this.service.list();
+        return this.service.list(from, to);
     }
 
     public UserService getUserService() {

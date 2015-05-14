@@ -12,12 +12,12 @@ import java.util.List;
 @Entity
 @Table(name = "resources")
 @NamedQueries({@NamedQuery(name = "Resource.getResourcesByCategoryId", query = "select distinct r from Resource r " +
-        "left join fetch r.categories c where c.id=:categoryId"),
+        "left join fetch r.categories c where c.id=:categoryId order by r.name asc"),
         @NamedQuery(name = "Resource.getResourcesByTeacherIdByLinks", query = "select distinct r from Resource r " +
-                "left join r.subjects s left join s.links l where l.teacher.id=:teacherId"),
+                "left join r.subjects s left join s.links l where l.teacher.id=:teacherId order by r.name asc"),
         @NamedQuery(name = "Resource.listResourcesByFaculty", query = "select distinct r from Resource r " +
                 "left join r.subjects s left join s.links l left join l.speciality sp " +
-                "left join sp.departments d left join d.faculty f where f.id=:facultyId"),
+                "left join sp.departments d left join d.faculty f where f.id=:facultyId order by r.name asc"),
         @NamedQuery(name = "Resource.loadWithRelations", query = "select r from Resource r " +
                 "left join r.categories c " +
                 "left join fetch r.subjects s " +

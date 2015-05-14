@@ -32,7 +32,7 @@ public class GenericDAOImpl<T extends Identifiable> implements GenericDAO<T> {
 
     @Override
     public List<T> list() {
-        return entityManager.createQuery("select a from " + entityClass.getSimpleName() + " a"
+        return entityManager.createQuery("select a from " + entityClass.getSimpleName() + " a order by a.name asc"
                 , entityClass).getResultList();
     }
 
@@ -79,7 +79,8 @@ public class GenericDAOImpl<T extends Identifiable> implements GenericDAO<T> {
 
     @Override
     public List<T> list(int from, int to) {
-        TypedQuery<T> query = entityManager.createQuery("select a from " + entityClass.getSimpleName() + " a",
+        TypedQuery<T> query = entityManager.createQuery("select a from " + entityClass.getSimpleName() + " a " +
+                        "order by a.name asc",
                 entityClass);
         query.setFirstResult(from);
         query.setMaxResults(to - from);

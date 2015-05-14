@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 @NamedQueries({@NamedQuery(name = "Speciality.getSpecialitiesByFacultyId", query = "select a from Speciality as a " +
         "left join a.departments d left join d.faculty f " +
-        " where f.id=:facultyId"),
+        " where f.id=:facultyId order by a.name asc"),
         @NamedQuery(name = "Speciality.filteredCount", query = "select count(distinct s) from Speciality s " +
                 "left join s.departments d left join d.faculty f " +
                 "where f.id = :facultyId")})

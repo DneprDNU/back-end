@@ -13,12 +13,12 @@ import java.util.List;
  */
 @Entity
 @NamedQueries({@NamedQuery(name = "Subject.getSubjectsByDepartmentIdByLinks", query = "select distinct s from Subject s " +
-        "left join s.links l left join l.speciality sp left join sp.departments d where d.id=:departmentId"),
+        "left join s.links l left join l.speciality sp left join sp.departments d where d.id=:departmentId order by s.name asc"),
         @NamedQuery(name = "Subject.listSubjectsByFacultyId", query = "select distinct s from Subject s " +
                 "left join s.links l left join l.speciality sp left join sp.departments d left join d.faculty f " +
-                "where f.id=:facultyId"),
+                "where f.id=:facultyId order by s.name asc"),
         @NamedQuery(name = "Subject.getSubjectsBySpecialityIdByLinks", query = "select distinct s from Subject s " +
-                "left join s.links l left join l.speciality sp where sp.id=:specialityId"),
+                "left join s.links l left join l.speciality sp where sp.id=:specialityId order by s.name asc"),
         @NamedQuery(name = "Subject.filteredCount", query = "select count(distinct s) from Subject s " +
                 "left join s.links l left join l.speciality sp left join sp.departments d " +
                 "left join d.faculty f where f.id = :facultyId")

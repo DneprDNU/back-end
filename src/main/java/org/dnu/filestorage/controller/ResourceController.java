@@ -255,7 +255,7 @@ public class ResourceController {
             }
             return ((FilteredService) service).listByFacultyId(user.getFaculty().getId(), from, to);
         }
-        return this.service.list();
+        return this.service.list(from, to);
     }
 
     public UserService getUserService() {

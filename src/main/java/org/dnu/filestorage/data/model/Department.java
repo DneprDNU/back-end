@@ -16,7 +16,7 @@ import java.util.List;
         "left join fetch a.specialities " +
         " where a.id = :departmentId"),
         @NamedQuery(name = "Department.listByFacultyId", query = "select a from Department a " +
-                "where a.faculty.id=:facultyId"),
+                "where a.faculty.id=:facultyId order by a.name asc"),
         @NamedQuery(name = "Department.filteredCount", query = "select count(distinct a) from Department a " +
                 "where a.faculty.id=:facultyId")})
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",

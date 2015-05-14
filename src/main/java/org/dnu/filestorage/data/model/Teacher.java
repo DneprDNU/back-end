@@ -10,11 +10,11 @@ import java.util.List;
  */
 @Entity
 @NamedQueries({@NamedQuery(name = "Teacher.listTeachersByFacultyId", query = "select distinct t from Teacher t " +
-        "left join t.departments d left join d.faculty f where f.id=:facultyId"),
+        "left join t.departments d left join d.faculty f where f.id=:facultyId order by t.name asc"),
         @NamedQuery(name = "Teacher.listTeachersBySubjectId", query = "select distinct t from Teacher t " +
-                "left join t.links l left join l.subject sp where sp.id=:subjectId"),
+                "left join t.links l left join l.subject sp where sp.id=:subjectId order by t.name asc"),
         @NamedQuery(name = "Teacher.listTeachersBySpecialityIdByLinks", query = "select distinct t from Teacher t " +
-                "left join t.links l left join l.speciality sp where sp.id=:specialityId"),
+                "left join t.links l left join l.speciality sp where sp.id=:specialityId order by t.name asc"),
         @NamedQuery(name = "Teacher.filteredCount", query = "select count(distinct t) from Teacher t " +
                 "left join t.departments d left join d.faculty f where f.id=:facultyId")})
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
