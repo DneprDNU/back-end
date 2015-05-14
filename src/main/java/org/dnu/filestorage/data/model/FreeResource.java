@@ -1,7 +1,5 @@
 package org.dnu.filestorage.data.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import java.util.LinkedList;
@@ -15,7 +13,7 @@ public class FreeResource extends NamedEntity {
     private String resource;
 
     @ManyToMany
-    @JsonBackReference
+//    @JsonBackReference
     private List<FreeResourceCategory> categories = new LinkedList<FreeResourceCategory>();
 
     public FreeResource() {

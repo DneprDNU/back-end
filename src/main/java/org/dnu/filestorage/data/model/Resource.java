@@ -1,9 +1,9 @@
 package org.dnu.filestorage.data.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.LinkedList;
@@ -27,18 +27,18 @@ import java.util.List;
                 "left join sp.departments d left join d.faculty f where f.id=:facultyId"),
         @NamedQuery(name = "Resource.addDownload", query = "update Resource r set r.downloads = r.downloads + 1 " +
                 "where r.fileR = :fileName")})
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
-//        scope = Resource.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",
+        scope = Resource.class)
 public class Resource extends NamedEntity {
     @ManyToMany()
-    @JsonBackReference
+//    @JsonBackReference
     private List<Category> categories = new LinkedList<Category>();
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "resources")
-    @JsonBackReference
+//    @JsonBackReference
     private List<Subject> subjects = new LinkedList<Subject>();
 
     @ManyToOne()
-    @JsonManagedReference
+//    @JsonManagedReference
     private Speciality speciality;
 
     private String year;

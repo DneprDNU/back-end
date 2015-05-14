@@ -1,7 +1,5 @@
 package org.dnu.filestorage.data.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,12 +24,12 @@ import java.util.List;
 //        scope = Subject.class)
 public class Subject extends NamedEntity {
     @ManyToMany(fetch = FetchType.LAZY)
-    @JsonManagedReference
+//    @JsonManagedReference
     private List<Resource> resources = new LinkedList<Resource>();
 
     @OneToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "subject")
-    @JsonManagedReference
+//    @JsonManagedReference
     private List<LinkingEntity> links = new LinkedList<LinkingEntity>();
 
     public Subject() {

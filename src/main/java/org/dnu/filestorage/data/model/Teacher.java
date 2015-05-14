@@ -1,8 +1,5 @@
 package org.dnu.filestorage.data.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,15 +22,15 @@ import java.util.List;
 public class Teacher extends NamedEntity {
     @OneToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "teacher")
-    @JsonManagedReference
+//    @JsonManagedReference
     private List<LinkingEntity> links = new LinkedList<LinkingEntity>();
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "employees")
-    @JsonBackReference
+//    @JsonBackReference
     private List<Department> departments = new LinkedList<Department>();
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "supervisors")
-    @JsonBackReference
+//    @JsonBackReference
     private List<Speciality> specialities = new LinkedList<Speciality>();
     private String email;
     private String phone;

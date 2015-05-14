@@ -1,7 +1,5 @@
 package org.dnu.filestorage.data.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
 
 /**
@@ -19,15 +17,15 @@ public class LinkingEntity implements Identifiable {
     private Long id;
     //    @Id
     @ManyToOne()
-    @JsonBackReference
+//    @JsonBackReference
     private Speciality speciality;
     //    @Id
     @ManyToOne()
-    @JsonBackReference
+//    @JsonBackReference
     private Subject subject;
     //    @Id
     @ManyToOne()
-    @JsonBackReference
+//    @JsonBackReference
     private Teacher teacher;
 
 
