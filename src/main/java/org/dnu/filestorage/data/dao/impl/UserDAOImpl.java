@@ -52,4 +52,10 @@ public class UserDAOImpl extends GenericDAOImpl<User> implements UserDAO {
         query.setMaxResults(to - from);
         return query.getResultList();
     }
+
+    @Override
+    public List<User> list() {
+        return entityManager.createQuery("select a from User a order by a.username asc"
+                , entityClass).getResultList();
+    }
 }
